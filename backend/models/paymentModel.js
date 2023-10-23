@@ -8,10 +8,6 @@ const paymentSchema = mongoose.Schema(
       ref: "Booking",
     },
 
-    paymentDate: {
-      type: Date,
-      required: true,
-    },
     amount: {
       type: Number,
       required: true,

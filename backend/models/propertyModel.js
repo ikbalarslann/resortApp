@@ -20,21 +20,6 @@ const propertySchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    type: {
-      type: String,
-      required: true,
-    },
-    amenities: {
-      type: Array,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    rating: {
-      type: Number,
-    },
   },
   { timestamps: true }
 );

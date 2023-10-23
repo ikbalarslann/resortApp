@@ -16,22 +16,6 @@ const hostSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
-    profilePicture: {
-      type: String,
-      required: true,
-    },
-    aboutme: {
-      type: String,
-      required: true,
-    },
-    listings: {
-      type: String,
-      required: true,
-    },
   },
   { timestamps: true }
 );
