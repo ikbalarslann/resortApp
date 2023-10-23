@@ -1,3 +1,4 @@
+import e from "express";
 import mongoose from "mongoose";
 
 const hostSchema = mongoose.Schema(
@@ -34,3 +35,7 @@ const hostSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const Host = mongoose.model("Host", hostSchema);
+
+export default Host;
