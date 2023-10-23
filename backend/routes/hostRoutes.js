@@ -1,21 +1,21 @@
 import express from "express";
 import {
-  authHost,
-  registerHost,
-  logoutHost,
-  getHostProfile,
-  updateHostProfile,
-} from "../controllers/HostController.js";
+  getAllHosts,
+  getHostById,
+  createHost,
+  updateHost,
+  deleteHost,
+} from "../controllers/hostController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", registerHost);
-router.post("/auth", authHost);
-router.post("/logout", logoutHost);
+router.route("/").get(getAllHosts).post(protect, createHost);
+
 router
-  .route("/profile")
-  .get(protect, getHostProfile)
-  .put(protect, updateHostProfile);
+  .route("/:hostId")
+  .get(getHostById)
+  .put(protect, updateHost)
+  .delete(protect, deleteHost);
 
 export default router;

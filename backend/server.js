@@ -5,7 +5,15 @@ dotenv.config();
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+
 import userRoutes from "./routes/userRoutes.js";
+import hostRoutes from "./routes/hostRoutes.js";
+import propertyRoutes from "./routes/propertyRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 const port = process.env.PORT || 5000;
 
@@ -20,6 +28,12 @@ app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
 app.use("/api/hosts", hostRoutes);
+app.use("/api/properties", propertyRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
