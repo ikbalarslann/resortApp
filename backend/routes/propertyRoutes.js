@@ -1,4 +1,3 @@
-// Import necessary modules
 import express from "express";
 import {
   getAllProperties,

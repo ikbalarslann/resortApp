@@ -1,4 +1,3 @@
-// paymentRoutes.js
 import express from "express";
 import {
   getAllPayments,

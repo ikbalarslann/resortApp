@@ -1,21 +1,22 @@
-import express from 'express';
+import express from "express";
 import {
   authUser,
   registerUser,
   logoutUser,
   getUserProfile,
   updateUserProfile,
-} from '../controllers/userController.js';
-import { protect } from '../middleware/authMiddleware.js';
+} from "../controllers/userController.js";
+import { protect } from "../middleware/authMiddleware.js";
+import User from "../models/userModel.js";
 
 const router = express.Router();
 
-router.post('/', registerUser);
-router.post('/auth', authUser);
-router.post('/logout', logoutUser);
+router.post("/", registerUser);
+router.post("/auth", authUser);
+router.post("/logout", logoutUser);
 router
-  .route('/profile')
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+  .route("/profile")
+  .get(protect(User), getUserProfile)
+  .put(protect(User), updateUserProfile);
 
 export default router;
