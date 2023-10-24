@@ -4,10 +4,9 @@ const propertySchema = mongoose.Schema(
   {
     hostId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "Host",
+      required: true,
     },
-
     title: {
       type: String,
       required: true,
@@ -23,3 +22,7 @@ const propertySchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const Property = mongoose.model("Property", propertySchema);
+
+export default Property;

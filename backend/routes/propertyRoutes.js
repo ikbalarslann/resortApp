@@ -6,19 +6,18 @@ import {
   updateProperty,
   deleteProperty,
 } from "../controllers/propertyController.js";
-import { protect } from "../middleware/authMiddleware.js";
 
 // Create a router
 const router = express.Router();
 
 // Define routes for the 'properties' resource
-router.route("/").get(getAllProperties).post(protect, createProperty);
+router.route("/").get(getAllProperties).post(createProperty);
 
 router
   .route("/:propertyId")
   .get(getPropertyById)
-  .put(protect, updateProperty)
-  .delete(protect, deleteProperty);
+  .put(updateProperty)
+  .delete(deleteProperty);
 
 // Export the router
 export default router;
