@@ -9,6 +9,9 @@ import Profile from "./pages/Profile.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import Property from "./pages/Property.jsx";
 import Error from "./pages/Error.jsx";
+import HostLogin from "./pages/HostLogin.jsx";
+import HostRegister from "./pages/HostRegister.jsx";
+import MyProperties from "./pages/MyProperties.jsx";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -32,6 +35,18 @@ const Router = () => {
         {
           path: "/properties",
           element: <Property />,
+        },
+        {
+          path: "/hostlogin",
+          element: <HostLogin />,
+        },
+        {
+          path: "/hostregister",
+          element: <HostRegister />,
+        },
+        {
+          path: "/myProperties",
+          element: <MyProperties />,
         },
 
         {

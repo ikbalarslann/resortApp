@@ -38,7 +38,7 @@ const Profile = () => {
           password,
         }).unwrap();
         console.log(res);
-        dispatch(setCredentials(res));
+        dispatch(setCredentials("userInfo")(res));
         toast.success("Profile updated successfully");
       } catch (err) {
         toast.error(err?.data?.message || err.error);

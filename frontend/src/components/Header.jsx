@@ -5,20 +5,26 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
+import { useHlogoutMutation } from "../slices/hostsApiSlice";
 import { logout } from "../slices/authSlice";
 
 const Header = () => {
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, hostInfo } = useSelector((state) => state.auth);
+
+  const loggedInUserType = userInfo ? "user" : hostInfo ? "host" : null;
+
+  console.log("loggedInUserType :", loggedInUserType);
+
+  const [logoutApiCall] =
+    loggedInUserType == "user" ? useLogoutMutation() : useHlogoutMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [logoutApiCall] = useLogoutMutation();
-
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
-      dispatch(logout());
+      dispatch(logout({ type: loggedInUserType }));
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -37,7 +43,7 @@ const Header = () => {
             <Nav className="ms-auto">
               {userInfo ? (
                 <>
-                  <NavDropdown title={userInfo.name} id="username">
+                  <NavDropdown title={`User : ${userInfo.name}`} id="username">
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>
@@ -49,8 +55,31 @@ const Header = () => {
                     </LinkContainer>
                   </NavDropdown>
                 </>
+              ) : hostInfo ? (
+                <>
+                  <NavDropdown title={`Host : ${hostInfo.name}`} id="username">
+                    <LinkContainer to="/profile">
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Item onClick={logoutHandler}>
+                      Logout
+                    </NavDropdown.Item>
+                    <LinkContainer to="/myProperties">
+                      <NavDropdown.Item>My Properties</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+                </>
               ) : (
                 <>
+                  <NavDropdown title="Hosts" id="hosts">
+                    <LinkContainer to="/hostRegister">
+                      <NavDropdown.Item>Sign In</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/hostLogin">
+                      <NavDropdown.Item>Sign Up</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+
                   <LinkContainer to="/login">
                     <Nav.Link>
                       <FaSignInAlt /> Sign In

@@ -3,19 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "../slices/usersApiSlice";
+import { useHloginMutation } from "../slices/hostsApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 
-const Login = () => {
+const HostLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading }] = useHloginMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -29,7 +29,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ type: "user", data: { ...res } }));
+      dispatch(setCredentials({ type: "host", data: { ...res } }));
       navigate("/");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -38,7 +38,7 @@ const Login = () => {
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1>Host Sign In</h1>
 
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2" controlId="email">
@@ -82,4 +82,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default HostLogin;

@@ -4,11 +4,11 @@ import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useRegisterMutation } from "../slices/usersApiSlice";
+import { useHregisterMutation } from "../slices/hostsApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 
-const Register = () => {
+const HostRegister = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,15 +17,15 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register, { isLoading }] = useHregisterMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { hostInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (userInfo) {
+    if (hostInfo) {
       navigate("/");
     }
-  }, [navigate, userInfo]);
+  }, [navigate, hostInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const Register = () => {
     } else {
       try {
         const res = await register({ name, email, password }).unwrap();
-        dispatch(setCredentials({ type: "user", data: { ...res } }));
+        dispatch(setCredentials({ type: "host", data: { ...res } }));
         navigate("/");
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -44,7 +44,7 @@ const Register = () => {
   };
   return (
     <FormContainer>
-      <h1>Register</h1>
+      <h1>Host Register</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2" controlId="name">
           <Form.Label>Name</Form.Label>
@@ -101,4 +101,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default HostRegister;
