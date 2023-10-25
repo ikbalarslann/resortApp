@@ -12,9 +12,12 @@ const bookingSchema = mongoose.Schema(
       required: true,
       ref: "Property",
     },
-
     status: {
       type: String,
+      required: true,
+    },
+    payment: {
+      type: Boolean,
       required: true,
     },
   },

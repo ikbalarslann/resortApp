@@ -19,6 +19,12 @@ const propertySchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
   },
   { timestamps: true }
 );

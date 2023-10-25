@@ -13,8 +13,6 @@ const Header = () => {
 
   const loggedInUserType = userInfo ? "user" : hostInfo ? "host" : null;
 
-  console.log("loggedInUserType :", loggedInUserType);
-
   const [logoutApiCall] =
     loggedInUserType == "user" ? useLogoutMutation() : useHlogoutMutation();
 

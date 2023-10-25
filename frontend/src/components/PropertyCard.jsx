@@ -12,13 +12,14 @@ const PropertyCard = ({ property, userId }) => {
         body: JSON.stringify({
           userId,
           propertyId: property._id, // assuming the property object has an _id field
-          status: "i am doin a test now", // or set the default status you want
+          status: "Pending", // or set the default status you want
+          payment: false,
         }),
       });
 
       if (response.ok) {
         // Booking successful, you might want to handle this accordingly
-        console.log("Booking successful");
+        console.log("Notification : Booking Pending");
       } else {
         // Booking failed, handle the error
         console.error("Booking failed");
