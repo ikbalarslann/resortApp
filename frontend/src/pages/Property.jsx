@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import PropertyCard from "../components/PropertyCard";
+import { useSelector } from "react-redux";
 
 const Property = () => {
   const [properties, setProperties] = useState([]);
+
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     // Fetch properties data here and update state
@@ -17,7 +20,7 @@ const Property = () => {
       <Row>
         {properties.map((property) => (
           <Col key={property._id} md={4}>
-            <PropertyCard property={property} />
+            <PropertyCard property={property} userId={userInfo._id} />
           </Col>
         ))}
       </Row>

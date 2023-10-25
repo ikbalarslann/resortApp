@@ -12,7 +12,7 @@ const PropertyCard = ({ property, userId }) => {
         body: JSON.stringify({
           userId,
           propertyId: property._id, // assuming the property object has an _id field
-          status: "pending", // or set the default status you want
+          status: "i am doin a test now", // or set the default status you want
         }),
       });
 
