@@ -12,6 +12,8 @@ import Error from "./pages/Error.jsx";
 import HostLogin from "./pages/HostLogin.jsx";
 import HostRegister from "./pages/HostRegister.jsx";
 import MyProperties from "./pages/MyProperties.jsx";
+import CreateProperty from "./pages/CreateProperty.jsx";
+import MyBookings from "./pages/MyBookings.jsx";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -47,6 +49,14 @@ const Router = () => {
         {
           path: "/myProperties",
           element: <MyProperties />,
+        },
+        {
+          path: "/createProperty",
+          element: <CreateProperty />,
+        },
+        {
+          path: "/myBookings",
+          element: <MyBookings />,
         },
 
         {

@@ -53,6 +53,9 @@ const Header = () => {
                     <LinkContainer to="/properties">
                       <NavDropdown.Item>Properties</NavDropdown.Item>
                     </LinkContainer>
+                    <LinkContainer to="/mybookings">
+                      <NavDropdown.Item>My Bookings</NavDropdown.Item>
+                    </LinkContainer>
                   </NavDropdown>
                 </>
               ) : hostInfo ? (
