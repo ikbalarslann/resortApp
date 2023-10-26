@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import findHost from "../hooks/findHost";
 
 const MyBookings = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -21,6 +22,10 @@ const MyBookings = () => {
   }, [userInfo._id]);
 
   const handlePayment = async (bookingId) => {
+    const host = findHost(bookingId);
+    if (!host) {
+      console.error("Host not found");
+    }
     try {
       const response = await fetch(`/api/bookings/${bookingId}`, {
         method: "PUT",
@@ -29,6 +34,7 @@ const MyBookings = () => {
         },
         body: JSON.stringify({ payment: true }),
       });
+
       console.log("Notification: Booking Successful");
       if (response.ok) {
         // Payment successful, update the local state
@@ -37,6 +43,7 @@ const MyBookings = () => {
             booking._id === bookingId ? { ...booking, payment: true } : booking
           )
         );
+        console.log(`host: ${host.name}, email: ${host.email}`);
       } else {
         // Payment failed, handle the error
         console.error("Payment failed");

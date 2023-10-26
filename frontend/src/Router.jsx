@@ -14,17 +14,16 @@ import HostRegister from "./pages/HostRegister.jsx";
 import MyProperties from "./pages/MyProperties.jsx";
 import CreateProperty from "./pages/CreateProperty.jsx";
 import MyBookings from "./pages/MyBookings.jsx";
-
 const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <App />,
+      element: <Home />,
       errorElement: <Error />,
       children: [
         {
           index: true,
-          element: <Home />,
+          element: <Test />,
         },
         {
           path: "/login",

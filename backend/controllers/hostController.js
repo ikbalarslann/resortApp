@@ -86,6 +86,21 @@ const getHostProfile = asyncHandler(async (req, res) => {
   }
 });
 
+const getHostById = asyncHandler(async (req, res) => {
+  const host = await Host.findById(req.params.hostId);
+
+  if (host) {
+    res.json({
+      _id: host._id,
+      name: host.name,
+      email: host.email,
+    });
+  } else {
+    res.status(404);
+    throw new Error("host not found");
+  }
+});
+
 // @desc    Update host profile
 // @route   PUT /api/hosts/profile
 // @access  Private
@@ -118,4 +133,5 @@ export {
   logoutHost,
   getHostProfile,
   updateHostProfile,
+  getHostById,
 };
