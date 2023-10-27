@@ -1,6 +1,6 @@
 import React from "react";
-import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import App from "./App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
@@ -18,12 +18,12 @@ const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <App />,
       errorElement: <Error />,
       children: [
         {
           index: true,
-          element: <Test />,
+          element: <Home />,
         },
         {
           path: "/login",

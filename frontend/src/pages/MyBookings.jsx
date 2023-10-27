@@ -22,10 +22,6 @@ const MyBookings = () => {
   }, [userInfo._id]);
 
   const handlePayment = async (bookingId) => {
-    const host = findHost(bookingId);
-    if (!host) {
-      console.error("Host not found");
-    }
     try {
       const response = await fetch(`/api/bookings/${bookingId}`, {
         method: "PUT",
@@ -35,7 +31,6 @@ const MyBookings = () => {
         body: JSON.stringify({ payment: true }),
       });
 
-      console.log("Notification: Booking Successful");
       if (response.ok) {
         // Payment successful, update the local state
         setBookings((prevBookings) =>
@@ -43,13 +38,47 @@ const MyBookings = () => {
             booking._id === bookingId ? { ...booking, payment: true } : booking
           )
         );
-        console.log(`host: ${host.name}, email: ${host.email}`);
       } else {
         // Payment failed, handle the error
         console.error("Payment failed");
       }
+
+      const host = await findHost(bookingId);
+
+      host &&
+        console.log(
+          `Notification : Property succesfully booked by  Customer : ${userInfo.name} from  Host : ${host.name}`
+        );
+
+      setTimeout(() => {
+        console.log("Notification : Review now");
+      }, 3000);
     } catch (error) {
       console.error("Error processing payment:", error);
+    }
+  };
+
+  const handleReview = async (propertyId) => {
+    try {
+      const response = await fetch(`/api/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: userInfo._id, propertyId, rating: 2 }),
+      });
+
+      // Handle the response as needed
+      if (response.ok) {
+        console.log(
+          `Notification : Review submitted successfully for Property : ${propertyId}`
+        );
+        // You can update your state or perform other actions upon successful review submission
+      } else {
+        console.error("Review submission failed");
+      }
+    } catch (error) {
+      console.error("Error processing review:", error);
     }
   };
 
@@ -67,7 +96,12 @@ const MyBookings = () => {
               </Card.Text>
               {/* Add more details as needed */}
               {booking.payment ? (
-                <Button variant="primary">Review</Button>
+                <Button
+                  variant="primary"
+                  onClick={() => handleReview(booking.propertyId)}
+                >
+                  Review
+                </Button>
               ) : (
                 <Button
                   variant="primary"

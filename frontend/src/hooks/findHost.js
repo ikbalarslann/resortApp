@@ -1,37 +1,26 @@
-import { useEffect, useState } from "react";
+const findHost = async (bookingId) => {
+  try {
+    const bookingResponse = await fetch(`/api/bookings/${bookingId}`);
+    const booking = await bookingResponse.json();
 
-const useFind = (route, id) => {
-  const [data, setData] = useState(null);
+    const propertyResponse = await fetch(
+      `/api/properties/${booking?.propertyId}`
+    );
+    const property = await propertyResponse.json();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/${route}/${id}`);
-        const result = await response.json();
+    const hostResponse = await fetch(`/api/hosts/${property?.hostId}`);
+    const host = await hostResponse.json();
 
-        setData(result);
-      } catch (error) {
-        console.error(`Error in fetching ${route}:`, error);
-        setData(null);
-      }
-    };
+    if (!booking || !property || !host) {
+      console.log("Loading...");
+      return null;
+    }
 
-    fetchData();
-  }, [route, id]);
-
-  return data;
-};
-
-const findHost = (bookingId) => {
-  const booking = useFind("bookings", bookingId);
-  const property = useFind("properties", booking?.propertyId);
-  const host = useFind("hosts", property?.hostId);
-
-  if (!booking || !property || !host) {
-    return console.log("Loading...");
+    return host;
+  } catch (error) {
+    console.error("Error in fetching data:", error);
+    return null;
   }
-
-  return host;
 };
 
 export default findHost;
