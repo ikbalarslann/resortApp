@@ -15,6 +15,7 @@ import MyProperties from "./pages/MyProperties.jsx";
 import CreateProperty from "./pages/CreateProperty.jsx";
 import EditProperty from "./pages/EditProperty.jsx";
 import MyBookings from "./pages/MyBookings.jsx";
+import HostBookings from "./pages/HostBookings.jsx";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -63,6 +64,10 @@ const Router = () => {
         {
           path: "/myBookings",
           element: <MyBookings />,
+        },
+        {
+          path: "/hostBookings",
+          element: <HostBookings />,
         },
 
         {

@@ -41,6 +41,14 @@ const Header = () => {
             <Nav className="ms-auto">
               {userInfo ? (
                 <>
+                  <NavDropdown title="Discover" id="discover">
+                    <LinkContainer to="/properties">
+                      <NavDropdown.Item>Properties</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/mybookings">
+                      <NavDropdown.Item>My Bookings</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
                   <NavDropdown title={`User : ${userInfo.name}`} id="username">
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -48,12 +56,6 @@ const Header = () => {
                     <NavDropdown.Item onClick={logoutHandler}>
                       Logout
                     </NavDropdown.Item>
-                    <LinkContainer to="/properties">
-                      <NavDropdown.Item>Properties</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/mybookings">
-                      <NavDropdown.Item>My Bookings</NavDropdown.Item>
-                    </LinkContainer>
                   </NavDropdown>
                 </>
               ) : hostInfo ? (

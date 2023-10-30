@@ -68,6 +68,16 @@ const logoutUser = (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 };
 
+const getAllUsers = asyncHandler(async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // @desc    Get user profile
 // @route   GET /api/users/profile
 // @access  Private
@@ -118,4 +128,5 @@ export {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  getAllUsers,
 };

@@ -5,6 +5,7 @@ import {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  getAllUsers,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import User from "../models/userModel.js";
@@ -12,6 +13,7 @@ import User from "../models/userModel.js";
 const router = express.Router();
 
 router.post("/", registerUser);
+router.get("/", getAllUsers);
 router.post("/auth", authUser);
 router.post("/logout", logoutUser);
 router
