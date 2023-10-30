@@ -13,7 +13,9 @@ import HostLogin from "./pages/HostLogin.jsx";
 import HostRegister from "./pages/HostRegister.jsx";
 import MyProperties from "./pages/MyProperties.jsx";
 import CreateProperty from "./pages/CreateProperty.jsx";
+import EditProperty from "./pages/EditProperty.jsx";
 import MyBookings from "./pages/MyBookings.jsx";
+
 const Router = () => {
   const router = createBrowserRouter([
     {
@@ -53,6 +55,11 @@ const Router = () => {
           path: "/createProperty",
           element: <CreateProperty />,
         },
+        {
+          path: "/editProperty/:id",
+          element: <EditProperty />,
+        },
+
         {
           path: "/myBookings",
           element: <MyBookings />,

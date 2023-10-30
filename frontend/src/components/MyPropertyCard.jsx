@@ -1,5 +1,6 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const MyPropertyCard = ({ property }) => {
   return (
@@ -11,6 +12,10 @@ const MyPropertyCard = ({ property }) => {
         </Card.Subtitle>
         <Card.Text>{property.description}</Card.Text>
         <Card.Text>Location: {property.location}</Card.Text>
+
+        <Link to={`/editProperty/${property._id}`}>
+          <Button variant="primary">Edit</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
