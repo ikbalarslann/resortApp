@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EditProperty = () => {
   const { hostInfo } = useSelector((state) => state.auth);
   const { id } = useParams();
+  const Navigate = useNavigate();
 
   // State to store form input values
   const [formData, setFormData] = useState({
@@ -13,6 +15,8 @@ const EditProperty = () => {
     title: "",
     description: "",
     location: "",
+    price: 0,
+    avaliableSpace: 0,
   });
 
   useEffect(() => {
@@ -20,12 +24,14 @@ const EditProperty = () => {
     fetch(`/api/properties/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        const { title, description, location } = data; // Replace with actual data fields
+        const { title, description, location, price, avaliableSpace } = data; // Replace with actual data fields
         setFormData((prevData) => ({
           ...prevData,
           title,
           description,
           location,
+          price,
+          avaliableSpace,
         }));
       })
       .catch((error) => {
@@ -60,6 +66,8 @@ const EditProperty = () => {
       .catch((error) => {
         console.error("Error creating property:", error);
       });
+
+    Navigate("/myProperties");
   };
 
   return (
@@ -97,6 +105,30 @@ const EditProperty = () => {
             placeholder="Enter location"
             name="location"
             value={formData.location}
+            onChange={handleInputChange}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="price">
+          <Form.Label>Price{"$"}</Form.Label>
+          <Form.Control
+            type="number"
+            placeholder="choose price"
+            name="price"
+            value={formData.price}
+            onChange={handleInputChange}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="avaliableSpace">
+          <Form.Label>Avaliable Space :</Form.Label>
+          <Form.Control
+            type="number"
+            placeholder="choose avaliable space"
+            name="avaliableSpace"
+            value={formData.avaliableSpace}
             onChange={handleInputChange}
             required
           />

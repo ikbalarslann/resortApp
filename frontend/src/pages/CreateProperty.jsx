@@ -11,6 +11,8 @@ const CreateProperty = () => {
     title: "",
     description: "",
     location: "",
+    price: 0,
+    avaliableSpace: 0,
   });
 
   // Handler to update form data on input change
@@ -77,6 +79,29 @@ const CreateProperty = () => {
             placeholder="Enter location"
             name="location"
             value={formData.location}
+            onChange={handleInputChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="price">
+          <Form.Label>Price{"$"}</Form.Label>
+          <Form.Control
+            type="number"
+            placeholder="choose price"
+            name="price"
+            value={formData.price}
+            onChange={handleInputChange}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="avaliableSpace">
+          <Form.Label>Avaliable Space :</Form.Label>
+          <Form.Control
+            type="number"
+            placeholder="choose avaliable space"
+            name="avaliableSpace"
+            value={formData.avaliableSpace}
             onChange={handleInputChange}
             required
           />

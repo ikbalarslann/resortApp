@@ -70,6 +70,7 @@ const HostBookings = () => {
         {hostData.bookings.map((booking, index) => (
           <Card key={index}>
             <Card.Body>
+              <Card.Text>number: {index + 1}</Card.Text>
               <Card.Text>
                 Customer Name:{" "}
                 {

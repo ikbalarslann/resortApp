@@ -13,6 +13,9 @@ const MyPropertyCard = ({ property }) => {
         <Card.Text>{property.description}</Card.Text>
         <Card.Text>Location: {property.location}</Card.Text>
 
+        <Card.Text>Price: ${property.price}</Card.Text>
+        <Card.Text>Avaliable Space: {property.avaliableSpace}</Card.Text>
+
         <Link to={`/editProperty/${property._id}`}>
           <Button variant="primary">Edit</Button>
         </Link>
