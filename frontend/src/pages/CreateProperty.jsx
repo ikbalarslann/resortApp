@@ -23,18 +23,19 @@ const CreateProperty = () => {
     e.preventDefault();
 
     setFormData((prevData) => {
-      const availabilityData = [];
-      const startDate = new Date(2022, 0, 1);
-      const endDate = new Date(2022, 0, 2);
-      const availableSpaces = 2;
-      const pricePerNight = prevData.price; // Use prevData to access the updated price
+      const startDate = new Date(2023, 10, 1);
+      const endDate = new Date(2023, 10, 2);
+      const availableSpaces = 4;
+      const pricePerNight = prevData.price;
+
+      const availability = [];
 
       for (
         let date = new Date(startDate);
         date <= endDate;
         date.setDate(date.getDate() + 1)
       ) {
-        availabilityData.push({
+        availability.push({
           date: new Date(date),
           availableSpaces: availableSpaces,
           pricePerNight: pricePerNight,
@@ -43,12 +44,10 @@ const CreateProperty = () => {
 
       return {
         ...prevData,
-        availability: availabilityData,
+        availability: availability,
       };
     });
 
-    // Move the fetch request inside the then block
-    // to ensure it uses the updated state
     fetch("/api/properties", {
       method: "POST",
       headers: {
@@ -116,8 +115,6 @@ const CreateProperty = () => {
             required
           />
         </Form.Group>
-
-        {/* Note: hostId is set automatically in formData */}
 
         <Button variant="primary" type="submit">
           Create Property

@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const fetchPropertyData = async (location) => {
+  // (element) => element.date === `${date}T00:00:00.000Z`;
+  const fetchPropertyData = async (location, date) => {
     try {
       const response = await fetch("/api/properties"); // Ensure the correct API URL
       if (response.ok) {
@@ -17,8 +17,14 @@ const Home = () => {
         const filteredProperties = data.filter(
           (element) => element.location === location
         );
+
+        filteredProperties.map((property) => {
+          property.availability = property.availability.filter((element) => {
+            return element.date === `${date}T00:00:00.000Z`;
+          });
+        });
+
         dispatch(setProperties(filteredProperties));
-        console.log(filteredProperties);
         navigate("/properties"); // Navigate to the desired page
       } else {
         console.error(
@@ -30,8 +36,8 @@ const Home = () => {
     }
   };
 
-  const handleSearch = (location) => {
-    fetchPropertyData(location);
+  const handleSearch = ({ location, date }) => {
+    fetchPropertyData(location, date);
   };
 
   return (

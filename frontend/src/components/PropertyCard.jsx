@@ -59,8 +59,15 @@ const PropertyCard = ({ property, userId }) => {
         <Card.Text> Description : {property.description}</Card.Text>
         <Card.Text>Location: {property.location}</Card.Text>
 
-        <Card.Text>Price : {property.price}</Card.Text>
-        <Card.Text>Avaliable Space : {property.avaliableSpace}</Card.Text>
+        {property.availability.map((element, index) => (
+          <div key={index}>
+            <Card.Text>
+              date: {new Date(element.date).toLocaleDateString("en-GB")}
+            </Card.Text>
+            <Card.Text>space: {element.availableSpaces}</Card.Text>
+            <Card.Text>price: {element.pricePerNight}</Card.Text>
+          </div>
+        ))}
 
         <Button
           variant="primary"
