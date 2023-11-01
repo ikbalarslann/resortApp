@@ -24,17 +24,28 @@ const propertySchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    avaliableSpace: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    reviews: [
+    availability: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Review",
+        date: {
+          type: Date,
+          required: true,
+        },
+        availableSpaces: {
+          type: Number,
+          required: true,
+        },
+        pricePerNight: {
+          type: Number,
+          required: true,
+        },
       },
     ],
+    // reviews: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Review",
+    //   },
+    // ],
   },
   { timestamps: true }
 );

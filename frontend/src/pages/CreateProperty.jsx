@@ -5,39 +5,60 @@ import { useSelector } from "react-redux";
 const CreateProperty = () => {
   const { hostInfo } = useSelector((state) => state.auth);
 
-  // State to store form input values
   const [formData, setFormData] = useState({
     hostId: hostInfo._id,
     title: "",
     description: "",
     location: "",
     price: 0,
-    avaliableSpace: 0,
+    availability: [],
   });
 
-  // Handler to update form data on input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Handler for form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Perform actions to create property using formData
-    // For simplicity, let's assume you have an API endpoint for property creation
+    setFormData((prevData) => {
+      const availabilityData = [];
+      const startDate = new Date(2022, 0, 1);
+      const endDate = new Date(2022, 0, 2);
+      const availableSpaces = 2;
+      const pricePerNight = prevData.price; // Use prevData to access the updated price
 
+      for (
+        let date = new Date(startDate);
+        date <= endDate;
+        date.setDate(date.getDate() + 1)
+      ) {
+        availabilityData.push({
+          date: new Date(date),
+          availableSpaces: availableSpaces,
+          pricePerNight: pricePerNight,
+        });
+      }
+
+      return {
+        ...prevData,
+        availability: availabilityData,
+      };
+    });
+
+    // Move the fetch request inside the then block
+    // to ensure it uses the updated state
     fetch("/api/properties", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData), // Uses the updated state with availability data
     })
       .then((response) => response.json())
-      .then((data) => {
-        // Handle the response, e.g., redirect to property details page
+      .then((propertyData) => {
+        console.log("Property created:", propertyData);
       })
       .catch((error) => {
         console.error("Error creating property:", error);
@@ -83,25 +104,14 @@ const CreateProperty = () => {
             required
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="price">
           <Form.Label>Price{"$"}</Form.Label>
           <Form.Control
             type="number"
-            placeholder="choose price"
+            placeholder="Choose price"
             name="price"
             value={formData.price}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="avaliableSpace">
-          <Form.Label>Avaliable Space :</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="choose avaliable space"
-            name="avaliableSpace"
-            value={formData.avaliableSpace}
             onChange={handleInputChange}
             required
           />

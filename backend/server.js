@@ -13,6 +13,7 @@ import bookingRoutes from "./routes/bookingRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import callendarRoutes from "./routes/callendarRoutes.js";
 
 const port = process.env.PORT || 5000;
 

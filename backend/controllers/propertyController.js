@@ -29,7 +29,7 @@ const getPropertyById = async (req, res) => {
 };
 
 const createProperty = asyncHandler(async (req, res) => {
-  const { hostId, title, description, location, price, avaliableSpace } =
+  const { hostId, title, description, location, price, availability } =
     req.body;
 
   try {
@@ -39,7 +39,7 @@ const createProperty = asyncHandler(async (req, res) => {
       description,
       location,
       price,
-      avaliableSpace,
+      availability,
     });
     const savedProperty = await newProperty.save();
 
