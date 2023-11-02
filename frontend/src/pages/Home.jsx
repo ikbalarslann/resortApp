@@ -4,23 +4,25 @@ import SearchBar from "../components/SearchBar";
 import { useDispatch } from "react-redux";
 import { setProperties } from "../slices/searchSlice";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // (element) => element.date === `${date}T00:00:00.000Z`;
+
   const fetchPropertyData = async (location, date) => {
     try {
       const response = await fetch("/api/properties"); // Ensure the correct API URL
       if (response.ok) {
         const data = await response.json();
         const filteredProperties = data.filter(
-          (element) => element.location === location
+          (element) => element.location.toLowerCase() === location.toLowerCase()
         );
 
         filteredProperties.map((property) => {
           property.availability = property.availability.filter((element) => {
-            return element.date === `${date}T00:00:00.000Z`;
+            element.date = format(new Date(element.date), "yyyy-MM-dd");
+            return element.date === date;
           });
         });
 

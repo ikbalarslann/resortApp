@@ -90,10 +90,10 @@ const Header = () => {
                 <>
                   <NavDropdown title="Hosts" id="hosts">
                     <LinkContainer to="/hostRegister">
-                      <NavDropdown.Item>Sign In</NavDropdown.Item>
+                      <NavDropdown.Item>Sign Up</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to="/hostLogin">
-                      <NavDropdown.Item>Sign Up</NavDropdown.Item>
+                      <NavDropdown.Item>Sign In</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
 
