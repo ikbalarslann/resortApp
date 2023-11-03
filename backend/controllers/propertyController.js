@@ -29,7 +29,7 @@ const getPropertyById = async (req, res) => {
 };
 
 const createProperty = asyncHandler(async (req, res) => {
-  const { hostId, title, description, location, price, availability } =
+  const { hostId, title, description, location, price, availability, reviews } =
     req.body;
 
   try {
@@ -40,6 +40,7 @@ const createProperty = asyncHandler(async (req, res) => {
       location,
       price,
       availability,
+      reviews,
     });
     const savedProperty = await newProperty.save();
 
@@ -52,12 +53,13 @@ const createProperty = asyncHandler(async (req, res) => {
 
 const updateProperty = async (req, res) => {
   const propertyId = req.params.propertyId;
-  const { title, description, location, price, availability } = req.body;
+  const { title, description, location, price, availability, reviews } =
+    req.body;
 
   try {
     const property = await Property.findByIdAndUpdate(
       propertyId,
-      { title, description, location, price, availability },
+      { title, description, location, price, availability, reviews },
       { new: true }
     );
 

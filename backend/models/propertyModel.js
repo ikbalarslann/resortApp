@@ -40,12 +40,23 @@ const propertySchema = mongoose.Schema(
         },
       },
     ],
-    // reviews: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Review",
-    //   },
-    // ],
+    reviews: [
+      {
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        rating: {
+          type: Number,
+          required: true,
+        },
+        text: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
