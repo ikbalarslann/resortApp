@@ -1,10 +1,9 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 
-const PropertyCard = ({ property, userId }) => {
+const PropertyCard = ({ property, userId, date }) => {
   const handleBookingClick = async () => {
     try {
-      // Create the booking
       const bookingResponse = await fetch("/api/bookings", {
         method: "POST",
         headers: {
@@ -23,8 +22,7 @@ const PropertyCard = ({ property, userId }) => {
         return;
       }
 
-      // Update the available space
-      const minusAvaliableSpaceResponse = await fetch(
+      const minusAvailableSpaceResponse = await fetch(
         `/api/properties/${property._id}`,
         {
           method: "PUT",
@@ -32,12 +30,20 @@ const PropertyCard = ({ property, userId }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            avaliableSpace: property.avaliableSpace - 1,
+            availability: property.availability.map((element) => {
+              if (element._id === sellectedAvalibilityDate._id) {
+                return {
+                  ...element,
+                  availableSpaces: element.availableSpaces - 1,
+                };
+              }
+              return element;
+            }),
           }),
         }
       );
 
-      if (minusAvaliableSpaceResponse.ok) {
+      if (minusAvailableSpaceResponse.ok) {
         // Update your local data (e.g., property state) here if needed
         console.log("Notification: Booking Pending");
       } else {
@@ -59,15 +65,14 @@ const PropertyCard = ({ property, userId }) => {
         <Card.Text> Description : {property.description}</Card.Text>
         <Card.Text>Location: {property.location}</Card.Text>
 
-        {property.availability.map((element, index) => (
-          <div key={index}>
-            <Card.Text>
-              date: {new Date(element.date).toLocaleDateString("en-GB")}
-            </Card.Text>
-            <Card.Text>space: {element.availableSpaces}</Card.Text>
-            <Card.Text>price: {element.pricePerNight}</Card.Text>
-          </div>
-        ))}
+        <Card.Text>date:{date}</Card.Text>
+
+        <Card.Text>
+          space: {property.availability.map((e) => e.availableSpaces)}
+        </Card.Text>
+        <Card.Text>
+          price: {property.availability.map((e) => e.pricePerNight)}
+        </Card.Text>
 
         <Button
           variant="primary"

@@ -16,6 +16,8 @@ import CreateProperty from "./pages/CreateProperty.jsx";
 import EditProperty from "./pages/EditProperty.jsx";
 import MyBookings from "./pages/MyBookings.jsx";
 import HostBookings from "./pages/HostBookings.jsx";
+import PriceAvaliability from "./pages/PriceAvaliability.jsx";
+import PriceAvaliabilityEdit from "./pages/PriceAvaliabilityEdit.jsx";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -68,6 +70,14 @@ const Router = () => {
         {
           path: "/hostBookings",
           element: <HostBookings />,
+        },
+        {
+          path: "/priceandavalibility",
+          element: <PriceAvaliability />,
+        },
+        {
+          path: "/priceandavalibility/:id",
+          element: <PriceAvaliabilityEdit />,
         },
 
         {

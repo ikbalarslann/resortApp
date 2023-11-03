@@ -10,6 +10,9 @@ import { logout } from "../slices/authSlice";
 
 const Header = () => {
   const { userInfo, hostInfo } = useSelector((state) => state.auth);
+  const { date } = useSelector((state) => state.date);
+  const { properties } = useSelector((state) => state.properties);
+  const { location } = useSelector((state) => state.location);
 
   const loggedInUserType = userInfo ? "user" : hostInfo ? "host" : null;
 
@@ -29,12 +32,18 @@ const Header = () => {
     }
   };
 
+  const handleLogoClick = () => {
+    dispatch(date({ date: null }));
+    dispatch(properties({ properties: [] }));
+    dispatch(location({ location: null }));
+  };
+
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Resort</Navbar.Brand>
+            <Navbar.Brand onClick={() => handleLogoClick}>Resort</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -42,9 +51,6 @@ const Header = () => {
               {userInfo ? (
                 <>
                   <NavDropdown title="Discover" id="discover">
-                    <LinkContainer to="/properties">
-                      <NavDropdown.Item>Properties</NavDropdown.Item>
-                    </LinkContainer>
                     <LinkContainer to="/mybookings">
                       <NavDropdown.Item>My Bookings</NavDropdown.Item>
                     </LinkContainer>
@@ -67,7 +73,7 @@ const Header = () => {
                     <LinkContainer to="/hostBookings">
                       <NavDropdown.Item>Bookings</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/price&avalibility">
+                    <LinkContainer to="/priceandavalibility">
                       <NavDropdown.Item>Price & Avalibility</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to="/hostMessages">

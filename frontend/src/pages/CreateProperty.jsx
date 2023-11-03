@@ -25,7 +25,7 @@ const CreateProperty = () => {
     try {
       const availability = [];
       const startDate = new Date(2023, 10, 1);
-      const endDate = new Date(2023, 10, 2);
+      const endDate = new Date(2023, 10, 30);
       const availableSpaces = 4;
       const pricePerNight = formData.price;
 
@@ -64,51 +64,6 @@ const CreateProperty = () => {
       console.error("Error creating property:", error);
     }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   setFormData((prevData) => {
-  //     const startDate = new Date(2023, 10, 1);
-  //     const endDate = new Date(2023, 10, 2);
-  //     const availableSpaces = 4;
-  //     const pricePerNight = prevData.price;
-
-  //     const availability = [];
-
-  //     for (
-  //       let date = new Date(startDate);
-  //       date <= endDate;
-  //       date.setDate(date.getDate() + 1)
-  //     ) {
-  //       availability.push({
-  //         date: new Date(date),
-  //         availableSpaces: availableSpaces,
-  //         pricePerNight: pricePerNight,
-  //       });
-  //     }
-
-  //     return {
-  //       ...prevData,
-  //       availability: availability,
-  //     };
-  //   });
-
-  //   fetch("/api/properties", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(formData), // Uses the updated state with availability data
-  //   })
-  //     .then((response) => response.json())
-  //     .then((propertyData) => {
-  //       console.log("Property created:", propertyData);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error creating property:", error);
-  //     });
-  // };
 
   return (
     <Container>

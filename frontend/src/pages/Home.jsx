@@ -1,33 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Hero from "../components/Hero";
 import SearchBar from "../components/SearchBar";
 import { useDispatch } from "react-redux";
-import { setProperties } from "../slices/searchSlice";
+import { setDate } from "../slices/dateSlice";
+import { setLocation } from "../slices/locationSlice";
+import { setProperties } from "../slices/propertiesSlice";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const Reduxlocation = useSelector((state) => state.location);
+  const Reduxdate = useSelector((state) => state.date);
+  const Reduxproperties = useSelector((state) => state.properties);
+
   const fetchPropertyData = async (location, date) => {
+    dispatch(setLocation(location.toLowerCase()));
+    dispatch(setDate(date));
+
     try {
-      const response = await fetch("/api/properties"); // Ensure the correct API URL
+      const response = await fetch("/api/properties");
       if (response.ok) {
         const data = await response.json();
-        const filteredProperties = data.filter(
-          (element) => element.location.toLowerCase() === location.toLowerCase()
-        );
 
-        filteredProperties.map((property) => {
-          property.availability = property.availability.filter((element) => {
-            element.date = format(new Date(element.date), "yyyy-MM-dd");
-            return element.date === date;
-          });
+        const filteredPropertiesbydate = await data.map((property) => {
+          const modifiedProperty = {
+            ...property,
+            availability: property.availability.filter((element) => {
+              element.date = format(new Date(element.date), "yyyy-MM-dd");
+              return element.date === Reduxdate.date;
+            }),
+          };
+          return modifiedProperty;
         });
 
-        dispatch(setProperties(filteredProperties));
-        navigate("/properties"); // Navigate to the desired page
+        const filteredPropertiesbyLocation =
+          await filteredPropertiesbydate.filter((property) => {
+            return property.location.toLowerCase() === Reduxlocation.location;
+          });
+
+        dispatch(setProperties(filteredPropertiesbyLocation));
       } else {
         console.error(
           "Failed to fetch property data. Status: " + response.status
@@ -41,6 +56,10 @@ const Home = () => {
   const handleSearch = ({ location, date }) => {
     fetchPropertyData(location, date);
   };
+  useEffect(() => {
+    if (Reduxproperties.properties.length === 0) return;
+    navigate("/properties");
+  }, [Reduxproperties.properties]);
 
   return (
     <>

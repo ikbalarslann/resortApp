@@ -4,8 +4,8 @@ const initialState = {
   properties: [],
 };
 
-const searchSlice = createSlice({
-  name: "search",
+const propertiesSlice = createSlice({
+  name: "properties",
   initialState,
   reducers: {
     setProperties: (state, action) => {
@@ -14,8 +14,8 @@ const searchSlice = createSlice({
   },
 });
 
-export const { setProperties } = searchSlice.actions;
+export const { setProperties } = propertiesSlice.actions;
 
-export const selectProperties = (state) => state.search.properties;
+export const selectProperties = (state) => state.properties;
 
-export default searchSlice.reducer;
+export default propertiesSlice.reducer;

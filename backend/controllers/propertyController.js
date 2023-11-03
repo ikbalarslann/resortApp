@@ -52,12 +52,12 @@ const createProperty = asyncHandler(async (req, res) => {
 
 const updateProperty = async (req, res) => {
   const propertyId = req.params.propertyId;
-  const { title, description, location, price, avaliableSpace } = req.body;
+  const { title, description, location, price, availability } = req.body;
 
   try {
     const property = await Property.findByIdAndUpdate(
       propertyId,
-      { title, description, location, price, avaliableSpace },
+      { title, description, location, price, availability },
       { new: true }
     );
 

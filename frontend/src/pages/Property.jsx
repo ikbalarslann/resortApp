@@ -2,19 +2,22 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import PropertyCard from "../components/PropertyCard";
 import { useSelector } from "react-redux";
-import { selectProperties } from "../slices/searchSlice";
 
 const Property = () => {
-  const properties = useSelector(selectProperties);
-
+  const Reduxproperties = useSelector((state) => state.properties);
   const { userInfo } = useSelector((state) => state.auth);
+  const { date } = useSelector((state) => state.date);
 
   return (
     <Container>
       <Row>
-        {properties.map((property) => (
+        {Reduxproperties.properties.map((property) => (
           <Col key={property._id} md={4}>
-            <PropertyCard property={property} userId={userInfo._id} />
+            <PropertyCard
+              property={property}
+              userId={userInfo._id}
+              date={date}
+            />
           </Col>
         ))}
       </Row>
