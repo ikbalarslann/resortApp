@@ -58,30 +58,6 @@ const MyBookings = () => {
     }
   };
 
-  const handleReview = async (propertyId) => {
-    try {
-      const response = await fetch(`/api/reviews`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: userInfo._id, propertyId, rating: 2 }),
-      });
-
-      // Handle the response as needed
-      if (response.ok) {
-        console.log(
-          `Notification : Review submitted successfully for Property : ${propertyId}`
-        );
-        // You can update your state or perform other actions upon successful review submission
-      } else {
-        console.error("Review submission failed");
-      }
-    } catch (error) {
-      console.error("Error processing review:", error);
-    }
-  };
-
   return (
     <Container>
       <h1>My Bookings</h1>
@@ -96,10 +72,7 @@ const MyBookings = () => {
               </Card.Text>
               {/* Add more details as needed */}
               {booking.payment ? (
-                <Button
-                  variant="primary"
-                  onClick={() => handleReview(booking.propertyId)}
-                >
+                <Button variant="primary" onClick={() => console.log("Review")}>
                   Review
                 </Button>
               ) : (
