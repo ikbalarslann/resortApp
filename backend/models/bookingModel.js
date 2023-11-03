@@ -12,6 +12,10 @@ const bookingSchema = mongoose.Schema(
       required: true,
       ref: "Property",
     },
+    date: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       required: true,
