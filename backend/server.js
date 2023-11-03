@@ -10,8 +10,6 @@ import userRoutes from "./routes/userRoutes.js";
 import hostRoutes from "./routes/hostRoutes.js";
 import propertyRoutes from "./routes/propertyRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
-import notificationRoutes from "./routes/notificationRoutes.js";
-import paymentRoutes from "./routes/paymentRoutes.js";
 
 const port = process.env.PORT || 5000;
 
@@ -28,8 +26,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/hosts", hostRoutes);
 app.use("/api/properties", propertyRoutes);
 app.use("/api/bookings", bookingRoutes);
-app.use("/api/notifications", notificationRoutes);
-app.use("/api/payments", paymentRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();

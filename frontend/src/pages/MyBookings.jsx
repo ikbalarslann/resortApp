@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Card, Button } from "react-bootstrap";
+import { Container, Card, Button, Modal, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import findHost from "../hooks/findHost";
 
@@ -7,12 +7,42 @@ const MyBookings = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [bookings, setBookings] = useState([]);
 
+  const [showModal, setShowModal] = useState(false);
+  const [rating, setRating] = useState(1);
+  const [reviewText, setReviewText] = useState("");
+
+  const handleModalSubmit = async (booking) => {
+    const review = { userId: userInfo._id, rating, text: reviewText };
+    const property = await fetch(`/api/properties/${booking.propertyId}`).then(
+      (data) => data.json()
+    );
+
+    const updatedReviews = [...property.reviews, review];
+
+    try {
+      const response = await fetch(`/api/properties/${property._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ reviews: updatedReviews }),
+      });
+
+      if (response.ok) {
+        console.log("Review submitted successfully.");
+        setShowModal(false);
+      } else {
+        console.error("Failed to submit the review.");
+      }
+    } catch (error) {
+      console.error("Error while submitting the review:", error);
+    }
+  };
+
   useEffect(() => {
-    // Fetch all bookings using an API endpoint
     fetch("/api/bookings")
       .then((response) => response.json())
       .then((data) => {
-        // Filter bookings based on the current user's ID
         const userBookings = data.filter(
           (booking) => booking.userId === userInfo._id
         );
@@ -32,14 +62,12 @@ const MyBookings = () => {
       });
 
       if (response.ok) {
-        // Payment successful, update the local state
         setBookings((prevBookings) =>
           prevBookings.map((booking) =>
             booking._id === bookingId ? { ...booking, payment: true } : booking
           )
         );
       } else {
-        // Payment failed, handle the error
         console.error("Payment failed");
       }
 
@@ -70,9 +98,9 @@ const MyBookings = () => {
               <Card.Text>
                 Payment: {booking.payment ? "true" : "false"}
               </Card.Text>
-              {/* Add more details as needed */}
+
               {booking.payment ? (
-                <Button variant="primary" onClick={() => console.log("Review")}>
+                <Button variant="primary" onClick={() => setShowModal(true)}>
                   Review
                 </Button>
               ) : (
@@ -84,6 +112,44 @@ const MyBookings = () => {
                 </Button>
               )}
             </Card.Body>
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>Leave a Review</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group>
+                    <Form.Label>Rating (1-5)</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="1"
+                      max="5"
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Review Text</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      value={reviewText}
+                      onChange={(e) => setReviewText(e.target.value)}
+                    />
+                  </Form.Group>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowModal(false)}>
+                  Close
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => handleModalSubmit(booking)}
+                >
+                  Submit Review
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </Card>
         ))}
       </div>
