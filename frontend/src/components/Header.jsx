@@ -50,6 +50,9 @@ const Header = () => {
             <Nav className="ms-auto">
               {userInfo ? (
                 <>
+                  <LinkContainer to="/wishlist">
+                    <Nav.Link>Wish List</Nav.Link>
+                  </LinkContainer>
                   <LinkContainer to="/shoppingCard">
                     <Nav.Link>Shopping Card</Nav.Link>
                   </LinkContainer>

@@ -15,6 +15,15 @@ const PropertyCard = ({ property, userId, date }) => {
   const dispatch = useDispatch();
 
   const handleBookingClick = async () => {
+    // const propertyExistsInCart = SCproperties.some(
+    //   (p) => p._id === property._id
+    // );
+
+    // if (propertyExistsInCart) {
+    //   console.log("Property already in cart");
+    //   return;
+    // }
+
     const minusAvailableSpace = async () => {
       const response = await fetch(`/api/properties/${property._id}`);
       if (response.ok) {
@@ -82,7 +91,6 @@ const PropertyCard = ({ property, userId, date }) => {
       });
 
       if (response.ok) {
-        console.log("hehehe payment success");
         dispatch(removeProperty(property._id));
       } else {
         console.error("Payment failed");

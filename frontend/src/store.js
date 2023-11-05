@@ -5,6 +5,7 @@ import propertiesReducer from "./slices/propertiesSlice";
 import dateReducer from "./slices/dateSlice";
 import locationReducer from "./slices/locationSlice";
 import SCpropertiesReducer from "./slices/SCproperties";
+import WLpropertiesReducer from "./slices/WLproperties";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     auth: authReducer,
     properties: propertiesReducer,
     SCproperties: SCpropertiesReducer,
+    WLproperties: WLpropertiesReducer,
     date: dateReducer,
     location: locationReducer,
   },
