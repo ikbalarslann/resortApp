@@ -18,6 +18,7 @@ import MyBookings from "./pages/MyBookings.jsx";
 import HostBookings from "./pages/HostBookings.jsx";
 import PriceAvaliability from "./pages/PriceAvaliability.jsx";
 import PriceAvaliabilityEdit from "./pages/PriceAvaliabilityEdit.jsx";
+import ShoppingCard from "./pages/ShoppingCard.jsx";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -78,6 +79,10 @@ const Router = () => {
         {
           path: "/priceandavalibility/:id",
           element: <PriceAvaliabilityEdit />,
+        },
+        {
+          path: "/shoppingCard",
+          element: <ShoppingCard />,
         },
 
         {

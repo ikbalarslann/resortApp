@@ -1,17 +1,17 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import PropertyCard from "../components/Property_Card";
+import PropertyCard from "../components/PropertyCard";
 import { useSelector } from "react-redux";
 
-const Property = () => {
-  const Reduxproperties = useSelector((state) => state.properties);
+const ShoppingCard = () => {
+  const SCproperties = useSelector((state) => state.SCproperties);
   const { userInfo } = useSelector((state) => state.auth);
   const { date } = useSelector((state) => state.date);
 
   return (
     <Container>
       <Row>
-        {Reduxproperties.properties.map((property) => (
+        {SCproperties.SCproperties.map((property) => (
           <Col key={property._id} md={4}>
             <PropertyCard
               property={property}
@@ -25,4 +25,4 @@ const Property = () => {
   );
 };
 
-export default Property;
+export default ShoppingCard;
