@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import MyPropertyCard from "../components/MyPropertyCard";
+import MyCard from "../../components/cards/MyCard";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const MyProperties = () => {
+const HostProperties = () => {
   const [properties, setProperties] = useState([]);
 
   const { hostInfo } = useSelector((state) => state.auth);
@@ -18,7 +18,7 @@ const MyProperties = () => {
 
   return (
     <>
-      <Link to="/createProperty">
+      <Link to="/host/create">
         <Button variant="primary">Create Property</Button>
       </Link>
 
@@ -28,7 +28,7 @@ const MyProperties = () => {
             .filter((property) => property.hostId === hostInfo?._id)
             .map((property) => (
               <Col key={property._id} md={4}>
-                <MyPropertyCard property={property} />
+                <MyCard property={property} />
               </Col>
             ))}
         </Row>
@@ -37,4 +37,4 @@ const MyProperties = () => {
   );
 };
 
-export default MyProperties;
+export default HostProperties;

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import NivoBar from "../components/NivoBar";
+import NivoBar from "../../components/nivo/NivoBar";
 import { format } from "date-fns";
-import NivoPie from "../components/NivoPie";
+import NivoPie from "../../components/nivo/NivoPie";
 
 const PropertyAnalytics = () => {
   const { propertyId } = useParams();

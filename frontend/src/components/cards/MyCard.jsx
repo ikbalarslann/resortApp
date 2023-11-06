@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const MyPropertyCard = ({ property }) => {
+const MyCard = ({ property }) => {
   return (
     <Card>
       <Card.Body>
@@ -16,7 +16,7 @@ const MyPropertyCard = ({ property }) => {
         <Card.Text>Price: ${property.price}</Card.Text>
         <Card.Text>Avaliable Space: {property.avaliableSpace}</Card.Text>
 
-        <Link to={`/editProperty/${property._id}`}>
+        <Link to={`/host/edit/${property._id}`}>
           <Button variant="primary">Edit</Button>
         </Link>
       </Card.Body>
@@ -24,4 +24,4 @@ const MyPropertyCard = ({ property }) => {
   );
 };
 
-export default MyPropertyCard;
+export default MyCard;

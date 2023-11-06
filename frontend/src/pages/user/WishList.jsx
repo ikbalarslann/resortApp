@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import PropertyCard from "../components/Property_Card";
+import AddCard from "../../components/cards/AddCard";
 import { useSelector } from "react-redux";
 
 const WishList = () => {
@@ -12,11 +12,7 @@ const WishList = () => {
       <Row>
         {WLproperties.WLproperties.map((property) => (
           <Col key={property._id} md={4}>
-            <PropertyCard
-              property={property}
-              date={date}
-              isShowWishList={false}
-            />
+            <AddCard property={property} date={date} isShowWishList={false} />
           </Col>
         ))}
       </Row>

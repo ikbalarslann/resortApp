@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Card, Button, Modal, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import findHost from "../hooks/findHost";
+import findHost from "../../hooks/findHost";
 
-const MyBookings = () => {
+const UserBookings = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [bookings, setBookings] = useState([]);
 
@@ -157,4 +157,4 @@ const MyBookings = () => {
   );
 };
 
-export default MyBookings;
+export default UserBookings;

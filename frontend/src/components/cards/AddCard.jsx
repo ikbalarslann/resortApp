@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setSCproperties } from "../slices/SCproperties";
-import { setWLproperties } from "../slices/WLproperties";
-import { removeProperty } from "../slices/WLproperties";
+import { setSCproperties } from "../../slices/SCproperties";
+import { setWLproperties } from "../../slices/WLproperties";
+import { removeProperty } from "../../slices/WLproperties";
 import { useState } from "react";
 
-const PropertyCard = ({ property, date, isShowWishList = true }) => {
+const handleAddToCardClick = ({ property, date, isShowWishList = true }) => {
   const dispatch = useDispatch();
   const { SCproperties } = useSelector((state) => state.SCproperties);
   const { WLproperties } = useSelector((state) => state.WLproperties);
@@ -64,4 +64,4 @@ const PropertyCard = ({ property, date, isShowWishList = true }) => {
   );
 };
 
-export default PropertyCard;
+export default handleAddToCardClick;

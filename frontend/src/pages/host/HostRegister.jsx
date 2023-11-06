@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import FormContainer from "../components/FormContainer";
-import Loader from "../components/Loader";
+import FormContainer from "../../components/FormContainer";
+import Loader from "../../components/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useHregisterMutation } from "../slices/hostsApiSlice";
-import { setCredentials } from "../slices/authSlice";
+import { useHregisterMutation } from "../../slices/hostsApiSlice";
+import { setCredentials } from "../../slices/authSlice";
 import { toast } from "react-toastify";
 
 const HostRegister = () => {

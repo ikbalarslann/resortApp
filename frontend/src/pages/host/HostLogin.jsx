@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { useHloginMutation } from "../slices/hostsApiSlice";
-import { setCredentials } from "../slices/authSlice";
+import { useHloginMutation } from "../../slices/hostsApiSlice";
+import { setCredentials } from "../../slices/authSlice";
 import { toast } from "react-toastify";
-import Loader from "../components/Loader";
+import Loader from "../../components/Loader";
 
 const HostLogin = () => {
   const [email, setEmail] = useState("");
@@ -17,13 +17,13 @@ const HostLogin = () => {
 
   const [login, { isLoading }] = useHloginMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { hostInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (userInfo) {
-      navigate("/");
+    if (hostInfo) {
+      navigate("/host");
     }
-  }, [navigate, userInfo]);
+  }, [navigate, hostInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();

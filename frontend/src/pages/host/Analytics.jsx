@@ -29,7 +29,7 @@ const Analytics = () => {
           .map((property) => (
             <Col key={property._id} md={4}>
               <Card className="m-2">
-                <Link to={`/propertyAnalytics/${property._id}`}>
+                <Link to={`/host/analytics/${property._id}`}>
                   <Card.Body>
                     <Card.Title>{property.title}</Card.Title>
                   </Card.Body>

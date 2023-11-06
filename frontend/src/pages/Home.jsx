@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Hero from "../components/Hero";
 import SearchBar from "../components/SearchBar";
 import { useDispatch } from "react-redux";
 import { setDate } from "../slices/dateSlice";
@@ -58,12 +57,12 @@ const Home = () => {
   };
   useEffect(() => {
     if (Reduxproperties.properties.length === 0) return;
-    navigate("/properties");
+    navigate("/user/properties");
   }, [Reduxproperties.properties]);
 
   return (
     <>
-      <Hero />
+      <h1>Home Page</h1>
       <SearchBar onSearch={handleSearch} />
     </>
   );

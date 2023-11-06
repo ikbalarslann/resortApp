@@ -42,22 +42,38 @@ const Header = () => {
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-          <LinkContainer to="/">
-            <Navbar.Brand onClick={() => handleLogoClick}>Resort</Navbar.Brand>
-          </LinkContainer>
+          {userInfo ? (
+            <LinkContainer to="/user">
+              <Navbar.Brand onClick={() => handleLogoClick()}>
+                Resort
+              </Navbar.Brand>
+            </LinkContainer>
+          ) : hostInfo ? (
+            <LinkContainer to="/host">
+              <Navbar.Brand onClick={() => handleLogoClick()}>
+                Resort
+              </Navbar.Brand>
+            </LinkContainer>
+          ) : (
+            <LinkContainer to="/">
+              <Navbar.Brand onClick={() => handleLogoClick()}>
+                Resort
+              </Navbar.Brand>
+            </LinkContainer>
+          )}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               {userInfo ? (
                 <>
-                  <LinkContainer to="/wishlist">
+                  <LinkContainer to="/user/wishlist">
                     <Nav.Link>Wish List</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/shoppingCard">
+                  <LinkContainer to="/user/shoppingCard">
                     <Nav.Link>Shopping Card</Nav.Link>
                   </LinkContainer>
                   <NavDropdown title="Discover" id="discover">
-                    <LinkContainer to="/mybookings">
+                    <LinkContainer to="/user/bookings">
                       <NavDropdown.Item>My Bookings</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
@@ -73,21 +89,21 @@ const Header = () => {
               ) : hostInfo ? (
                 <>
                   <NavDropdown title="Management" id="management">
-                    <LinkContainer to="/myProperties">
+                    <LinkContainer to="/host/properties">
                       <NavDropdown.Item>Property</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/hostBookings">
+                    <LinkContainer to="/host/bookings">
                       <NavDropdown.Item>Bookings</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/priceandavalibility">
+                    <LinkContainer to="/host/avalibility">
                       <NavDropdown.Item>Price & Avalibility</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/analytics">
+                    <LinkContainer to="/host/analytics">
                       <NavDropdown.Item>Analytics</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
                   <NavDropdown title={`Host : ${hostInfo.name}`} id="username">
-                    <LinkContainer to="/profile">
+                    <LinkContainer to="/host/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
@@ -98,20 +114,20 @@ const Header = () => {
               ) : (
                 <>
                   <NavDropdown title="Hosts" id="hosts">
-                    <LinkContainer to="/hostRegister">
+                    <LinkContainer to="/host/register">
                       <NavDropdown.Item>Sign Up</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/hostLogin">
+                    <LinkContainer to="/host/login">
                       <NavDropdown.Item>Sign In</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
 
-                  <LinkContainer to="/login">
+                  <LinkContainer to="/user/login">
                     <Nav.Link>
                       <FaSignInAlt /> Sign In
                     </Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/register">
+                  <LinkContainer to="/user/register">
                     <Nav.Link>
                       <FaSignOutAlt /> Sign Up
                     </Nav.Link>
