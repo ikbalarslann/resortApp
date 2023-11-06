@@ -20,6 +20,8 @@ import PriceAvaliability from "./pages/PriceAvaliability.jsx";
 import PriceAvaliabilityEdit from "./pages/PriceAvaliabilityEdit.jsx";
 import ShoppingCard from "./pages/ShoppingCard.jsx";
 import WishList from "./pages/WishList.jsx";
+import Analytics from "./pages/Analytics.jsx";
+import PropertyAnalytics from "./pages/PropertyAnalytics.jsx";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -88,6 +90,14 @@ const Router = () => {
         {
           path: "/wishlist",
           element: <WishList />,
+        },
+        {
+          path: "/analytics",
+          element: <Analytics />,
+        },
+        {
+          path: "/propertyAnalytics/:propertyId",
+          element: <PropertyAnalytics />,
         },
 
         {
