@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import findHost from "../../hooks/findHost";
-import { removeProperty } from "../../slices/SCproperties";
+import { removeProperty } from "../../slices/properties/SCproperties";
 
 const BookCard = ({ property, userId, date }) => {
   const [isBooked, setIsBooked] = useState(false);

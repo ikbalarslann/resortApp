@@ -29,8 +29,16 @@ const getPropertyById = async (req, res) => {
 };
 
 const createProperty = asyncHandler(async (req, res) => {
-  const { hostId, title, description, location, price, availability, reviews } =
-    req.body;
+  const {
+    hostId,
+    title,
+    description,
+    location,
+    price,
+    space,
+    availability,
+    reviews,
+  } = req.body;
 
   try {
     const newProperty = new Property({
@@ -39,6 +47,7 @@ const createProperty = asyncHandler(async (req, res) => {
       description,
       location,
       price,
+      space,
       availability,
       reviews,
     });
@@ -53,13 +62,13 @@ const createProperty = asyncHandler(async (req, res) => {
 
 const updateProperty = async (req, res) => {
   const propertyId = req.params.propertyId;
-  const { title, description, location, price, availability, reviews } =
+  const { title, description, location, price, space, availability, reviews } =
     req.body;
 
   try {
     const property = await Property.findByIdAndUpdate(
       propertyId,
-      { title, description, location, price, availability, reviews },
+      { title, description, location, price, space, availability, reviews },
       { new: true }
     );
 

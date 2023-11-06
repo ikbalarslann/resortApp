@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import SearchBar from "../components/SearchBar";
 import { useDispatch } from "react-redux";
-import { setDate } from "../slices/dateSlice";
-import { setLocation } from "../slices/locationSlice";
-import { setProperties } from "../slices/propertiesSlice";
+import { setDate } from "../slices/searchbars/dateSlice";
+import { setLocation } from "../slices/searchbars/locationSlice";
+import { setProperties } from "../slices/properties/propertiesSlice";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";

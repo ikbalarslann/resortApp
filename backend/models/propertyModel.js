@@ -22,8 +22,12 @@ const propertySchema = mongoose.Schema(
     price: {
       type: Number,
       required: true,
-      default: 0,
     },
+    space: {
+      type: Number,
+      required: true,
+    },
+
     availability: [
       {
         date: {

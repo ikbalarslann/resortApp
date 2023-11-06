@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
-import { apiSlice } from "./slices/apiSlice";
-import propertiesReducer from "./slices/propertiesSlice";
-import dateReducer from "./slices/dateSlice";
-import locationReducer from "./slices/locationSlice";
-import SCpropertiesReducer from "./slices/SCproperties";
-import WLpropertiesReducer from "./slices/WLproperties";
+import { apiSlice } from "./slices/apis/apiSlice";
+import propertiesReducer from "./slices/properties/propertiesSlice";
+import dateReducer from "./slices/searchbars/dateSlice";
+import locationReducer from "./slices/searchbars/locationSlice";
+import SCpropertiesReducer from "./slices/properties/SCproperties";
+import WLpropertiesReducer from "./slices/properties/WLproperties";
 
 const store = configureStore({
   reducer: {

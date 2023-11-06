@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setSCproperties } from "../../slices/SCproperties";
-import { setWLproperties } from "../../slices/WLproperties";
-import { removeProperty } from "../../slices/WLproperties";
+import { setSCproperties } from "../../slices/properties/SCproperties";
+import { setWLproperties } from "../../slices/properties/WLproperties";
+import { removeProperty } from "../../slices/properties/WLproperties";
 import { useState } from "react";
 
 const handleAddToCardClick = ({ property, date, isShowWishList = true }) => {

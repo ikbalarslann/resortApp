@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import EditCreateProperty from "../../components/EditCreateProperty";
 import { useSelector } from "react-redux";
-
 const CreateProperty = () => {
   const { hostInfo } = useSelector((state) => state.auth);
 
@@ -11,14 +10,8 @@ const CreateProperty = () => {
     description: "",
     location: "",
     price: 0,
-    availability: [],
+    space: 0,
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -26,9 +19,8 @@ const CreateProperty = () => {
       const availability = [];
       const startDate = new Date(2023, 10, 1);
       const endDate = new Date(2023, 10, 30);
-      const availableSpaces = 4;
+      const availableSpace = formData.space;
       const pricePerNight = formData.price;
-
       for (
         let date = new Date(startDate);
         date <= endDate;
@@ -36,14 +28,19 @@ const CreateProperty = () => {
       ) {
         availability.push({
           date: new Date(date),
-          availableSpaces: availableSpaces,
+          availableSpaces: availableSpace,
           pricePerNight: pricePerNight,
         });
       }
 
       const updatedFormData = {
-        ...formData,
-        availability: availability,
+        hostId: formData.hostId,
+        title: formData.title,
+        description: formData.description,
+        location: formData.location,
+        price: formData.price,
+        space: formData.space,
+        availability,
       };
 
       const response = await fetch("/api/properties", {
@@ -66,62 +63,12 @@ const CreateProperty = () => {
   };
 
   return (
-    <Container>
-      <h1>Create Property</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="title">
-          <Form.Control
-            type="text"
-            placeholder="Enter title"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="Enter description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="location">
-          <Form.Label>Location</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter location"
-            name="location"
-            value={formData.location}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="price">
-          <Form.Label>Price{"$"}</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Choose price"
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Create Property
-        </Button>
-      </Form>
-    </Container>
+    <EditCreateProperty
+      title="Create"
+      formData={formData}
+      setFormData={setFormData}
+      handleSubmit={handleSubmit}
+    />
   );
 };
 

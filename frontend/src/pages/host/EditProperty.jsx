@@ -1,37 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import EditCreateProperty from "../../components/EditCreateProperty";
 
 const EditProperty = () => {
   const { hostInfo } = useSelector((state) => state.auth);
   const { id } = useParams();
   const Navigate = useNavigate();
 
-  // State to store form input values
   const [formData, setFormData] = useState({
     hostId: hostInfo._id,
     title: "",
     description: "",
     location: "",
     price: 0,
-    avaliableSpace: 0,
+    space: 0,
   });
 
   useEffect(() => {
-    // Fetch the existing property data using `id` and set it in the form
     fetch(`/api/properties/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        const { title, description, location, price, avaliableSpace } = data; // Replace with actual data fields
+        const { title, description, location, price, space } = data;
         setFormData((prevData) => ({
           ...prevData,
           title,
           description,
           location,
           price,
-          avaliableSpace,
+          space,
         }));
       })
       .catch((error) => {
@@ -39,108 +37,63 @@ const EditProperty = () => {
       });
   }, [id]);
 
-  // Handler to update form data on input change
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  // Handler for form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Perform actions to create property using formData
-    // For simplicity, let's assume you have an API endpoint for property creation
+    //avaliability creation
+    const availability = [];
+    const startDate = new Date(2023, 10, 1);
+    const endDate = new Date(2023, 10, 30);
+    const availableSpace = formData.space;
+    const pricePerNight = formData.price;
+    for (
+      let date = new Date(startDate);
+      date <= endDate;
+      date.setDate(date.getDate() + 1)
+    ) {
+      availability.push({
+        date: new Date(date),
+        availableSpaces: availableSpace,
+        pricePerNight: pricePerNight,
+      });
+    }
+
+    // create object to send to backend
+    const updateData = {
+      hostId: hostInfo._id,
+      title: formData.title,
+      description: formData.description,
+      location: formData.location,
+      price: formData.price,
+      space: formData.space,
+      availability: availability,
+    };
 
     fetch(`/api/properties/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(updateData),
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle the response, e.g., redirect to property details page
+        console.log("Property updated:", data);
       })
       .catch((error) => {
         console.error("Error creating property:", error);
       });
 
-    Navigate("/myProperties");
+    Navigate("/host/properties");
   };
 
   return (
-    <Container>
-      <h1>Edit Property</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="title">
-          <Form.Control
-            type="text"
-            placeholder="Enter title"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="Enter description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="location">
-          <Form.Label>Location</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter location"
-            name="location"
-            value={formData.location}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="price">
-          <Form.Label>Price{"$"}</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="choose price"
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="avaliableSpace">
-          <Form.Label>Avaliable Space :</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="choose avaliable space"
-            name="avaliableSpace"
-            value={formData.avaliableSpace}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        {/* Note: hostId is set automatically in formData */}
-
-        <Button variant="primary" type="submit">
-          Edit Property
-        </Button>
-      </Form>
-    </Container>
+    <EditCreateProperty
+      title="Edit"
+      formData={formData}
+      setFormData={setFormData}
+      handleSubmit={handleSubmit}
+    />
   );
 };
 

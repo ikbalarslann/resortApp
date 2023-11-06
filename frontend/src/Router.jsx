@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //layouts
-import App from "./App.jsx";
+import App from "./layouts/App.jsx";
 import UserLayout from "./layouts/UserLayout.jsx";
 import HostLayout from "./layouts/HostLayout.jsx";
 

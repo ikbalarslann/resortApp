@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import MyCard from "../../components/cards/MyCard";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -23,9 +22,16 @@ const PriceAvaliability = () => {
           .map((property) => (
             <Col key={property._id} md={4}>
               <div>
-                <Link to={`/host/avalibility/${property._id}`}>
-                  <MyCard property={property} />
-                </Link>
+                <Card>
+                  <Link
+                    to={`/host/avalibility/${property._id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Card.Body>
+                      <Card.Title>{property.title}</Card.Title>
+                    </Card.Body>
+                  </Link>
+                </Card>
               </div>
             </Col>
           ))}
