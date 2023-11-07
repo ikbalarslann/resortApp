@@ -77,11 +77,12 @@ const Home = () => {
 
   const handleSearch = ({ location, date }) => {
     fetchPropertyData(location, date);
-  };
-  useEffect(() => {
-    if (Reduxproperties.properties.length === 0) return;
+    if (Reduxproperties.properties.length === 0) {
+      alert("No properties available");
+      return;
+    }
     navigate("/user/properties");
-  }, [Reduxproperties.properties]);
+  };
 
   return (
     <>

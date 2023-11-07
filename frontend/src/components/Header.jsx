@@ -1,4 +1,3 @@
-// import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
@@ -7,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/apis/usersApiSlice";
 import { useHlogoutMutation } from "../slices/apis/hostsApiSlice";
 import { logout } from "../slices/authSlice";
+import { setDate } from "../slices/searchbars/dateSlice";
+import { setProperties } from "../slices/properties/propertiesSlice";
+import { setLocation } from "../slices/searchbars/locationSlice";
 
 const Header = () => {
   const { userInfo, hostInfo } = useSelector((state) => state.auth);
-  const { date } = useSelector((state) => state.date);
-  const { properties } = useSelector((state) => state.properties);
-  const { location } = useSelector((state) => state.location);
 
   const loggedInUserType = userInfo ? "user" : hostInfo ? "host" : null;
 
@@ -33,9 +32,9 @@ const Header = () => {
   };
 
   const handleLogoClick = () => {
-    dispatch(date({ date: null }));
-    dispatch(properties({ properties: [] }));
-    dispatch(location({ location: null }));
+    dispatch(setDate({ date: null }));
+    dispatch(setProperties({ properties: [] }));
+    dispatch(setLocation({ location: null }));
   };
 
   return (
