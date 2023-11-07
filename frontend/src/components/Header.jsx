@@ -32,9 +32,9 @@ const Header = () => {
   };
 
   const handleLogoClick = () => {
-    dispatch(setDate({ date: null }));
+    dispatch(setDate(null));
     dispatch(setProperties({ properties: [] }));
-    dispatch(setLocation({ location: null }));
+    dispatch(setLocation(null));
   };
 
   return (
