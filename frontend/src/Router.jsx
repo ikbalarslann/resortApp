@@ -85,7 +85,7 @@ const Router = () => {
           children: [
             {
               index: true,
-              element: <Home />,
+              element: <HostProperties />,
             },
             {
               path: "login",

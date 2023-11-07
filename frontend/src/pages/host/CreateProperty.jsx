@@ -1,8 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditCreateProperty from "../../components/EditCreateProperty";
 import { useSelector } from "react-redux";
 const CreateProperty = () => {
   const { hostInfo } = useSelector((state) => state.auth);
+  const [suggestedLocations, setSuggestedLocations] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/locations");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const locations = data.map((location) => location.location);
+        console.log(`suggestedLocations: ${locations}`);
+        setSuggestedLocations(locations);
+        // You can set the locations in your component state if needed
+      } catch (error) {
+        // Handle errors
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const addLocation = (location) => {
+    fetch("/api/locations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ location }),
+    });
+  };
 
   const [formData, setFormData] = useState({
     hostId: hostInfo._id,
@@ -42,6 +74,10 @@ const CreateProperty = () => {
         space: formData.space,
         availability,
       };
+
+      if (!suggestedLocations.includes(updatedFormData.location)) {
+        addLocation(updatedFormData.location);
+      }
 
       const response = await fetch("/api/properties", {
         method: "POST",

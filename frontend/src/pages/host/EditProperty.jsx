@@ -5,6 +5,39 @@ import { useNavigate } from "react-router-dom";
 import EditCreateProperty from "../../components/EditCreateProperty";
 
 const EditProperty = () => {
+  const [suggestedLocations, setSuggestedLocations] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/locations");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const locations = data.map((location) => location.location);
+        console.log(`suggestedLocations: ${locations}`);
+        setSuggestedLocations(locations);
+        // You can set the locations in your component state if needed
+      } catch (error) {
+        // Handle errors
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const addLocation = (location) => {
+    fetch("/api/locations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ location }),
+    });
+  };
+
   const { hostInfo } = useSelector((state) => state.auth);
   const { id } = useParams();
   const Navigate = useNavigate();
@@ -68,6 +101,10 @@ const EditProperty = () => {
       space: formData.space,
       availability: availability,
     };
+
+    if (!suggestedLocations.includes(updateData.location)) {
+      addLocation(updateData.location);
+    }
 
     fetch(`/api/properties/${id}`, {
       method: "PUT",

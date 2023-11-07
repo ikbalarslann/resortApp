@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import { useDispatch } from "react-redux";
 import { setDate } from "../slices/searchbars/dateSlice";
@@ -9,6 +9,29 @@ import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
 const Home = () => {
+  const [suggestedLocations, setSuggestedLocations] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/locations");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const locations = data.map((location) => location.location);
+
+        setSuggestedLocations(locations);
+        // You can set the locations in your component state if needed
+      } catch (error) {
+        // Handle errors
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -63,7 +86,10 @@ const Home = () => {
   return (
     <>
       <h1>Home Page</h1>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar
+        onSearch={handleSearch}
+        suggestedLocations={suggestedLocations}
+      />
     </>
   );
 };

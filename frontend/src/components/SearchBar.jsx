@@ -1,12 +1,30 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  FormGroup,
+  FormControl,
+  ListGroup,
+} from "react-bootstrap";
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, suggestedLocations }) => {
   const [location, setLocation] = useState("");
-  const [date, setDate] = useState(""); // Add a state for the date
+  const [date, setDate] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const handleSearch = () => {
-    onSearch({ location, date }); // Pass both location and date to the onSearch function
+    onSearch({ location, date });
+  };
+
+  const handleLocationChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setLocation(value);
+    setShowSuggestions(value.length > 0);
+  };
+
+  const handleLocationSelect = (selectedLocation) => {
+    setLocation(selectedLocation);
+    setShowSuggestions(false);
   };
 
   return (
@@ -16,13 +34,30 @@ const SearchBar = ({ onSearch }) => {
           type="text"
           placeholder="Search by location"
           value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          onChange={handleLocationChange}
         />
+        {showSuggestions && (
+          <ListGroup style={{ position: "absolute", width: "100%", zIndex: 1 }}>
+            {suggestedLocations
+              .filter((suggestedLocation) =>
+                suggestedLocation.toLowerCase().includes(location)
+              )
+              .map((suggestedLocation) => (
+                <ListGroup.Item
+                  key={suggestedLocation}
+                  action
+                  onClick={() => handleLocationSelect(suggestedLocation)}
+                >
+                  {suggestedLocation}
+                </ListGroup.Item>
+              ))}
+          </ListGroup>
+        )}
       </FormGroup>
       <FormGroup>
         <FormControl
           type="date"
-          placeholder="Search by date" // You can use a date input field
+          placeholder="Search by date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />

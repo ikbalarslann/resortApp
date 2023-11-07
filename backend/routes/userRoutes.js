@@ -16,6 +16,7 @@ router.post("/", registerUser);
 router.get("/", getAllUsers);
 router.post("/auth", authUser);
 router.post("/logout", logoutUser);
+
 router
   .route("/profile")
   .get(protect(User), getUserProfile)
