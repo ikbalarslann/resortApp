@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 //layouts
 import App from "./layouts/App.jsx";
+import DefaultLayout from "./layouts/DefaultLayout.jsx";
 import UserLayout from "./layouts/UserLayout.jsx";
 import HostLayout from "./layouts/HostLayout.jsx";
 
@@ -41,13 +42,8 @@ const Router = () => {
       errorElement: <Error />,
       children: [
         {
-          index: true,
-          element: <Home />,
-        },
-
-        {
-          path: "user/",
-          element: <UserLayout />,
+          path: "",
+          element: <DefaultLayout />,
           children: [
             {
               index: true,
@@ -60,6 +56,25 @@ const Router = () => {
             {
               path: "register",
               element: <Register />,
+            },
+            {
+              path: "hostLogin",
+              element: <HostLogin />,
+            },
+            {
+              path: "hostRegister",
+              element: <HostRegister />,
+            },
+          ],
+        },
+
+        {
+          path: "user/",
+          element: <UserLayout />,
+          children: [
+            {
+              index: true,
+              element: <Home />,
             },
             {
               path: "properties",
@@ -86,14 +101,6 @@ const Router = () => {
             {
               index: true,
               element: <HostProperties />,
-            },
-            {
-              path: "login",
-              element: <HostLogin />,
-            },
-            {
-              path: "register",
-              element: <HostRegister />,
             },
             {
               path: "properties",
@@ -130,7 +137,7 @@ const Router = () => {
           ],
         },
         {
-          path: "",
+          path: "/",
           element: <PrivateRoute />,
           children: [
             {
