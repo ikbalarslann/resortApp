@@ -60,7 +60,10 @@ const HostHeader = () => {
                     <NavDropdown.Item>Analytics</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
-                <NavDropdown title={`Host : ${hostInfo.name}`} id="username">
+                <NavDropdown
+                  title={hostInfo && `Host : ${hostInfo.name}`}
+                  id="username"
+                >
                   <LinkContainer to="/host/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>

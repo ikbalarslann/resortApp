@@ -57,7 +57,10 @@ const UserHeader = () => {
                     <NavDropdown.Item>My Bookings</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
-                <NavDropdown title={`User : ${userInfo.name}`} id="username">
+                <NavDropdown
+                  title={userInfo && `User : ${userInfo.name}`}
+                  id="username"
+                >
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
