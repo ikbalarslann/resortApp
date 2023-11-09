@@ -1,4 +1,3 @@
-import { Container } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 import UserHeader from "../components/headers/UserHeader";
 import Footer from "../components/Footer";
@@ -11,9 +10,7 @@ const UserLayout = () => {
       <UserHeader />
       <div style={{ flex: 1, position: "relative" }}>
         <div style={{ marginBottom: "4vh" }}>
-          <Container className="my-2">
-            <Outlet />
-          </Container>
+          <Outlet />
         </div>
 
         <Footer />

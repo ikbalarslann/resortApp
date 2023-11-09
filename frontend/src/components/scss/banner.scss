@@ -1,0 +1,14 @@
+.banner {
+  background-color: #f0f0f0;
+  width: 100%;
+  text-align: center;
+  padding: 8vh 0;
+
+  &__title {
+    font-size: 48px;
+
+    &-highlight {
+      color: #549deb;
+    }
+  }
+}

@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Form,
-  FormGroup,
-  FormControl,
-  ListGroup,
-} from "react-bootstrap";
+import "./scss/searchBar.scss";
 
 const SearchBar = ({ onSearch, suggestedLocations }) => {
   const [location, setLocation] = useState("");
@@ -28,44 +22,49 @@ const SearchBar = ({ onSearch, suggestedLocations }) => {
   };
 
   return (
-    <Form>
-      <FormGroup>
-        <FormControl
+    <div className="searchBar-cover">
+      <div className="searchBar">
+        <input
+          className="searchBar__input"
           type="text"
+          id="location"
           placeholder="Search by location"
           value={location}
-          onChange={handleLocationChange}
+          onInput={handleLocationChange}
+          autoComplete="off"
         />
         {showSuggestions && (
-          <ListGroup style={{ position: "absolute", width: "100%", zIndex: 1 }}>
+          <div className="searchBar__input__suggestions">
             {suggestedLocations
               .filter((suggestedLocation) =>
                 suggestedLocation.toLowerCase().includes(location)
               )
               .map((suggestedLocation) => (
-                <ListGroup.Item
+                <div
+                  className="searchBar__input__suggestions-suggestion"
                   key={suggestedLocation}
-                  action
                   onClick={() => handleLocationSelect(suggestedLocation)}
                 >
                   {suggestedLocation}
-                </ListGroup.Item>
+                </div>
               ))}
-          </ListGroup>
+          </div>
         )}
-      </FormGroup>
-      <FormGroup>
-        <FormControl
+
+        <input
+          className="searchBar__input"
           type="date"
+          id="date"
           placeholder="Search by date"
           value={date}
-          onChange={(e) => setDate(e.target.value)}
+          onInput={(e) => setDate(e.target.value)}
         />
-      </FormGroup>
-      <Button variant="primary" onClick={handleSearch}>
-        Search
-      </Button>
-    </Form>
+
+        <button className="searchBar__button" onClick={handleSearch}>
+          Search
+        </button>
+      </div>
+    </div>
   );
 };
 

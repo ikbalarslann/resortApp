@@ -5,6 +5,7 @@ import { setProperties } from "../slices/properties/propertiesSlice";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
+import Banner from "../components/Banner";
 
 const Home = () => {
   const [suggestedLocations, setSuggestedLocations] = useState([]);
@@ -78,7 +79,7 @@ const Home = () => {
 
   return (
     <>
-      <h1>Home Page</h1>
+      <Banner />
       <SearchBar
         onSearch={handleSearch}
         suggestedLocations={suggestedLocations}
