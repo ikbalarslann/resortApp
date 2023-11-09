@@ -1,12 +1,12 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setSCproperties } from "../../slices/properties/SCproperties";
 import { setWLproperties } from "../../slices/properties/WLproperties";
 import { removeProperty } from "../../slices/properties/WLproperties";
 import { useState } from "react";
+import "./scss/addCard.scss";
 
-const handleAddToCardClick = ({ property, date, isShowWishList = true }) => {
+const AddCard = ({ property, date, isShowWishList = true }) => {
   const dispatch = useDispatch();
   const { SCproperties } = useSelector((state) => state.SCproperties);
   const { WLproperties } = useSelector((state) => state.WLproperties);
@@ -24,41 +24,41 @@ const handleAddToCardClick = ({ property, date, isShowWishList = true }) => {
   };
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{property.title}</Card.Title>
-        <Card.Text> Description : {property.description}</Card.Text>
-        <Card.Text>Location: {property.location}</Card.Text>
-        <Card.Text>date:{date}</Card.Text>
-        <Card.Text>
-          space: {property.availability.map((e) => e.availableSpaces)}
-        </Card.Text>
-        <Card.Text>
-          price: {property.availability.map((e) => e.pricePerNight)}
-        </Card.Text>
+    <div className="addCard">
+      <div className="addCard__body">
+        <h5 className="addCard__title">{property.title}</h5>
+        <p className="addCard__text">Description: {property.description}</p>
+        <p className="addCard__text">Location: {property.location}</p>
+        <p className="addCard__text">Date: {date}</p>
+        <p className="addCard__text">
+          Space: {property.availability.map((e) => e.availableSpaces)}
+        </p>
+        <p className="card__text">
+          Price: {property.availability.map((e) => e.pricePerNight)}
+        </p>
         {isAddedToCart ? (
-          "added to cart"
+          "Added to cart"
         ) : (
-          <Button
-            variant="primary"
+          <button
+            className="addCard-button"
             onClick={handleAddToCardClick}
             disabled={property.avaliableSpace <= 0}
           >
             Add to cart
-          </Button>
-        )}{" "}
+          </button>
+        )}
         {isShowWishList && (
-          <Button
-            variant="primary"
+          <button
+            className="addCard-button"
             onClick={handleAddToWishListClick}
             disabled={property.avaliableSpace <= 0}
           >
             Add to Wish List
-          </Button>
+          </button>
         )}
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 };
 
-export default handleAddToCardClick;
+export default AddCard;

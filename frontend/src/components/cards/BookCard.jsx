@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import findHost from "../../hooks/findHost";
 import { removeProperty } from "../../slices/properties/SCproperties";
+import "./scss/bookCard.scss";
 
 const BookCard = ({ property, userId, date }) => {
   const [isBooked, setIsBooked] = useState(false);
@@ -111,39 +112,35 @@ const BookCard = ({ property, userId, date }) => {
     }
   };
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{property.title}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
-          Host ID: {property.hostId}
-        </Card.Subtitle>
+    <div className="bookCard">
+      <h2 className="bookCard__title">{property.title}</h2>
 
-        <Card.Text> Description : {property.description}</Card.Text>
-        <Card.Text>Location: {property.location}</Card.Text>
+      <p className="bookCard__item">Description: {property.description}</p>
+      <p className="bookCard__item">Location: {property.location}</p>
 
-        <Card.Text>date:{date}</Card.Text>
+      <p className="bookCard__item">Date: {date}</p>
 
-        <Card.Text>
-          space: {property.availability.map((e) => e.availableSpaces)}
-        </Card.Text>
-        <Card.Text>
-          price: {property.availability.map((e) => e.pricePerNight)}
-        </Card.Text>
-        {isBooked ? (
-          <Button variant="primary" onClick={handlePaymentClick}>
-            Pay Now
-          </Button>
-        ) : (
-          <Button
-            variant="primary"
-            onClick={handleBookingClick}
-            disabled={property.avaliableSpace <= 0}
-          >
-            Book Now
-          </Button>
-        )}
-      </Card.Body>
-    </Card>
+      <p className="bookCard__item">
+        Space: {property.availability.map((e) => e.availableSpaces)}
+      </p>
+      <p className="bookCard__item">
+        Price: {property.availability.map((e) => e.pricePerNight)}
+      </p>
+
+      {isBooked ? (
+        <button className="bookCard__button" onClick={handlePaymentClick}>
+          Pay Now
+        </button>
+      ) : (
+        <button
+          className="bookCard__button"
+          onClick={handleBookingClick}
+          disabled={property.availableSpace <= 0}
+        >
+          Book Now
+        </button>
+      )}
+    </div>
   );
 };
 

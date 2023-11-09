@@ -1,0 +1,18 @@
+.property {
+  display: flex;
+  flex-direction: row;
+
+  &__row {
+    width: 3fr;
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    &-col {
+      flex: 0 0 33.3333%;
+      box-sizing: border-box;
+      padding: 0 15px;
+    }
+  }
+}
