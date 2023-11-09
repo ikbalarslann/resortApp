@@ -27,9 +27,6 @@ const handleAddToCardClick = ({ property, date, isShowWishList = true }) => {
     <Card>
       <Card.Body>
         <Card.Title>{property.title}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
-          Host ID: {property.hostId}
-        </Card.Subtitle>
         <Card.Text> Description : {property.description}</Card.Text>
         <Card.Text>Location: {property.location}</Card.Text>
         <Card.Text>date:{date}</Card.Text>

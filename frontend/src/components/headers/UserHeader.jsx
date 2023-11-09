@@ -1,5 +1,3 @@
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../slices/apis/usersApiSlice";
@@ -7,8 +5,19 @@ import { logout } from "../../slices/authSlice";
 import { setDate } from "../../slices/searchbars/dateSlice";
 import { setProperties } from "../../slices/properties/propertiesSlice";
 import { setLocation } from "../../slices/searchbars/locationSlice";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import "./scss/userHeader.scss";
 
 const UserHeader = () => {
+  //dropdown menu
+  const [dropdownHidden, setDropdownHidden] = useState(true);
+
+  const toggleDropdown = () => {
+    setDropdownHidden(!dropdownHidden);
+  };
+
+  // rest of the code
   const { userInfo } = useSelector((state) => state.auth);
 
   const [logoutApiCall] = useLogoutMutation();
@@ -34,45 +43,50 @@ const UserHeader = () => {
 
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-        <Container>
-          <LinkContainer to="/user">
-            <Navbar.Brand onClick={() => handleLogoClick()}>
-              Resort
-            </Navbar.Brand>
-          </LinkContainer>
-
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              <>
-                <LinkContainer to="/user/wishlist">
-                  <Nav.Link>Wish List</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/user/shoppingCard">
-                  <Nav.Link>Shopping Card</Nav.Link>
-                </LinkContainer>
-                <NavDropdown title="Discover" id="discover">
-                  <LinkContainer to="/user/bookings">
-                    <NavDropdown.Item>My Bookings</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
-                <NavDropdown
-                  title={userInfo && `User : ${userInfo.name}`}
-                  id="username"
-                >
-                  <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <div className="nav">
+        <h1>
+          <Link
+            to="/user"
+            onClick={() => handleLogoClick()}
+            className="nav__logo"
+          >
+            Resort
+          </Link>
+        </h1>
+        <div className="nav__links">
+          <Link to="/user/shoppingCard" className="nav__links-link">
+            Shopping Card
+          </Link>
+          <Link to="/user/wishlist" className="nav__links-link">
+            Wish List
+          </Link>
+          <Link to="/user/bookings" className="nav__links-link">
+            My Bookings
+          </Link>
+          <div className="nav__user">
+            <h5 className="nav__user-name" onClick={toggleDropdown}>
+              User : {userInfo.name}
+            </h5>
+            <Link
+              to="/profile"
+              className={
+                dropdownHidden ? "nav__links-link hidden " : "nav__links-link "
+              }
+            >
+              Profile
+            </Link>
+            <Link
+              to="/"
+              onClick={logoutHandler}
+              className={
+                dropdownHidden ? "nav__links-link hidden " : "nav__links-link"
+              }
+            >
+              Logout
+            </Link>
+          </div>
+        </div>
+      </div>
     </header>
   );
 };
