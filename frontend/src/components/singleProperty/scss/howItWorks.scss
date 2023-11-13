@@ -1,0 +1,27 @@
+.how-it-works {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+
+  &__title {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  &__steps {
+    padding: 0;
+
+    &__step {
+      font-size: 16px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      color: #555;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+.reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  &__review {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+
+    &__rating {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    &__text {
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+}

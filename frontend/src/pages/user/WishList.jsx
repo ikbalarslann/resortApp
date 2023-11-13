@@ -1,22 +1,21 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import AddCard from "../../components/cards/AddCard";
+import "./scss/property.scss";
 import { useSelector } from "react-redux";
 
 const WishList = () => {
   const WLproperties = useSelector((state) => state.WLproperties);
-  const { date } = useSelector((state) => state.date);
 
   return (
-    <Container>
-      <Row>
-        {WLproperties.WLproperties.map((property) => (
-          <Col key={property._id} md={4}>
-            <AddCard property={property} date={date} isShowWishList={false} />
-          </Col>
+    <div className="wishlist">
+      <div className="wishlist__row">
+        {WLproperties.WLproperties.map((property, index) => (
+          <div className="wishlist__row-col" key={index}>
+            <AddCard property={property} isShowWishList={false} />
+          </div>
         ))}
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 };
 

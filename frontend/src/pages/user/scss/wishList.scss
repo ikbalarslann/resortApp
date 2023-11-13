@@ -1,0 +1,17 @@
+.wishlist {
+  display: flex;
+  flex-direction: row;
+
+  &__row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr; // Set to a single column
+    gap: 15px;
+    overflow-x: auto;
+
+    &-col {
+      box-sizing: border-box;
+      min-width: 0;
+    }
+  }
+}
