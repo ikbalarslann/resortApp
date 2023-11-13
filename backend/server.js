@@ -5,6 +5,7 @@ dotenv.config();
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import chalk from "chalk";
 
 import userRoutes from "./routes/userRoutes.js";
 import hostRoutes from "./routes/hostRoutes.js";
@@ -45,4 +46,10 @@ if (process.env.NODE_ENV === "production") {
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () =>
+  console.log(
+    `${chalk.green("✓")} ${chalk.blue(
+      `Server running on port ${port}:`
+    )} Visit http://localhost:${port}/ in your browser.`
+  )
+);

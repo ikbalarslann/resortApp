@@ -61,6 +61,16 @@ const propertySchema = mongoose.Schema(
         },
       },
     ],
+    type: {
+      type: String,
+      required: true,
+    },
+    images: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
   },
   { timestamps: true }
 );
