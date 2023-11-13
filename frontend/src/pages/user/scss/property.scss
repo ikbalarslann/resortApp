@@ -3,16 +3,15 @@
   flex-direction: row;
 
   &__row {
-    width: 3fr;
-    display: flex;
-
-    flex-wrap: wrap;
-    justify-content: space-around;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr; // Set to a single column
+    gap: 15px;
+    overflow-x: auto;
 
     &-col {
-      flex: 0 0 33.3333%;
       box-sizing: border-box;
-      padding: 0 15px;
+      min-width: 0;
     }
   }
 }

@@ -17,6 +17,7 @@ import Login from "./pages/user/Login.jsx";
 import UserBookings from "./pages/user/UserBookings.jsx";
 import ShoppingCard from "./pages/user/ShoppingCard.jsx";
 import WishList from "./pages/user/WishList.jsx";
+import SingleProperty from "./pages/user/SingleProperty.jsx";
 
 //host routes
 import HostLogin from "./pages/host/HostLogin.jsx";
@@ -80,6 +81,10 @@ const Router = () => {
             {
               path: "properties",
               element: <Property />,
+            },
+            {
+              path: "properties/:id",
+              element: <SingleProperty />,
             },
             {
               path: "bookings",

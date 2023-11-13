@@ -4,9 +4,12 @@ import { setSCproperties } from "../../slices/properties/SCproperties";
 import { setWLproperties } from "../../slices/properties/WLproperties";
 import { removeProperty } from "../../slices/properties/WLproperties";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./scss/addCard.scss";
 
-const AddCard = ({ property, date, isShowWishList = true }) => {
+const AddCard = ({ property, isShowWishList = true }) => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const { SCproperties } = useSelector((state) => state.SCproperties);
   const { WLproperties } = useSelector((state) => state.WLproperties);
@@ -23,39 +26,69 @@ const AddCard = ({ property, date, isShowWishList = true }) => {
     dispatch(setWLproperties([...WLproperties, property]));
   };
 
+  const averageReview = () => {
+    if (property.reviews.length === 0) return 0;
+
+    let sum = 0;
+    for (let i = 0; i < property.reviews.length; i++) {
+      sum += property.reviews[i].rating;
+    }
+
+    const avg = sum / property.reviews.length;
+
+    const roundedAvg = Math.round(avg * 2) / 2;
+
+    return roundedAvg.toFixed(1);
+  };
+
+  const handleViewClick = async () => {
+    navigate(`/user/properties/${property._id}`);
+  };
+
   return (
     <div className="addCard">
-      <div className="addCard__body">
-        <h5 className="addCard__title">{property.title}</h5>
-        <p className="addCard__text">Description: {property.description}</p>
-        <p className="addCard__text">Location: {property.location}</p>
-        <p className="addCard__text">Date: {date}</p>
-        <p className="addCard__text">
+      <img className="addCard__img" src={property.images[0]} alt="property" />
+
+      <div className="addCard__content">
+        <p className="addCard__content__text">{property.location}</p>
+        <h5 className="addCard__content__title">{property.title}</h5>
+        <p className="addCard__content__text">
+          {averageReview()}/5 - {property.reviews.length} reviews
+        </p>
+        <p className="addCard__content__text">{property.type}</p>
+        <p className="addCard__content__text">
+          Description: {property.description}
+        </p>
+
+        <p className="addCard__content__text">
           Space: {property.availability.map((e) => e.availableSpaces)}
         </p>
-        <p className="card__text">
+        <p className="addCard__content__title">
           Price: {property.availability.map((e) => e.pricePerNight)}
         </p>
-        {isAddedToCart ? (
-          "Added to cart"
-        ) : (
-          <button
-            className="addCard-button"
-            onClick={handleAddToCardClick}
-            disabled={property.avaliableSpace <= 0}
-          >
-            Add to cart
+        <div className="addCard__content-button-group">
+          {isAddedToCart ? (
+            "Added to cart"
+          ) : (
+            <button
+              className="addCard__content-button"
+              onClick={handleAddToCardClick}
+            >
+              Add to cart
+            </button>
+          )}
+          {isShowWishList && (
+            <button
+              className="addCard__content-button"
+              onClick={handleAddToWishListClick}
+            >
+              Add to Wish List
+            </button>
+          )}
+          <button className="addCard__content-button" onClick={handleViewClick}>
+            view
           </button>
-        )}
-        {isShowWishList && (
-          <button
-            className="addCard-button"
-            onClick={handleAddToWishListClick}
-            disabled={property.avaliableSpace <= 0}
-          >
-            Add to Wish List
-          </button>
-        )}
+        </div>
       </div>
     </div>
   );

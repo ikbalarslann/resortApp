@@ -15,7 +15,7 @@ const Property = () => {
       <div className="property__row">
         {Reduxproperties.properties.map((property) => (
           <div key={property._id} className="property__row-col">
-            <AddCard property={property} userId={userInfo._id} date={date} />
+            <AddCard property={property} userId={userInfo._id} />
           </div>
         ))}
       </div>

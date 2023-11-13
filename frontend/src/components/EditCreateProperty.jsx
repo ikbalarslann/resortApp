@@ -8,6 +8,30 @@ const EditCreateProperty = ({ title, formData, setFormData, handleSubmit }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const options = [
+    "Olimpic",
+    "Semi-Olimpic",
+    "Hotel Pool",
+    "Villa Pool",
+    "Aqua Park",
+  ];
+
+  const handleImageChange = (e) => {
+    const { name, files } = e.target;
+
+    if (files.length > 0) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const imagePath = reader.result; // This is the data URL representing the file content
+        setFormData((prevData) => ({ ...prevData, [name]: imagePath }));
+      };
+
+      // Read the file as a data URL
+      reader.readAsDataURL(files[0]);
+    }
+  };
+
   return (
     <FormContainer>
       <h1>{`${title} Property`}</h1>
@@ -70,6 +94,37 @@ const EditCreateProperty = ({ title, formData, setFormData, handleSubmit }) => {
             required
           />
         </Form.Group>
+
+        <Form.Label>Pool Type</Form.Label>
+        <Form.Select
+          name="type"
+          value={formData.type}
+          onChange={handleInputChange}
+          required
+        >
+          <option value="" disabled>
+            Select pool type
+          </option>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </Form.Select>
+
+        <Form.Group className="mb-3" controlId="images">
+          <Form.Label>Images</Form.Label>
+          <Form.Control
+            type="file"
+            name="images"
+            onChange={handleImageChange}
+            multiple
+          />
+          <Form.Text className="text-muted">
+            Select two images for upload.
+          </Form.Text>
+        </Form.Group>
+
         <Button variant="primary" type="submit">
           {`${title} Property`}
         </Button>

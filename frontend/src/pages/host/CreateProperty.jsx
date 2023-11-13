@@ -14,7 +14,7 @@ const CreateProperty = () => {
         }
         const data = await response.json();
         const locations = data.map((location) => location.location);
-        console.log(`suggestedLocations: ${locations}`);
+
         setSuggestedLocations(locations);
         // You can set the locations in your component state if needed
       } catch (error) {
@@ -43,6 +43,8 @@ const CreateProperty = () => {
     location: "",
     price: 0,
     space: 0,
+    type: "",
+    images: [],
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +74,8 @@ const CreateProperty = () => {
         location: formData.location,
         price: formData.price,
         space: formData.space,
+        type: formData.type,
+        images: formData.images,
         availability,
       };
 
