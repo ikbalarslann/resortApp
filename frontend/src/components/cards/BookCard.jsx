@@ -1,30 +1,20 @@
 import React, { useState } from "react";
-import { Card, Button } from "react-bootstrap";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import findHost from "../../hooks/findHost";
 import { removeProperty } from "../../slices/properties/SCproperties";
 import "./scss/bookCard.scss";
 
-const BookCard = ({ property, userId, date }) => {
+const BookCard = ({ property }) => {
   const [isBooked, setIsBooked] = useState(false);
   const [bookingId, setBookingId] = useState(null);
 
   const { userInfo } = useSelector((state) => state.auth);
-  const { SCproperties } = useSelector((state) => state.SCproperties);
+  const { date } = useSelector((state) => state.date);
 
   const dispatch = useDispatch();
 
   const handleBookingClick = async () => {
-    // const propertyExistsInCart = SCproperties.some(
-    //   (p) => p._id === property._id
-    // );
-
-    // if (propertyExistsInCart) {
-    //   console.log("Property already in cart");
-    //   return;
-    // }
-
     const minusAvailableSpace = async () => {
       const response = await fetch(`/api/properties/${property._id}`);
       if (response.ok) {
@@ -66,7 +56,7 @@ const BookCard = ({ property, userId, date }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId,
+          userId: userInfo._id,
           propertyId: property._id,
           date: format(new Date(date), "dd-MM-yyyy"),
           status: "Pending",
@@ -121,10 +111,10 @@ const BookCard = ({ property, userId, date }) => {
       <p className="bookCard__item">Date: {date}</p>
 
       <p className="bookCard__item">
-        Space: {property.availability.map((e) => e.availableSpaces)}
+        Space: {property.availability[0].availableSpaces}
       </p>
       <p className="bookCard__item">
-        Price: {property.availability.map((e) => e.pricePerNight)}
+        Price: {property.availability[0].pricePerNight}
       </p>
 
       {isBooked ? (

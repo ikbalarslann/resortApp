@@ -4,16 +4,16 @@ import { removeProperty } from "../../slices/properties/WLproperties";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
-const ProductCard = (object) => {
-  const property = object.property;
-
+const ProductCard = ({ property }) => {
   const dispatch = useDispatch();
   const { SCproperties } = useSelector((state) => state.SCproperties);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   const handleAddToCardClick = async () => {
     setIsAddedToCart(true);
+
     dispatch(setSCproperties([...SCproperties, property]));
+
     dispatch(removeProperty(property._id));
   };
 
@@ -52,18 +52,14 @@ const ProductCard = (object) => {
       </p>
       <div className="product-card__text">
         <p>price for a day = ${property.availability[0].pricePerNight}</p>
-
-        {isAddedToCart ? (
-          "Added to cart"
-        ) : (
-          <button
-            className="product-card__button"
-            onClick={handleAddToCardClick}
-          >
-            Add to Cart
-          </button>
-        )}
       </div>
+      {isAddedToCart ? (
+        "Added to cart"
+      ) : (
+        <button className="product-card__button" onClick={handleAddToCardClick}>
+          Add to Cart
+        </button>
+      )}
     </div>
   );
 };

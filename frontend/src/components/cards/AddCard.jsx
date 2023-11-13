@@ -1,9 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSCproperties } from "../../slices/properties/SCproperties";
 import { setWLproperties } from "../../slices/properties/WLproperties";
-import { removeProperty } from "../../slices/properties/WLproperties";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./scss/addCard.scss";
 
@@ -11,15 +8,7 @@ const AddCard = ({ property, isShowWishList = true }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { SCproperties } = useSelector((state) => state.SCproperties);
   const { WLproperties } = useSelector((state) => state.WLproperties);
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
-
-  const handleAddToCardClick = async () => {
-    setIsAddedToCart(true);
-    dispatch(setSCproperties([...SCproperties, property]));
-    dispatch(removeProperty(property._id));
-  };
 
   const handleAddToWishListClick = async () => {
     console.log("add to wish list");
@@ -67,16 +56,6 @@ const AddCard = ({ property, isShowWishList = true }) => {
           Price: {property.availability.map((e) => e.pricePerNight)}
         </p>
         <div className="addCard__content-button-group">
-          {isAddedToCart ? (
-            "Added to cart"
-          ) : (
-            <button
-              className="addCard__content-button"
-              onClick={handleAddToCardClick}
-            >
-              Add to cart
-            </button>
-          )}
           {isShowWishList && (
             <button
               className="addCard__content-button"

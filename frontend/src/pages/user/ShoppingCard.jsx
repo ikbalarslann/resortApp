@@ -2,22 +2,21 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import BookCard from "../../components/cards/BookCard";
 import { useSelector } from "react-redux";
+import "./scss/shoppingCard.scss";
 
 const ShoppingCard = () => {
-  const SCproperties = useSelector((state) => state.SCproperties);
-  const { userInfo } = useSelector((state) => state.auth);
-  const { date } = useSelector((state) => state.date);
+  const SCproperties = useSelector((state) => state.SCproperties.SCproperties);
 
   return (
-    <Container>
-      <Row>
-        {SCproperties.SCproperties.map((property) => (
-          <Col key={property._id} md={4}>
-            <BookCard property={property} userId={userInfo._id} date={date} />
-          </Col>
+    <div className="shoppingCard">
+      <div className="shoppingCard__row">
+        {SCproperties.map((property, index) => (
+          <div key={index} className="shoppingCard__row-col">
+            <BookCard property={property} />
+          </div>
         ))}
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 };
 
