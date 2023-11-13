@@ -10,22 +10,27 @@
   flex-direction: column;
   align-items: center;
   width: 60vw;
-  height: 7vh;
+  height: 10vh;
   border-radius: 4px;
-  padding: 10px;
+  padding: 1.3vw;
   background-color: gray;
 
   &__input {
-    margin-bottom: 10px;
-    padding: 8px;
-    width: 100%;
-    box-sizing: border-box;
+    margin-bottom: 1.5vw; // Use relative unit (vw) for margin
+    padding: 1.2vw; // Use relative unit (vw) for padding
+    flex: 1.4;
+    display: flex;
+    flex-direction: column;
+
+    &-locationsuggestion {
+      display: flex;
+      flex-direction: column;
+    }
 
     &__suggestions {
       position: absolute;
 
       width: 20.5vw;
-
       z-index: 1;
       margin-top: 5px;
       border: 1px solid #ccc;
@@ -34,7 +39,7 @@
       background-color: gray;
 
       &-suggestion {
-        padding: 8px;
+        padding: 1.2vw; // Use relative unit (vw) for padding
         cursor: pointer;
 
         &:hover {
@@ -45,13 +50,13 @@
   }
 
   &__button {
-    padding: 10px;
+    padding: 1.5vw; // Use relative unit (vw) for padding
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 40vw;
+    flex: 1;
 
     &:hover {
       background-color: #0056b3;
@@ -65,7 +70,7 @@
 
       &__input {
         margin-bottom: 0;
-        margin-right: 10px;
+        margin-right: 1.5vw; // Use relative unit (vw) for margin
       }
     }
   }

@@ -11,6 +11,7 @@ body {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
+  cursor: pointer;
 
   &__logo {
     margin: 0;
@@ -51,6 +52,32 @@ body {
   }
 }
 
-.hidden {
-  display: none;
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 4vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #424242;
+}
+
+@media screen and (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__logo {
+      margin-left: 0;
+    }
+
+    &__links {
+      margin: 15px 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }

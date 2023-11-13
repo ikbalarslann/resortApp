@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import Banner from "../components/Banner";
+import Slider from "../components/Slider";
+import ExploreLocations from "../components/ExploreLocations";
 
 const Home = () => {
   const [suggestedLocations, setSuggestedLocations] = useState([]);
@@ -84,6 +86,8 @@ const Home = () => {
         onSearch={handleSearch}
         suggestedLocations={suggestedLocations}
       />
+      <Slider />
+      <ExploreLocations />
     </>
   );
 };

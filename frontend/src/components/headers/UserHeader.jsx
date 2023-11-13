@@ -65,25 +65,22 @@ const UserHeader = () => {
           </Link>
           <div className="nav__user">
             <h5 className="nav__user-name" onClick={toggleDropdown}>
-              User : {userInfo.name}
+              User: {userInfo.name}
             </h5>
-            <Link
-              to="/profile"
-              className={
-                dropdownHidden ? "nav__links-link hidden " : "nav__links-link "
-              }
-            >
-              Profile
-            </Link>
-            <Link
-              to="/"
-              onClick={logoutHandler}
-              className={
-                dropdownHidden ? "nav__links-link hidden " : "nav__links-link"
-              }
-            >
-              Logout
-            </Link>
+            {!dropdownHidden && (
+              <div className="dropdown-menu">
+                <Link to="/profile" className="nav__links-link">
+                  Profile
+                </Link>
+                <Link
+                  to="/"
+                  onClick={logoutHandler}
+                  className="nav__links-link"
+                >
+                  Logout
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

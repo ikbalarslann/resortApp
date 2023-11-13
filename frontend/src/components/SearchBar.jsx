@@ -24,32 +24,34 @@ const SearchBar = ({ onSearch, suggestedLocations }) => {
   return (
     <div className="searchBar-cover">
       <div className="searchBar">
-        <input
-          className="searchBar__input"
-          type="text"
-          id="location"
-          placeholder="Search by location"
-          value={location}
-          onInput={handleLocationChange}
-          autoComplete="off"
-        />
-        {showSuggestions && (
-          <div className="searchBar__input__suggestions">
-            {suggestedLocations
-              .filter((suggestedLocation) =>
-                suggestedLocation.toLowerCase().includes(location)
-              )
-              .map((suggestedLocation) => (
-                <div
-                  className="searchBar__input__suggestions-suggestion"
-                  key={suggestedLocation}
-                  onClick={() => handleLocationSelect(suggestedLocation)}
-                >
-                  {suggestedLocation}
-                </div>
-              ))}
-          </div>
-        )}
+        <div className="searchbar__input-locationsuggestion">
+          <input
+            className="searchBar__input"
+            type="text"
+            id="location"
+            placeholder="Search by location"
+            value={location}
+            onInput={handleLocationChange}
+            autoComplete="off"
+          />
+          {showSuggestions && (
+            <div className="searchBar__input__suggestions">
+              {suggestedLocations
+                .filter((suggestedLocation) =>
+                  suggestedLocation.toLowerCase().includes(location)
+                )
+                .map((suggestedLocation) => (
+                  <div
+                    className="searchBar__input__suggestions-suggestion"
+                    key={suggestedLocation}
+                    onClick={() => handleLocationSelect(suggestedLocation)}
+                  >
+                    {suggestedLocation}
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
 
         <input
           className="searchBar__input"

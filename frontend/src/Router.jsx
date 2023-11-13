@@ -1,6 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../src/assets/main.scss";
 
 //layouts
 import App from "./layouts/App.jsx";
