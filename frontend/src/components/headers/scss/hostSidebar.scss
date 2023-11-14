@@ -39,6 +39,10 @@
     justify-content: center;
     text-align: center; /* Center text */
 
+    &.selected {
+      background-color: #6195b8;
+    }
+
     &:hover {
       background-color: #2980b9; /* Darker blue on hover */
     }

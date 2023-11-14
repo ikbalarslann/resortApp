@@ -1,30 +1,99 @@
-import React, { useState, useEffect } from "react";
+// PriceAvaliabilityEdit.js
+import React, { useState, useEffect, useRef } from "react";
+import ModalAvaliability from "./ModalAvaliability";
+import { format } from "date-fns";
 import "./scss/priceAvaliability.scss";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 const PriceAvaliability = () => {
-  const [properties, setProperties] = useState([]);
+  const [availability, setAvailability] = useState([]);
+  const [filteredAvailability, setFilteredAvailability] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-  const { hostInfo } = useSelector((state) => state.auth);
+  const { Hproperties } = useSelector((state) => state.Hproperties);
+
+  const availableSpacesRef = useRef();
+  const pricePerNightRef = useRef();
 
   useEffect(() => {
-    fetch("/api/properties")
+    setAvailability(Hproperties[0].availability);
+  }, [Hproperties]);
+
+  const handleClick = (date) => {
+    setFilteredAvailability(availability.filter((item) => item.date === date));
+    setShowModal(true);
+  };
+
+  const handleFormSubmit = () => {
+    const updatedAvailability = {
+      ...filteredAvailability[0],
+      availableSpaces: availableSpacesRef.current.value,
+      pricePerNight: pricePerNightRef.current.value,
+    };
+
+    const updatedCollection = availability.map((item) => {
+      if (item.date === updatedAvailability.date) {
+        return updatedAvailability;
+      }
+      return item;
+    });
+
+    fetch(`/api/properties/${Hproperties[0]._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        availability: updatedCollection,
+      }),
+    })
       .then((response) => response.json())
-      .then((data) => setProperties(data));
-  }, []);
+      .then((data) => console.log(data));
+
+    setShowModal(false);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   return (
-    <div className="PandA">
-      {properties
-        .filter((property) => property.hostId === hostInfo?._id)
-        .map((property, index) => (
-          <div className="PandA__card" key={index}>
-            <Link to={`/host/avalibility/${property._id}`}>
-              <div className="PandA__card-title">{property.title}</div>
-            </Link>
+    <div className="PandAe">
+      <h1 className="PandAe__title">Price Availability</h1>
+      <h2 className="PandAe__title">Property Name: {Hproperties[0].title}</h2>
+
+      {availability.length > 0 &&
+        availability.map((item, index) => (
+          <div
+            className="PandAe-card"
+            key={index}
+            onClick={() => handleClick(item.date)}
+          >
+            <div className="PandAe-card__body">
+              <h3 className="PandAe__title">
+                Date: {format(new Date(item.date), "dd/MM/yyyy")}
+              </h3>
+              <p className="PandAe-card__text">
+                Available Space: {item.availableSpaces}
+              </p>
+              <p className="PandAe-card__text">Price: {item.pricePerNight}</p>
+            </div>
           </div>
         ))}
+
+      <ModalAvaliability
+        showModal={showModal}
+        handleClose={handleClose}
+        handleFormSubmit={handleFormSubmit}
+        availableSpaces={
+          filteredAvailability ? filteredAvailability[0].availableSpaces : ""
+        }
+        pricePerNight={
+          filteredAvailability ? filteredAvailability[0].pricePerNight : ""
+        }
+        availableSpacesRef={availableSpacesRef}
+        pricePerNightRef={pricePerNightRef}
+      />
     </div>
   );
 };

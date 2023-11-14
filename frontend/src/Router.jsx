@@ -27,9 +27,7 @@ import CreateProperty from "./pages/host/CreateProperty.jsx";
 import EditProperty from "./pages/host/EditProperty.jsx";
 import HostBookings from "./pages/host/HostBookings.jsx";
 import PriceAvaliability from "./pages/host/PriceAvaliability.jsx";
-import PriceAvaliabilityEdit from "./pages/host/PriceAvaliabilityEdit.jsx";
-import Analytics from "./pages/host/Analytics.jsx";
-import PropertyAnalytics from "./pages/host/PropertyAnalytics.jsx";
+import PropertyAnalytics from "./pages/host/Analytics.jsx";
 
 //common routes
 import Home from "./pages/Home.jsx";
@@ -128,16 +126,9 @@ const Router = () => {
               path: "avalibility",
               element: <PriceAvaliability />,
             },
-            {
-              path: "avalibility/:id",
-              element: <PriceAvaliabilityEdit />,
-            },
+
             {
               path: "analytics",
-              element: <Analytics />,
-            },
-            {
-              path: "analytics/:propertyId",
               element: <PropertyAnalytics />,
             },
           ],

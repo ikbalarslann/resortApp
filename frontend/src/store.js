@@ -6,6 +6,7 @@ import dateReducer from "./slices/searchbars/dateSlice";
 import locationReducer from "./slices/searchbars/locationSlice";
 import SCpropertiesReducer from "./slices/properties/SCproperties";
 import WLpropertiesReducer from "./slices/properties/WLproperties";
+import HpropertiesReducer from "./slices/properties/HpropertiesSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     properties: propertiesReducer,
     SCproperties: SCpropertiesReducer,
     WLproperties: WLpropertiesReducer,
+    Hproperties: HpropertiesReducer,
     date: dateReducer,
     location: locationReducer,
   },

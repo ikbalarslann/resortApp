@@ -1,42 +1,85 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import NivoBar from "../../components/nivo/NivoBar";
+import { format } from "date-fns";
+import NivoPie from "../../components/nivo/NivoPie";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import "./scss/analytics.scss";
 
 const Analytics = () => {
-  const [properties, setProperties] = useState([]);
+  const [property, setProperty] = useState(null);
+  const [bookings, setBookings] = useState([]);
 
-  const { hostInfo } = useSelector((state) => state.auth);
+  const { Hproperties } = useSelector((state) => state.Hproperties);
 
   useEffect(() => {
-    // Fetch properties data here and update state
-    fetch("/api/properties")
+    setProperty(Hproperties[0]);
+
+    fetch(`/api/bookings`)
       .then((response) => response.json())
-      .then((data) => setProperties(data));
-  }, []);
+      .then((data) => {
+        const filteredData = data.filter(
+          (b) => b.propertyId === Hproperties[0]._id
+        );
+        setBookings(filteredData);
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
+      });
+  }, [Hproperties]);
+
+  const filterBookingData = (bookings) => {
+    const days = [];
+    const startDate = new Date("2023-11-01");
+    const endDate = new Date("2023-11-30");
+
+    for (
+      let currentDate = startDate;
+      currentDate.getTime() <= endDate.getTime();
+      currentDate.setDate(currentDate.getDate() + 1)
+    ) {
+      days.push(format(new Date(currentDate), "dd-MM-yyyy"));
+    }
+
+    const data = [];
+
+    for (let i = 0; i < days.length; i++) {
+      const day = days[i];
+
+      const bookingsOnDay = bookings.filter((b) => b.date === day).length;
+
+      const dayData = {
+        day: day,
+        booking: bookingsOnDay,
+        bookingColor: "hsl(125, 70%, 50%)",
+      };
+      data.push(dayData);
+    }
+
+    return data;
+  };
 
   return (
-    <div className="analyticsPage">
-      <Link to="/host/analytics">
-        <button className="analyticsPage-button">All</button>
-      </Link>
-      <div className="analyticsPage-row">
-        {properties
-          .filter((property) => property.hostId === hostInfo?._id)
-          .map((property) => (
-            <div key={property._id} className="analyticsPage-row__col">
-              <div className="analyticsPage-row__col-card ">
-                <Link to={`/host/analytics/${property._id}`}>
-                  <div className="card-body">
-                    <div className="card-title">{property.title}</div>
-                  </div>
-                </Link>
-              </div>
-            </div>
-          ))}
+    <>
+      <h1>Property Analytics</h1>
+      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+        <h2>bookings-bar</h2>
+        <NivoBar data={filterBookingData(bookings)} leftkey={"booking"} />
       </div>
-    </div>
+      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+        <h2>occupancy - pie</h2>
+        <NivoPie />
+      </div>
+      <h2>occupancy - pie</h2>
+      <h2>money - bar</h2>
+      <h2>callendar - each cell booking,occupancy,money</h2>
+      {property ? (
+        <>
+          <h3>{property.title}</h3>
+          <h4>{`Bookings: ${bookings.length}`}</h4>
+        </>
+      ) : (
+        <p>Loading property data...</p>
+      )}
+    </>
   );
 };
 

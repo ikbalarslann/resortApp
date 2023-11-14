@@ -4,6 +4,7 @@ import "./scss/hostBookings.scss";
 
 const HostBookings = () => {
   const { hostInfo } = useSelector((state) => state.auth);
+  const { Hproperties } = useSelector((state) => state.Hproperties);
   const dispatch = useDispatch();
 
   const [hostData, setHostData] = useState({
@@ -15,13 +16,12 @@ const HostBookings = () => {
   useEffect(() => {
     // Fetch both property and booking data
     Promise.all([
-      fetch(`/api/properties`).then((response) => response.json()),
       fetch(`/api/bookings`).then((response) => response.json()),
       fetch("/api/users").then((response) => response.json()),
     ])
-      .then(([propertyData, bookingData, userData]) => {
+      .then(([bookingData, userData]) => {
         // Filter properties that match the hostId
-        const filteredProperties = propertyData.filter(
+        const filteredProperties = Hproperties.filter(
           (property) => property.hostId === hostInfo._id
         );
 
@@ -44,7 +44,7 @@ const HostBookings = () => {
         );
         const filteredPropertiesWithTitles = filteredProperties.map(
           (property) => {
-            const propertyTitle = propertyData.find(
+            const propertyTitle = Hproperties.find(
               (p) => p._id === property._id
             )?.title;
             return { ...property, title: propertyTitle };
@@ -60,7 +60,7 @@ const HostBookings = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [hostInfo._id]);
+  }, [hostInfo._id, Hproperties]);
 
   return (
     <div>

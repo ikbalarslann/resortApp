@@ -1,24 +1,34 @@
-.PandA {
-  display: flex;
-  justify-content: space-around; // Adjust the spacing between cards
+.PandAe {
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-  &__card {
-    background-color: #f9f9f9; // Light background color
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  &-card {
+    border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 20px; // Increase padding for better spacing
+    cursor: pointer;
     margin: 10px;
-    width: 200px; // Set a fixed width for each card
+    transition: box-shadow 0.3s ease;
+    max-width: 60vw;
 
     &:hover {
-      transform: translateY(-5px);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    &-title {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-bottom: 8px;
+    &__body {
+      padding: 10px;
+
+      .PandAe__title {
+        font-size: 18px;
+        margin-bottom: 5px;
+      }
+
+      &__text {
+        font-size: 16px;
+        margin: 5px 0;
+      }
     }
   }
 }
