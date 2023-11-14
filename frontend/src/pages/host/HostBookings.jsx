@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
+import "./scss/hostBookings.scss";
 
 const HostBookings = () => {
   const { hostInfo } = useSelector((state) => state.auth);
@@ -51,7 +51,6 @@ const HostBookings = () => {
           }
         );
 
-        // Set the combined host data state
         setHostData({
           properties: filteredPropertiesWithTitles,
           bookings: filteredBookings,
@@ -65,29 +64,23 @@ const HostBookings = () => {
 
   return (
     <div>
-      <h1>Host Bookings</h1>
       <div>
         {hostData.bookings.map((booking, index) => (
-          <Card key={index}>
-            <Card.Body>
-              <Card.Text>number: {index + 1}</Card.Text>
-              <Card.Text>
-                Customer Name:{" "}
-                {
-                  hostData.users.find((user) => user._id === booking.userId)
-                    ?.name
-                }
-              </Card.Text>
-              <Card.Text>
-                Property Title:{" "}
-                {
-                  hostData.properties.find(
-                    (property) => property._id === booking.propertyId
-                  )?.title
-                }
-              </Card.Text>
-            </Card.Body>
-          </Card>
+          <div className="hostbookingcard" key={index}>
+            <p className="hostbookingcard__text">Number: {index + 1}</p>
+            <p className="hostbookingcard__text">
+              Customer Name:{" "}
+              {hostData.users.find((user) => user._id === booking.userId)?.name}
+            </p>
+            <p className="hostbookingcard__text">
+              Property Title:{" "}
+              {
+                hostData.properties.find(
+                  (property) => property._id === booking.propertyId
+                )?.title
+              }
+            </p>
+          </div>
         ))}
       </div>
     </div>

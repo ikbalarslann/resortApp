@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import "./scss/priceAvaliability.scss";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -15,28 +15,17 @@ const PriceAvaliability = () => {
   }, []);
 
   return (
-    <Container>
-      <Row>
-        {properties
-          .filter((property) => property.hostId === hostInfo?._id)
-          .map((property) => (
-            <Col key={property._id} md={4}>
-              <div>
-                <Card>
-                  <Link
-                    to={`/host/avalibility/${property._id}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Card.Body>
-                      <Card.Title>{property.title}</Card.Title>
-                    </Card.Body>
-                  </Link>
-                </Card>
-              </div>
-            </Col>
-          ))}
-      </Row>
-    </Container>
+    <div className="PandA">
+      {properties
+        .filter((property) => property.hostId === hostInfo?._id)
+        .map((property, index) => (
+          <div className="PandA__card" key={index}>
+            <Link to={`/host/avalibility/${property._id}`}>
+              <div className="PandA__card-title">{property.title}</div>
+            </Link>
+          </div>
+        ))}
+    </div>
   );
 };
 

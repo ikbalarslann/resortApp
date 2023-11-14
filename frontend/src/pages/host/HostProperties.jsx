@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import "./scss/hostProperties.scss";
 import MyCard from "../../components/cards/MyCard";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,30 +10,32 @@ const HostProperties = () => {
   const { hostInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // Fetch properties data here and update state
     fetch("/api/properties")
       .then((response) => response.json())
       .then((data) => setProperties(data));
   }, []);
 
   return (
-    <>
+    <div className="hostProperties">
       <Link to="/host/create">
-        <Button variant="primary">Create Property</Button>
+        <button className="hostProperties__button">Create Property</button>
       </Link>
 
-      <Container>
-        <Row>
+      <div className="hostProperties__container">
+        <div className="hostProperties__container__row">
           {properties
             .filter((property) => property.hostId === hostInfo?._id)
             .map((property) => (
-              <Col key={property._id} md={4}>
+              <div
+                key={property._id}
+                className="hostProperties__container__col"
+              >
                 <MyCard property={property} />
-              </Col>
+              </div>
             ))}
-        </Row>
-      </Container>
-    </>
+        </div>
+      </div>
+    </div>
   );
 };
 

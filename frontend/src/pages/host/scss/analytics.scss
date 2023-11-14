@@ -1,0 +1,53 @@
+// Your .analytics container styles
+.analyticsPage {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+
+  // Your button styles
+  &-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+
+  // Your .analytics-row styles
+  &-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+
+    // Your .analytics-row__col styles
+    &__col {
+      width: 33.33%;
+      padding: 10px;
+
+      // Your .analytics-row__col-card styles
+      &-card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+
+        // Your .card-body styles
+        .card-body {
+          padding: 15px;
+
+          // Your .card-title styles
+          .card-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}

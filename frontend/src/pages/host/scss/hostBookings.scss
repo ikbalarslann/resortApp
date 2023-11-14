@@ -1,0 +1,16 @@
+.hostbookingcard {
+  border: 1px solid #ddd;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+
+  max-width: 60vw;
+
+  &__text {
+    margin-bottom: 5px;
+
+    &:first-child {
+      font-weight: bold;
+    }
+  }
+}

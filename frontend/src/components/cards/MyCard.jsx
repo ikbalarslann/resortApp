@@ -1,26 +1,24 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "./scss/myCard.scss";
 
 const MyCard = ({ property }) => {
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{property.title}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
-          Host ID: {property.hostId}
-        </Card.Subtitle>
-        <Card.Text>{property.description}</Card.Text>
-        <Card.Text>Location: {property.location}</Card.Text>
-
-        <Card.Text>Price: ${property.price}</Card.Text>
-        <Card.Text>Avaliable Space: {property.avaliableSpace}</Card.Text>
-
+    <div className="myCard">
+      <div className="myCard__body">
+        <h2 className="myCard__title">{property.title}</h2>
+        <p className="myCard__subtitle">Host ID: {property.hostId}</p>
+        <p className="myCard__text">{property.description}</p>
+        <p className="myCard__text">Location: {property.location}</p>
+        <p className="myCard__text">Price: ${property.price}</p>
+        <p className="myCard__text">
+          Available Space: {property.avaliableSpace}
+        </p>
         <Link to={`/host/edit/${property._id}`}>
-          <Button variant="primary">Edit</Button>
+          <button className="myCard__button">Edit</button>
         </Link>
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 };
 

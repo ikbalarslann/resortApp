@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom"; // Import the Link component
+import { Link } from "react-router-dom";
+import "./scss/analytics.scss";
 
 const Analytics = () => {
   const [properties, setProperties] = useState([]);
@@ -16,29 +17,26 @@ const Analytics = () => {
   }, []);
 
   return (
-    <Container>
-      <Link to="/all-properties">
-        {" "}
-        {/* Define the route for the "All" button */}
-        <Button variant="primary">All</Button>{" "}
-        {/* Added variant to style the button */}
+    <div className="analyticsPage">
+      <Link to="/host/analytics">
+        <button className="analyticsPage-button">All</button>
       </Link>
-      <Row>
+      <div className="analyticsPage-row">
         {properties
           .filter((property) => property.hostId === hostInfo?._id)
           .map((property) => (
-            <Col key={property._id} md={4}>
-              <Card className="m-2">
+            <div key={property._id} className="analyticsPage-row__col">
+              <div className="analyticsPage-row__col-card ">
                 <Link to={`/host/analytics/${property._id}`}>
-                  <Card.Body>
-                    <Card.Title>{property.title}</Card.Title>
-                  </Card.Body>
+                  <div className="card-body">
+                    <div className="card-title">{property.title}</div>
+                  </div>
                 </Link>
-              </Card>
-            </Col>
+              </div>
+            </div>
           ))}
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
 import FormContainer from "./FormContainer";
+import "./scss/editCrateProperty.scss";
 
 const EditCreateProperty = ({ title, formData, setFormData, handleSubmit }) => {
   const handleInputChange = (e) => {
@@ -23,7 +23,7 @@ const EditCreateProperty = ({ title, formData, setFormData, handleSubmit }) => {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        const imagePath = reader.result; // This is the data URL representing the file content
+        const imagePath = reader.result;
         setFormData((prevData) => ({ ...prevData, [name]: imagePath }));
       };
 
@@ -35,72 +35,103 @@ const EditCreateProperty = ({ title, formData, setFormData, handleSubmit }) => {
   return (
     <FormContainer>
       <h1>{`${title} Property`}</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="title">
-          <Form.Control
+      <form className="editCreateProperty" onSubmit={handleSubmit}>
+        <div className="editCreateProperty__group">
+          <label htmlFor="title" className="editCreateProperty__group__label">
+            Title
+          </label>
+          <input
             type="text"
             placeholder="Enter title"
             name="title"
+            id="title"
             value={formData.title}
             onChange={handleInputChange}
             required
+            className="editCreateProperty__group__input"
           />
-        </Form.Group>
+        </div>
 
-        <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
+        <div className="editCreateProperty__group">
+          <label
+            htmlFor="description"
+            className="editCreateProperty__group__label"
+          >
+            Description
+          </label>
+          <textarea
+            rows="3"
             placeholder="Enter description"
             name="description"
+            id="description"
             value={formData.description}
             onChange={handleInputChange}
             required
-          />
-        </Form.Group>
+            className="editCreateProperty__group__input"
+          ></textarea>
+        </div>
 
-        <Form.Group className="mb-3" controlId="location">
-          <Form.Label>Location</Form.Label>
-          <Form.Control
+        <div className="editCreateProperty__group">
+          <label
+            htmlFor="location"
+            className="editCreateProperty__group__label"
+          >
+            Location
+          </label>
+          <input
             type="text"
             placeholder="Enter location"
             name="location"
+            id="location"
             value={formData.location}
             onChange={handleInputChange}
             required
+            className="editCreateProperty__group__input"
           />
-        </Form.Group>
+        </div>
 
-        <Form.Group className="mb-3" controlId="price">
-          <Form.Label>{"$"} Price </Form.Label>
-          <Form.Control
+        <div className="editCreateProperty__group">
+          <label htmlFor="price" className="editCreateProperty__group__label">
+            Price
+          </label>
+          <input
             type="number"
             placeholder="Choose price"
             name="price"
+            id="price"
             value={formData.price}
             onChange={handleInputChange}
             required
+            className="editCreateProperty__group__input"
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="space">
-          <Form.Label>Avaliable Space</Form.Label>
-          <Form.Control
+        </div>
+
+        <div className="editCreateProperty__group">
+          <label htmlFor="space" className="editCreateProperty__group__label">
+            Available Space
+          </label>
+          <input
             type="number"
             placeholder="Choose available space"
             name="space"
+            id="space"
             value={formData.space}
             onChange={handleInputChange}
             required
+            className="editCreateProperty__group__input"
           />
-        </Form.Group>
+        </div>
 
-        <Form.Label>Pool Type</Form.Label>
-        <Form.Select
+        <label htmlFor="type" className="editCreateProperty__group__label">
+          Pool Type
+        </label>
+        <select
           name="type"
+          id="type"
           value={formData.type}
           onChange={handleInputChange}
           required
+          className="editCreateProperty__group__select"
         >
           <option value="" disabled>
             Select pool type
@@ -110,25 +141,29 @@ const EditCreateProperty = ({ title, formData, setFormData, handleSubmit }) => {
               {option}
             </option>
           ))}
-        </Form.Select>
+        </select>
 
-        <Form.Group className="mb-3" controlId="images">
-          <Form.Label>Images</Form.Label>
-          <Form.Control
+        <div className="editCreateProperty__group">
+          <label htmlFor="images" className="editCreateProperty__group__label">
+            Images
+          </label>
+          <input
             type="file"
             name="images"
+            id="images"
             onChange={handleImageChange}
             multiple
+            className="editCreateProperty__file"
           />
-          <Form.Text className="text-muted">
+          <p className="editCreateProperty__group__text">
             Select two images for upload.
-          </Form.Text>
-        </Form.Group>
+          </p>
+        </div>
 
-        <Button variant="primary" type="submit">
+        <button type="submit" className="editCreateProperty__button">
           {`${title} Property`}
-        </Button>
-      </Form>
+        </button>
+      </form>
     </FormContainer>
   );
 };
