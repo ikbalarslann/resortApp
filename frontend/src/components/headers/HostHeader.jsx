@@ -1,5 +1,3 @@
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useHlogoutMutation } from "../../slices/apis/hostsApiSlice";
@@ -7,8 +5,18 @@ import { logout } from "../../slices/authSlice";
 import { setDate } from "../../slices/searchbars/dateSlice";
 import { setProperties } from "../../slices/properties/propertiesSlice";
 import { setLocation } from "../../slices/searchbars/locationSlice";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import "./scss/hostHeader.scss";
 
 const HostHeader = () => {
+  //dropdown menu
+  const [dropdownHidden, setDropdownHidden] = useState(true);
+
+  const toggleDropdown = () => {
+    setDropdownHidden(!dropdownHidden);
+  };
+
   const { hostInfo } = useSelector((state) => state.auth);
 
   const [logoutApiCall] = useHlogoutMutation();
@@ -34,50 +42,39 @@ const HostHeader = () => {
 
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-        <Container>
-          <LinkContainer to="/host">
-            <Navbar.Brand onClick={() => handleLogoClick()}>
-              Resort
-            </Navbar.Brand>
-          </LinkContainer>
-
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              <>
-                <NavDropdown title="Management" id="management">
-                  <LinkContainer to="/host/properties">
-                    <NavDropdown.Item>Property</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/host/bookings">
-                    <NavDropdown.Item>Bookings</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/host/avalibility">
-                    <NavDropdown.Item>Price & Avalibility</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/host/analytics">
-                    <NavDropdown.Item>Analytics</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
-                <NavDropdown
-                  title={hostInfo && `Host : ${hostInfo.name}`}
-                  id="username"
+      <div className="host-nav">
+        <h1>
+          <Link
+            to="/host"
+            onClick={() => handleLogoClick()}
+            className="host-nav__logo"
+          >
+            Resort
+          </Link>
+        </h1>
+        <div className="host-nav__links">
+          <div className="host-nav__user">
+            <h5 className="host-nav__user-name" onClick={toggleDropdown}>
+              Host: {hostInfo.name}
+            </h5>
+            {!dropdownHidden && (
+              <div className="dropdown-menu">
+                <Link to="/profile" className="host-nav__links-link">
+                  Profile
+                </Link>
+                <Link
+                  to="/"
+                  onClick={logoutHandler}
+                  className="host-nav__links-link"
                 >
-                  <LinkContainer to="/host/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+                  Logout
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </header>
   );
 };
-
 export default HostHeader;

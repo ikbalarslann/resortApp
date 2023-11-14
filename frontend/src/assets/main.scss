@@ -1,9 +1,15 @@
 body {
   margin-top: 3vh;
+  padding-top: 3vh;
 }
 
 html,
 body,
 #root {
   height: 100%;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
 }
