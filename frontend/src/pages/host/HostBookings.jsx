@@ -65,13 +65,17 @@ const HostBookings = () => {
   return (
     <div>
       <div>
+        <h1>
+          {hostData.bookings.length > 0 &&
+            hostData.properties.find(
+              (property) => property._id === hostData.bookings[0].propertyId
+            )?.title}
+        </h1>
+        <h1>{hostData.bookings.length} bookings</h1>
         {hostData.bookings.map((booking, index) => (
           <div className="hostbookingcard" key={index}>
             <p className="hostbookingcard__text">Number: {index + 1}</p>
-            <p className="hostbookingcard__text">
-              Customer Name:{" "}
-              {hostData.users.find((user) => user._id === booking.userId)?.name}
-            </p>
+            <p className="hostbookingcard__text">Date: {booking.date}</p>
             <p className="hostbookingcard__text">
               Property Title:{" "}
               {
@@ -79,6 +83,10 @@ const HostBookings = () => {
                   (property) => property._id === booking.propertyId
                 )?.title
               }
+            </p>
+            <p className="hostbookingcard__text">
+              Customer Name:{" "}
+              {hostData.users.find((user) => user._id === booking.userId)?.name}
             </p>
           </div>
         ))}

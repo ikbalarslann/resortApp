@@ -59,7 +59,7 @@ const PriceAvaliability = () => {
 
   return (
     <div className="PandAe">
-      <h1 className="PandAe__title">Price Availability</h1>
+      <h1 className="PandAe__title">November</h1>
       <h2 className="PandAe__title">Property Name: {Hproperties[0].title}</h2>
 
       {availability.length > 0 &&

@@ -50,6 +50,7 @@ const BookCard = ({ property }) => {
       }
     };
     const createBooking = async () => {
+      console.log(`date: ${date}`);
       fetch("/api/bookings", {
         method: "POST",
         headers: {
