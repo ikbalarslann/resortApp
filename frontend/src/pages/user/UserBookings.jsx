@@ -6,6 +6,7 @@ import "./scss/userBookings.scss";
 
 const UserBookings = () => {
   const { userInfo } = useSelector((state) => state.auth);
+  const { date } = useSelector((state) => state.date);
   const [bookings, setBookings] = useState([]);
   const [showModals, setShowModals] = useState([]);
 
@@ -91,6 +92,9 @@ const UserBookings = () => {
               </h2>
               <p className="userBookings-card__content-item">
                 Status: {booking.status}
+              </p>
+              <p className="userBookings-card__content-item">
+                Date: {booking.date}
               </p>
               <p className="userBookings-card__content-item">
                 Payment: {booking.payment ? "true" : "false"}
