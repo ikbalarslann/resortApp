@@ -1,12 +1,70 @@
 // Sidebar.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./scss/sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setSProperties } from "../slices/properties/SpropertiesSlice";
+import { set } from "mongoose";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const { properties } = useSelector((state) => state.properties);
+
+  const [allowedTypes, setAllowedTypes] = useState([]);
+  const [availability, setAvailability] = useState(false);
+  const [ratingValue, setRatingValue] = useState(0);
+
+  useEffect(() => {
+    updateProperties();
+  }, [allowedTypes, availability, ratingValue]);
+
+  const updateProperties = () => {
+    const filterProperties = () => {
+      try {
+        let filteredProperties = properties;
+
+        if (availability) {
+          filteredProperties = filteredProperties.filter(
+            (property) => property.availability[0].availableSpaces > 0
+          );
+        }
+
+        filteredProperties = filteredProperties.filter((property) => {
+          return allowedTypes.length === 0
+            ? true
+            : allowedTypes.includes(property.type);
+        });
+
+        if (ratingValue) {
+          filteredProperties = properties.filter(
+            (property) => averageReview(property) > ratingValue
+          );
+        }
+
+        return filteredProperties;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const filteredProperties = filterProperties();
+    dispatch(setSProperties(filteredProperties));
+  };
+
+  const handleTypeChange = (e, t) => {
+    const newValue = e.target.checked;
+
+    setAllowedTypes((prevAllowedTypes) => {
+      const updatedTypes = newValue
+        ? [...prevAllowedTypes, t]
+        : prevAllowedTypes.filter((type) => type !== t);
+
+      return updatedTypes;
+    });
+  };
+
+  const handleAvailabilityChange = (e) => {
+    setAvailability(e.target.checked);
+  };
 
   const averageReview = (property) => {
     if (property.reviews.length === 0) return 0;
@@ -23,111 +81,29 @@ const Sidebar = () => {
     return roundedAvg.toFixed(1);
   };
 
-  //avaliability
-  const [availabilityChecked, setAvailabilityChecked] = useState(false);
+  const handleRatingChange = (r) => {
+    const ratingCheckboxes = document.querySelectorAll(
+      ".sidebar__title__checkbox.rating"
+    );
 
-  //Pool Style
-  const [olimpicChecked, setOlimpicChecked] = useState(false);
-  const [semiOlimpicChecked, setSemiOlimpicChecked] = useState(false);
-  const [hotelPoolChecked, setHotelPoolChecked] = useState(false);
-  const [aquaparkChecked, setAquaparkChecked] = useState(false);
+    // If the clicked checkbox is already checked, uncheck all rating checkboxes
+    if (ratingValue === r) {
+      ratingCheckboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
 
-  //Guest rating
-  const [guestRating3Checked, setGuestRating3Checked] = useState(false);
-  const [guestRating4Checked, setGuestRating4Checked] = useState(false);
-  const [guestRating45Checked, setGuestRating45Checked] = useState(false);
+      setRatingValue(0); // Reset the rating filter
+    } else {
+      // Otherwise, check only the clicked checkbox
+      ratingCheckboxes.forEach((checkbox) => {
+        if (parseFloat(checkbox.value) === r) {
+          checkbox.checked = true;
+        } else {
+          checkbox.checked = false;
+        }
+      });
 
-  //avaliability
-  const handleAvailabilityChange = (e) => {
-    setAvailabilityChecked(e.target.checked);
-    if (e.target.checked) {
-      const filteredProperties = properties.filter(
-        (property) => property.availability[0].availableSpaces > 0
-      );
-      dispatch(setSProperties(filteredProperties));
-    } else {
-      console.log("Availability checkbox is unchecked");
-    }
-  };
-
-  //Pool Style
-  const handleOlimpicChange = (e) => {
-    setOlimpicChecked(e.target.checked);
-    if (e.target.checked) {
-      const filteredProperties = properties.filter(
-        (property) => property.type === "Olimpic"
-      );
-      dispatch(setSProperties(filteredProperties));
-    } else {
-      console.log("Olimpic checkbox is unchecked");
-    }
-  };
-  const handleSemiOlimpicChange = (e) => {
-    setSemiOlimpicChecked(e.target.checked);
-    if (e.target.checked) {
-      const filteredProperties = properties.filter(
-        (property) => property.type === "SemiOlimpic"
-      );
-      dispatch(setSProperties(filteredProperties));
-    } else {
-      console.log("SemiOlimpic checkbox is unchecked");
-    }
-  };
-  const handleHotelPoolChange = (e) => {
-    setHotelPoolChecked(e.target.checked);
-    if (e.target.checked) {
-      const filteredProperties = properties.filter(
-        (property) => property.type === "HotelPool"
-      );
-      dispatch(setSProperties(filteredProperties));
-    } else {
-      console.log("HotelPool checkbox is unchecked");
-    }
-  };
-  const handleAquaparkChange = (e) => {
-    setAquaparkChecked(e.target.checked);
-    if (e.target.checked) {
-      const filteredProperties = properties.filter(
-        (property) => property.type === "Aquapark"
-      );
-      dispatch(setSProperties(filteredProperties));
-    } else {
-      console.log("Aquapark checkbox is unchecked");
-    }
-  };
-
-  //Guest rating
-  const handleGuestRating3Change = (e) => {
-    setGuestRating3Checked(e.target.checked);
-    if (e.target.checked) {
-      const filteredProperties = properties.filter(
-        (property) => averageReview(property) > 3
-      );
-      dispatch(setSProperties(filteredProperties));
-    } else {
-      console.log("GuestRating3 checkbox is unchecked");
-    }
-  };
-  const handleGuestRating4Change = (e) => {
-    setGuestRating4Checked(e.target.checked);
-    if (e.target.checked) {
-      const filteredProperties = properties.filter(
-        (property) => averageReview(property) > 4
-      );
-      dispatch(setSProperties(filteredProperties));
-    } else {
-      console.log("GuestRating4 checkbox is unchecked");
-    }
-  };
-  const handleGuestRating45Change = (e) => {
-    setGuestRating45Checked(e.target.checked);
-    if (e.target.checked) {
-      const filteredProperties = properties.filter(
-        (property) => averageReview(property) > 4.5
-      );
-      dispatch(setSProperties(filteredProperties));
-    } else {
-      console.log("GuestRating45 checkbox is unchecked");
+      setRatingValue(r); // Set the rating filter to the clicked value
     }
   };
 
@@ -138,7 +114,6 @@ const Sidebar = () => {
         <input
           className="sidebar__title__checkbox"
           type="checkbox"
-          checked={availabilityChecked}
           onChange={handleAvailabilityChange}
         />
         Available
@@ -150,8 +125,7 @@ const Sidebar = () => {
           <input
             className="sidebar__title__checkbox"
             type="checkbox"
-            checked={olimpicChecked}
-            onChange={handleOlimpicChange}
+            onChange={(e) => handleTypeChange(e, "Olimpic")}
           />
           Olympic
         </label>
@@ -159,8 +133,7 @@ const Sidebar = () => {
           <input
             className="sidebar__title__checkbox"
             type="checkbox"
-            checked={semiOlimpicChecked}
-            onChange={handleSemiOlimpicChange}
+            onChange={(e) => handleTypeChange(e, "Semi-Olimpic")}
           />
           Semi Olympic
         </label>
@@ -168,8 +141,7 @@ const Sidebar = () => {
           <input
             className="sidebar__title__checkbox"
             type="checkbox"
-            checked={hotelPoolChecked}
-            onChange={handleHotelPoolChange}
+            onChange={(e) => handleTypeChange(e, "Hotel Pool")}
           />
           Hotel Pool
         </label>
@@ -177,8 +149,7 @@ const Sidebar = () => {
           <input
             className="sidebar__title__checkbox"
             type="checkbox"
-            checked={aquaparkChecked}
-            onChange={handleAquaparkChange}
+            onChange={(e) => handleTypeChange(e, "Aqua Park")}
           />
           Aquapark
         </label>
@@ -187,28 +158,28 @@ const Sidebar = () => {
       <div className="sidebar__title__options">
         <label className="sidebar__title__checkbox-label">
           <input
-            className="sidebar__title__checkbox"
+            className="sidebar__title__checkbox rating"
             type="checkbox"
-            checked={guestRating3Checked}
-            onChange={handleGuestRating3Change}
+            onChange={() => handleRatingChange(3)}
+            checked={ratingValue === 3}
           />
           +3
         </label>
-        <label className="sidebar__title__checkbox-label">
+        <label className="sidebar__title__checkbox-label ">
           <input
-            className="sidebar__title__checkbox"
+            className="sidebar__title__checkbox rating"
             type="checkbox"
-            checked={guestRating4Checked}
-            onChange={handleGuestRating4Change}
+            onChange={() => handleRatingChange(4)}
+            checked={ratingValue === 4}
           />
           +4
         </label>
         <label className="sidebar__title__checkbox-label">
           <input
-            className="sidebar__title__checkbox"
+            className="sidebar__title__checkbox rating"
             type="checkbox"
-            checked={guestRating45Checked}
-            onChange={handleGuestRating45Change}
+            onChange={() => handleRatingChange(4.5)}
+            checked={ratingValue === 4.5}
           />
           +4.5
         </label>
