@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./scss/sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { setProperties } from "../slices/properties/propertiesSlice";
+import { setSProperties } from "../slices/properties/SpropertiesSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const Sidebar = () => {
       const filteredProperties = properties.filter(
         (property) => property.availability[0].availableSpaces > 0
       );
-      dispatch(setProperties(filteredProperties));
+      dispatch(setSProperties(filteredProperties));
     } else {
       console.log("Availability checkbox is unchecked");
     }
@@ -57,7 +57,7 @@ const Sidebar = () => {
       const filteredProperties = properties.filter(
         (property) => property.type === "Olimpic"
       );
-      dispatch(setProperties(filteredProperties));
+      dispatch(setSProperties(filteredProperties));
     } else {
       console.log("Olimpic checkbox is unchecked");
     }
@@ -68,7 +68,7 @@ const Sidebar = () => {
       const filteredProperties = properties.filter(
         (property) => property.type === "SemiOlimpic"
       );
-      dispatch(setProperties(filteredProperties));
+      dispatch(setSProperties(filteredProperties));
     } else {
       console.log("SemiOlimpic checkbox is unchecked");
     }
@@ -79,7 +79,7 @@ const Sidebar = () => {
       const filteredProperties = properties.filter(
         (property) => property.type === "HotelPool"
       );
-      dispatch(setProperties(filteredProperties));
+      dispatch(setSProperties(filteredProperties));
     } else {
       console.log("HotelPool checkbox is unchecked");
     }
@@ -90,7 +90,7 @@ const Sidebar = () => {
       const filteredProperties = properties.filter(
         (property) => property.type === "Aquapark"
       );
-      dispatch(setProperties(filteredProperties));
+      dispatch(setSProperties(filteredProperties));
     } else {
       console.log("Aquapark checkbox is unchecked");
     }
@@ -103,7 +103,7 @@ const Sidebar = () => {
       const filteredProperties = properties.filter(
         (property) => averageReview(property) > 3
       );
-      dispatch(setProperties(filteredProperties));
+      dispatch(setSProperties(filteredProperties));
     } else {
       console.log("GuestRating3 checkbox is unchecked");
     }
@@ -114,7 +114,7 @@ const Sidebar = () => {
       const filteredProperties = properties.filter(
         (property) => averageReview(property) > 4
       );
-      dispatch(setProperties(filteredProperties));
+      dispatch(setSProperties(filteredProperties));
     } else {
       console.log("GuestRating4 checkbox is unchecked");
     }
@@ -125,7 +125,7 @@ const Sidebar = () => {
       const filteredProperties = properties.filter(
         (property) => averageReview(property) > 4.5
       );
-      dispatch(setProperties(filteredProperties));
+      dispatch(setSProperties(filteredProperties));
     } else {
       console.log("GuestRating45 checkbox is unchecked");
     }

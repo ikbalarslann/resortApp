@@ -9,6 +9,7 @@ const AddCard = ({ property, isShowWishList = true }) => {
 
   const dispatch = useDispatch();
   const { WLproperties } = useSelector((state) => state.WLproperties);
+  const { date } = useSelector((state) => state.date);
 
   const handleAddToWishListClick = async () => {
     console.log("add to wish list");
@@ -40,11 +41,13 @@ const AddCard = ({ property, isShowWishList = true }) => {
 
       <div className="addCard__content">
         <p className="addCard__content__text">{property.location}</p>
+        <p className="addCard__content__text">date : {date}</p>
         <h5 className="addCard__content__title">{property.title}</h5>
         <p className="addCard__content__text">
           {averageReview()}/5 - {property.reviews.length} reviews
         </p>
         <p className="addCard__content__text">{property.type}</p>
+
         <p className="addCard__content__text">
           Description: {property.description}
         </p>

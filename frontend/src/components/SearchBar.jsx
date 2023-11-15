@@ -1,25 +1,99 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./scss/searchBar.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { setProperties } from "../slices/properties/propertiesSlice";
+import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { setLocation } from "../slices/searchbars/locationSlice";
+import { setDate } from "../slices/searchbars/dateSlice";
+import { setSProperties } from "../slices/properties/SpropertiesSlice";
 
-const SearchBar = ({ onSearch, suggestedLocations }) => {
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
+const SearchBar = () => {
+  const [suggestedLocations, setSuggestedLocations] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [filterproperties, setFilterProperties] = useState([]);
 
-  const handleSearch = () => {
-    onSearch({ location, date });
-  };
+  const { date } = useSelector((state) => state.date);
+  const { location } = useSelector((state) => state.location);
+  const { properties } = useSelector((state) => state.properties);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //handle section
   const handleLocationChange = (e) => {
     const value = e.target.value.toLowerCase();
-    setLocation(value);
+    dispatch(setLocation(value));
     setShowSuggestions(value.length > 0);
   };
-
   const handleLocationSelect = (selectedLocation) => {
-    setLocation(selectedLocation);
+    dispatch(setLocation(selectedLocation));
     setShowSuggestions(false);
   };
+  const handleDateChange = (e) => {
+    const value = e.target.value;
+    dispatch(setDate(value));
+  };
+  const handleSearch = async () => {
+    try {
+      const response = await fetch("/api/properties");
+      if (response.ok) {
+        const data = await response.json();
+
+        const filteredProperties = await data
+          .map((property) => ({
+            ...property,
+            availability: property.availability
+              .map((element) => ({
+                ...element,
+                date: format(new Date(element.date), "yyyy-MM-dd"),
+              }))
+              .filter((element) => element.date === date),
+          }))
+          .filter((property) => property.location.toLowerCase() === location);
+
+        setFilterProperties(filteredProperties);
+        dispatch(setSProperties(filteredProperties));
+      } else {
+        console.error(
+          "Failed to fetch property data. Status: " + response.status
+        );
+      }
+    } catch (error) {
+      console.error("Error while fetching property data:", error);
+      throw error;
+    }
+  };
+
+  //useEffect section
+  useEffect(() => {
+    dispatch(setProperties(filterproperties));
+  }, [filterproperties, dispatch]);
+
+  useEffect(() => {
+    if (properties.length > 0) {
+      navigate("/user/properties");
+    }
+  }, [properties, navigate]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/locations");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const locations = data.map((location) => location.location);
+
+        setSuggestedLocations(locations);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="searchBar-cover">
@@ -30,8 +104,8 @@ const SearchBar = ({ onSearch, suggestedLocations }) => {
             type="text"
             id="location"
             placeholder="Search by location"
-            value={location}
-            onInput={handleLocationChange}
+            value={location || ""}
+            onChange={handleLocationChange}
             autoComplete="off"
           />
           {showSuggestions && (
@@ -58,8 +132,8 @@ const SearchBar = ({ onSearch, suggestedLocations }) => {
           type="date"
           id="date"
           placeholder="Search by date"
-          value={date}
-          onInput={(e) => setDate(e.target.value)}
+          value={date || ""}
+          onChange={handleDateChange}
         />
 
         <button className="searchBar__button" onClick={handleSearch}>
