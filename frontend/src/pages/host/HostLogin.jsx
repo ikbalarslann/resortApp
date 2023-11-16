@@ -22,6 +22,7 @@ const HostLogin = () => {
   useEffect(() => {
     if (hostInfo) {
       navigate("/host");
+      window.scrollTo(0, 0);
     }
   }, [navigate, hostInfo]);
 

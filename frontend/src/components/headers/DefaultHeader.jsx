@@ -1,18 +1,19 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../slices/apis/usersApiSlice";
+import { useHlogoutMutation } from "../../slices/apis/hostsApiSlice";
 import { logout } from "../../slices/authSlice";
 import { setDate } from "../../slices/searchbars/dateSlice";
 import { setProperties } from "../../slices/properties/propertiesSlice";
 import { setLocation } from "../../slices/searchbars/locationSlice";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./scss/userHeader.scss";
 
 const DefaultHeader = () => {
-  //dropdown menu
   const [dropdownHidden, setDropdownHidden] = useState(true);
   const [dropdownHiddenHost, setDropdownHiddenHost] = useState(true);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropdownHidden(!dropdownHidden);
@@ -28,6 +29,36 @@ const DefaultHeader = () => {
     dispatch(setProperties({ properties: [] }));
     dispatch(setLocation(null));
   };
+
+  const [HostlogoutApiCall] = useHlogoutMutation();
+  const [logoutApiCall] = useLogoutMutation();
+
+  useEffect(() => {
+    const UserLogout = async () => {
+      try {
+        await logoutApiCall().unwrap();
+        dispatch(logout({ type: "user" }));
+        navigate("/");
+        window.scrollTo(0, 0);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const HostLogout = async () => {
+      try {
+        await HostlogoutApiCall().unwrap();
+        dispatch(logout({ type: "host" }));
+        navigate("/");
+        window.scrollTo(0, 0);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    UserLogout();
+    HostLogout();
+  }, []);
 
   return (
     <header>

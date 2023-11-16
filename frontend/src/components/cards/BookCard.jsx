@@ -14,15 +14,6 @@ const BookCard = ({ property }) => {
 
   const dispatch = useDispatch();
 
-  const Alert = ({ type, message }) => {
-    return (
-      <div className={`alert alert--${type}`}>
-        <div className="alert__message">{message}</div>
-        <button className="alert__close-button">Close</button>
-      </div>
-    );
-  };
-
   const handleBookingClick = async () => {
     if (!userInfo) {
       alert("Please login to book");

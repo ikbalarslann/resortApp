@@ -122,6 +122,7 @@ const EditProperty = () => {
       });
 
     Navigate("/host/properties");
+    window.scrollTo(0, 0);
   };
 
   return (

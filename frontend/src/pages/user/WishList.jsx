@@ -2,9 +2,14 @@ import React from "react";
 import AddCard from "../../components/cards/AddCard";
 import "./scss/property.scss";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const WishList = () => {
   const WLproperties = useSelector((state) => state.WLproperties);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="wishlist">

@@ -29,6 +29,7 @@ const HostHeader = () => {
       await logoutApiCall().unwrap();
       dispatch(logout({ type: "host" }));
       navigate("/");
+      window.scrollTo(0, 0);
     } catch (err) {
       console.error(err);
     }

@@ -30,6 +30,7 @@ const UserHeader = () => {
       await logoutApiCall().unwrap();
       dispatch(logout({ type: "user" }));
       navigate("/");
+      window.scrollTo(0, 0);
     } catch (err) {
       console.error(err);
     }

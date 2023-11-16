@@ -88,6 +88,7 @@ const SearchBar = () => {
   useEffect(() => {
     if (properties.length > 0) {
       navigate("/user/properties");
+      window.scrollTo(0, 0);
     }
   }, [properties, navigate]);
 

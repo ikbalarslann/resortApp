@@ -22,6 +22,7 @@ const Login = () => {
   useEffect(() => {
     if (userInfo) {
       navigate("/user");
+      window.scrollTo(0, 0);
     }
   }, [navigate, userInfo]);
 

@@ -24,6 +24,7 @@ const Register = () => {
   useEffect(() => {
     if (userInfo) {
       navigate("/");
+      window.scrollTo(0, 0);
     }
   }, [navigate, userInfo]);
 
@@ -37,6 +38,7 @@ const Register = () => {
         const res = await register({ name, email, password }).unwrap();
         dispatch(setCredentials({ type: "user", data: { ...res } }));
         navigate("/");
+        window.scrollTo(0, 0);
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }

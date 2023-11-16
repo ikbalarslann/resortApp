@@ -1,11 +1,15 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import BookCard from "../../components/cards/BookCard";
 import { useSelector } from "react-redux";
 import "./scss/shoppingCard.scss";
+import { useEffect } from "react";
 
 const ShoppingCard = () => {
   const SCproperties = useSelector((state) => state.SCproperties.SCproperties);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="shoppingCard">

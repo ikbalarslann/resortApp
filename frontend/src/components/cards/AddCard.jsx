@@ -34,6 +34,7 @@ const AddCard = ({ property, isShowWishList = true }) => {
 
   const handleViewClick = async () => {
     navigate(`/user/properties/${property._id}`);
+    window.scrollTo(0, 0);
   };
 
   return (
