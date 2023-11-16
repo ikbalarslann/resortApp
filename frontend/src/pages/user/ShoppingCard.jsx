@@ -9,6 +9,7 @@ const ShoppingCard = () => {
 
   return (
     <div className="shoppingCard">
+      <h1>Shopping Card</h1>
       <div className="shoppingCard__row">
         {SCproperties.map((property, index) => (
           <div key={index} className="shoppingCard__row-col">

@@ -1,16 +1,22 @@
-import { Container } from "react-bootstrap";
 import "react-toastify/dist/ReactToastify.css";
 import DefaultHeader from "../components/headers/DefaultHeader";
 import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const DefaultLayout = () => {
   return (
-    <>
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       <DefaultHeader />
-      <Container className="my-2">
-        <Outlet />
-      </Container>
-    </>
+      <div style={{ flex: 1, position: "relative" }}>
+        <div style={{ marginBottom: "4vh" }}>
+          <Outlet />
+        </div>
+
+        <Footer />
+      </div>
+    </div>
   );
 };
 

@@ -5,12 +5,12 @@ import "./scss/property.scss";
 import Sidebar from "../../components/Sidebar";
 import Searchbar from "../../components/SearchBar";
 import { setSProperties } from "../../slices/properties/SpropertiesSlice";
+import { setProperties } from "../../slices/properties/propertiesSlice";
 import { format } from "date-fns";
 import { useEffect } from "react";
 
 const Property = () => {
   const { Sproperties } = useSelector((state) => state.Sproperties);
-  const { userInfo } = useSelector((state) => state.auth);
 
   const { date } = useSelector((state) => state.date);
   const { location } = useSelector((state) => state.location);
@@ -36,6 +36,7 @@ const Property = () => {
             }))
             .filter((property) => property.location.toLowerCase() === location);
 
+          dispatch(setProperties(filteredProperties));
           dispatch(setSProperties(filteredProperties));
         } else {
           console.error(
@@ -58,7 +59,7 @@ const Property = () => {
         <Searchbar />
         {Sproperties.map((property) => (
           <div key={property._id} className="property__row-col">
-            <AddCard property={property} userId={userInfo._id} />
+            <AddCard property={property} />
           </div>
         ))}
       </div>

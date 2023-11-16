@@ -28,6 +28,7 @@ import EditProperty from "./pages/host/EditProperty.jsx";
 import HostBookings from "./pages/host/HostBookings.jsx";
 import PriceAvaliability from "./pages/host/PriceAvaliability.jsx";
 import PropertyAnalytics from "./pages/host/Analytics.jsx";
+import HostProfile from "./pages/host/HostProfile.jsx";
 
 //common routes
 import Home from "./pages/Home.jsx";
@@ -64,6 +65,22 @@ const Router = () => {
             {
               path: "hostRegister",
               element: <HostRegister />,
+            },
+            {
+              path: "user/properties",
+              element: <Property />,
+            },
+            {
+              path: "user/properties/:propertyId",
+              element: <SingleProperty />,
+            },
+            {
+              path: "user/shoppingCard",
+              element: <ShoppingCard />,
+            },
+            {
+              path: "user/wishlist",
+              element: <WishList />,
             },
           ],
         },
@@ -140,6 +157,10 @@ const Router = () => {
             {
               path: "/profile",
               element: <Profile />,
+            },
+            {
+              path: "/hprofile",
+              element: <HostProfile />,
             },
           ],
         },

@@ -59,7 +59,7 @@ const HostHeader = () => {
             </h5>
             {!dropdownHidden && (
               <div className="dropdown-menu">
-                <Link to="/profile" className="host-nav__links-link">
+                <Link to="/hprofile" className="host-nav__links-link">
                   Profile
                 </Link>
                 <Link

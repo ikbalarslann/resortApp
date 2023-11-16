@@ -56,10 +56,10 @@ const AddCard = ({ property, isShowWishList = true }) => {
         </p>
 
         <p className="addCard__content__text">
-          Space: {property.availability.map((e) => e.availableSpaces)}
+          Space: {property.availability[0].availableSpaces}
         </p>
         <p className="addCard__content__title">
-          Price: {property.availability.map((e) => e.pricePerNight)}
+          Price: {property.availability[0].pricePerNight}
         </p>
         <div className="addCard__content-button-group">
           {isShowWishList && (

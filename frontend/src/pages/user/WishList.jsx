@@ -8,6 +8,7 @@ const WishList = () => {
 
   return (
     <div className="wishlist">
+      <h1>WishList</h1>
       <div className="wishlist__row">
         {WLproperties.WLproperties.map((property, index) => (
           <div className="wishlist__row-col" key={index}>
