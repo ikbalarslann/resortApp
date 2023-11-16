@@ -5,47 +5,72 @@ import image4 from "../assets/img/exploreLocations/4.jpeg";
 import image5 from "../assets/img/exploreLocations/5.jpeg";
 import image6 from "../assets/img/exploreLocations/6.jpeg";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setLocation } from "../slices/searchbars/locationSlice";
+import { setDate } from "../slices/searchbars/dateSlice";
+
+import { useNavigate } from "react-router-dom";
+
 import "./scss/exploreLocations.scss";
 
 const ExploreLocations = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const data = [
     {
-      title: "New York",
+      title: "new york",
       img: image1,
     },
     {
-      title: "Los Angeles",
+      title: "los angeles",
       img: image2,
     },
     {
-      title: "San Francisco",
+      title: "san francisco",
       img: image3,
     },
     {
-      title: "Chicago",
+      title: "chicago",
       img: image4,
     },
     {
-      title: "Miami",
+      title: "miami",
       img: image5,
     },
     {
-      title: "Boston",
+      title: "boston",
       img: image6,
     },
   ];
+
+  const handleOnClick = async (location) => {
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const year = currentDate.getFullYear();
+    const formattedDate = `${year}-${month}-${day}`;
+
+    dispatch(setLocation(location));
+    dispatch(setDate(formattedDate));
+
+    navigate("/user/properties");
+  };
 
   return (
     <div className="exploreLocation">
       <h1>Explore Locations</h1>
 
       <div className="exploreLocation__cards">
-        {data.map((element) => {
+        {data.map((element, index) => {
           return (
             <div
               className="exploreLocation__cards-card"
               style={{ backgroundImage: `url(${element.img})` }}
-              key={element.title}
+              onClick={() => {
+                handleOnClick(element.title);
+              }}
+              key={index}
             >
               <p>Explore</p>
               <h2>{element.title}</h2>

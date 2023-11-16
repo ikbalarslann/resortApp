@@ -12,6 +12,7 @@ const SearchBar = () => {
   const [suggestedLocations, setSuggestedLocations] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [filterproperties, setFilterProperties] = useState([]);
+  const [searchTriggered, setSearchTriggered] = useState(false);
 
   const { date } = useSelector((state) => state.date);
   const { location } = useSelector((state) => state.location);
@@ -20,52 +21,66 @@ const SearchBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //handle section
   const handleLocationChange = (e) => {
     const value = e.target.value.toLowerCase();
     dispatch(setLocation(value));
     setShowSuggestions(value.length > 0);
   };
+
   const handleLocationSelect = (selectedLocation) => {
     dispatch(setLocation(selectedLocation));
     setShowSuggestions(false);
   };
+
   const handleDateChange = (e) => {
     const value = e.target.value;
     dispatch(setDate(value));
   };
+
   const handleSearch = async () => {
-    try {
-      const response = await fetch("/api/properties");
-      if (response.ok) {
-        const data = await response.json();
-
-        const filteredProperties = await data
-          .map((property) => ({
-            ...property,
-            availability: property.availability
-              .map((element) => ({
-                ...element,
-                date: format(new Date(element.date), "yyyy-MM-dd"),
-              }))
-              .filter((element) => element.date === date),
-          }))
-          .filter((property) => property.location.toLowerCase() === location);
-
-        setFilterProperties(filteredProperties);
-        dispatch(setSProperties(filteredProperties));
-      } else {
-        console.error(
-          "Failed to fetch property data. Status: " + response.status
-        );
-      }
-    } catch (error) {
-      console.error("Error while fetching property data:", error);
-      throw error;
-    }
+    setSearchTriggered(true);
   };
 
-  //useEffect section
+  useEffect(() => {
+    if (searchTriggered) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch("/api/properties");
+          if (response.ok) {
+            const data = await response.json();
+
+            const filteredProperties = await data
+              .map((property) => ({
+                ...property,
+                availability: property.availability
+                  .map((element) => ({
+                    ...element,
+                    date: format(new Date(element.date), "yyyy-MM-dd"),
+                  }))
+                  .filter((element) => element.date === date),
+              }))
+              .filter(
+                (property) => property.location.toLowerCase() === location
+              );
+
+            setFilterProperties(filteredProperties);
+            dispatch(setSProperties(filteredProperties));
+          } else {
+            console.error(
+              "Failed to fetch property data. Status: " + response.status
+            );
+          }
+        } catch (error) {
+          console.error("Error while fetching property data:", error);
+          throw error;
+        }
+      };
+
+      fetchData();
+      setSearchTriggered(false);
+    }
+  }, [searchTriggered, location, date, dispatch]);
+
   useEffect(() => {
     dispatch(setProperties(filterproperties));
   }, [filterproperties, dispatch]);

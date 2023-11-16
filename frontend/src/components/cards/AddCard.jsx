@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setWLproperties } from "../../slices/properties/WLproperties";
 import { useNavigate } from "react-router-dom";
 import "./scss/addCard.scss";
+import { format } from "date-fns";
 
 const AddCard = ({ property, isShowWishList = true }) => {
   const navigate = useNavigate();
@@ -41,7 +42,9 @@ const AddCard = ({ property, isShowWishList = true }) => {
 
       <div className="addCard__content">
         <p className="addCard__content__text">{property.location}</p>
-        <p className="addCard__content__text">date : {date}</p>
+        <p className="addCard__content__text">
+          date : {format(new Date(date), "dd-MM-yyyy")}
+        </p>
         <h5 className="addCard__content__title">{property.title}</h5>
         <p className="addCard__content__text">
           {averageReview()}/5 - {property.reviews.length} reviews

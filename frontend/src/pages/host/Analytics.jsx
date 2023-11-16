@@ -191,7 +191,6 @@ const Analytics = () => {
         <NivoPie data={occupancyMonthlyPie()} />
       </div>
       <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
-        <h2>Callendar </h2>
         <NivoCallendar data={callendarData} />
       </div>
     </>

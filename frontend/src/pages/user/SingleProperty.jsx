@@ -8,6 +8,7 @@ import Hours from "../../components/singleProperty/Hours";
 import HowItWorks from "../../components/singleProperty/HowItWorks";
 import CancelPolicy from "../../components/singleProperty/CancelPolicy";
 import Reviews from "../../components/singleProperty/Reviews";
+import DateSearchbar from "../../components/DateSearchbar";
 
 import { setWLproperties } from "../../slices/properties/WLproperties";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,6 +70,7 @@ const SingleProperty = () => {
   return (
     <div>
       <Slider />
+      <DateSearchbar />
       <div className="sProperty">
         <div className="sProperty__header">
           <h5 className="sProperty__item">{property.title}</h5>
