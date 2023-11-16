@@ -1,20 +1,6 @@
 import { ResponsivePie } from "@nivo/pie";
 
-const NivoPie = () => {
-  const data = [
-    {
-      id: "booked",
-      label: "booked",
-      value: 30,
-      color: "hsl(354, 70%, 50%)",
-    },
-    {
-      id: "empty",
-      label: "empty",
-      value: 10,
-      color: "hsl(164, 70%, 50%)",
-    },
-  ];
+const NivoPie = ({ data }) => {
   return (
     <ResponsivePie
       data={data}
@@ -37,18 +23,74 @@ const NivoPie = () => {
         from: "color",
         modifiers: [["darker", 2]],
       }}
+      defs={[
+        {
+          id: "dots",
+          type: "patternDots",
+          background: "inherit",
+          color: "rgba(255, 255, 255, 0.3)",
+          size: 4,
+          padding: 1,
+          stagger: true,
+        },
+        {
+          id: "lines",
+          type: "patternLines",
+          background: "inherit",
+          color: "rgba(255, 255, 255, 0.3)",
+          rotation: -45,
+          lineWidth: 6,
+          spacing: 10,
+        },
+      ]}
       fill={[
         {
           match: {
-            id: "booked",
+            id: "ruby",
           },
           id: "dots",
         },
         {
           match: {
-            id: "empty",
+            id: "c",
           },
           id: "dots",
+        },
+        {
+          match: {
+            id: "go",
+          },
+          id: "dots",
+        },
+        {
+          match: {
+            id: "python",
+          },
+          id: "dots",
+        },
+        {
+          match: {
+            id: "scala",
+          },
+          id: "lines",
+        },
+        {
+          match: {
+            id: "lisp",
+          },
+          id: "lines",
+        },
+        {
+          match: {
+            id: "elixir",
+          },
+          id: "lines",
+        },
+        {
+          match: {
+            id: "javascript",
+          },
+          id: "lines",
         },
       ]}
       legends={[

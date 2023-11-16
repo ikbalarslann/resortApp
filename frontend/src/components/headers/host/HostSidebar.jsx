@@ -37,8 +37,6 @@ const HostSidebar = () => {
     fetchData();
   }, [hostInfo?._id]);
 
-  console.log(Hproperties);
-
   const handleCheckboxChange = (e) => {
     const { name } = e.target;
 

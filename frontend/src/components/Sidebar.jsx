@@ -49,23 +49,6 @@ const Sidebar = () => {
     const filteredProperties = filterProperties();
     dispatch(setSProperties(filteredProperties));
   };
-
-  const handleTypeChange = (e, t) => {
-    const newValue = e.target.checked;
-
-    setAllowedTypes((prevAllowedTypes) => {
-      const updatedTypes = newValue
-        ? [...prevAllowedTypes, t]
-        : prevAllowedTypes.filter((type) => type !== t);
-
-      return updatedTypes;
-    });
-  };
-
-  const handleAvailabilityChange = (e) => {
-    setAvailability(e.target.checked);
-  };
-
   const averageReview = (property) => {
     if (property.reviews.length === 0) return 0;
 
@@ -81,6 +64,22 @@ const Sidebar = () => {
     return roundedAvg.toFixed(1);
   };
 
+  //
+  const handleTypeChange = (e, t) => {
+    const newValue = e.target.checked;
+
+    setAllowedTypes((prevAllowedTypes) => {
+      const updatedTypes = newValue
+        ? [...prevAllowedTypes, t]
+        : prevAllowedTypes.filter((type) => type !== t);
+
+      return updatedTypes;
+    });
+  };
+
+  const handleAvailabilityChange = (e) => {
+    setAvailability(e.target.checked);
+  };
   const handleRatingChange = (r) => {
     const ratingCheckboxes = document.querySelectorAll(
       ".sidebar__title__checkbox.rating"

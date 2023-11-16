@@ -3,27 +3,46 @@ import NivoBar from "../../components/nivo/NivoBar";
 import { format } from "date-fns";
 import NivoPie from "../../components/nivo/NivoPie";
 import { useSelector } from "react-redux";
+import NivoCallendar from "../../components/nivo/NivoCallendar";
 
 const Analytics = () => {
   const [property, setProperty] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [avaliability, setAvaliability] = useState([]);
 
   const { Hproperties } = useSelector((state) => state.Hproperties);
 
   useEffect(() => {
-    setProperty(Hproperties[0]);
+    const fetchData = async () => {
+      try {
+        // Check if Hproperties is not undefined and has at least one element
+        if (Hproperties && Hproperties.length > 0) {
+          setProperty(Hproperties[0]);
 
-    fetch(`/api/bookings`)
-      .then((response) => response.json())
-      .then((data) => {
-        const filteredData = data.filter(
-          (b) => b.propertyId === Hproperties[0]._id
-        );
-        setBookings(filteredData);
-      })
-      .catch((error) => {
+          const bookingsResponse = await fetch(`/api/bookings`);
+          const bookingsData = await bookingsResponse.json();
+          const filteredBookings = bookingsData.filter(
+            (b) => b.propertyId === Hproperties[0]._id
+          );
+          setBookings(filteredBookings);
+
+          const propertyData = Hproperties[0];
+          const filteredAvailability = await propertyData.availability.map(
+            (a) => ({
+              date: format(new Date(a.date), "dd-MM-yyyy"),
+              price: a.pricePerNight,
+              space: a.availableSpaces,
+            })
+          );
+
+          setAvaliability(filteredAvailability);
+        }
+      } catch (error) {
         console.error("An error occurred:", error);
-      });
+      }
+    };
+
+    fetchData();
   }, [Hproperties]);
 
   const filterBookingData = (bookings) => {
@@ -57,28 +76,124 @@ const Analytics = () => {
     return data;
   };
 
+  const dailyRevenue = (date) => {
+    const price = avaliability.filter((a) => a.date === date)[0].price;
+    const booking = bookings.filter((b) => b.date === date).length;
+    return price * booking;
+  };
+
+  const bookingsData = filterBookingData(bookings).map((b) => {
+    return {
+      date: b.day.slice(0, 2),
+      booking: b.booking,
+      bookingColor: "hsl(62, 70%, 50%)",
+    };
+  });
+
+  const moneyData = avaliability.map((a) => {
+    return {
+      date: a.date.slice(0, 2),
+      money: dailyRevenue(a.date),
+      moneyColor: "hsl(62, 70%, 50%)",
+    };
+  });
+
+  const occupancyData = avaliability.map((a) => {
+    const bookingsThatDay = bookings.filter((b) => b.date === a.date).length;
+    return {
+      date: a.date.slice(0, 2),
+      empty: a.space,
+      emptyColor: "grey",
+      booked: bookingsThatDay,
+      bookedColor: "green",
+    };
+  });
+
+  const occupancyMonthlyPie = () => {
+    let emptySpaces = 0;
+    let bookedSpaces = 0;
+
+    avaliability.map((a) => {
+      const bookingsThatDay = bookings.filter((b) => b.date === a.date).length;
+      emptySpaces += a.space;
+      bookedSpaces += bookingsThatDay;
+    });
+
+    return [
+      {
+        id: "empty",
+        label: "empty",
+        value: emptySpaces,
+        color: "hsl(222, 70%, 50%)",
+      },
+      {
+        id: "booked",
+        label: "booked",
+        value: bookedSpaces,
+        color: "hsl(326, 70%, 50%)",
+      },
+    ];
+  };
+
+  const callendarData = avaliability.map((a) => {
+    const parts = a.date.split("-");
+    const formattedDate = parts[2] + "-" + parts[1] + "-" + parts[0];
+
+    const bookingsThatDay = bookings.filter((b) => b.date === a.date).length;
+    const occupancyThatDay =
+      (bookingsThatDay / (a.space + bookingsThatDay)) * 100;
+
+    const moneyThatDay = bookingsThatDay * a.price;
+
+    return {
+      day: formattedDate,
+      booking: bookingsThatDay,
+      value: occupancyThatDay,
+      money: moneyThatDay,
+    };
+  });
+
   return (
     <>
       <h1>Property Analytics</h1>
-      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
-        <h2>bookings-bar</h2>
-        <NivoBar data={filterBookingData(bookings)} leftkey={"booking"} />
-      </div>
-      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
-        <h2>occupancy - pie</h2>
-        <NivoPie />
-      </div>
-      <h2>occupancy - pie</h2>
-      <h2>money - bar</h2>
-      <h2>callendar - each cell booking,occupancy,money</h2>
       {property ? (
         <>
           <h3>{property.title}</h3>
-          <h4>{`Bookings: ${bookings.length}`}</h4>
+          <h6>{`Bookings: ${bookings.length}`}</h6>
         </>
       ) : (
         <p>Loading property data...</p>
       )}
+      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+        <h2>Bookings</h2>
+        {/* <NivoBar data={filterBookingData(bookings)} leftkey={"booking"} /> */}
+
+        <NivoBar
+          data={bookingsData}
+          keys={["booking"]}
+          leftLegend={"bookings"}
+        />
+      </div>
+      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+        <h2>Money</h2>
+        <NivoBar data={moneyData} keys={["money"]} leftLegend={"revenue"} />
+      </div>
+      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+        <h2>Occupancy</h2>
+        <NivoBar
+          data={occupancyData}
+          keys={["booked", "empty"]}
+          leftLegend={"occupancy"}
+        />
+      </div>
+      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+        <h2>Monthly Occupancy </h2>
+        <NivoPie data={occupancyMonthlyPie()} />
+      </div>
+      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+        <h2>Callendar </h2>
+        <NivoCallendar data={callendarData} />
+      </div>
     </>
   );
 };
