@@ -97,11 +97,12 @@ const BookCard = ({ property }) => {
       const host = await findHost(bookingId);
 
       host &&
-        console.log(
+        alert(
           `Notification : Property succesfully booked by  Customer : ${userInfo.name} from  Host : ${host.name}`
         );
 
       setTimeout(() => {
+        alert("Notification : Review now");
         console.log("Notification : Review now");
       }, 3000);
     } catch (error) {
@@ -121,6 +122,8 @@ const BookCard = ({ property }) => {
           amount: totalAmount,
         }),
       });
+
+      handlePaymentClick();
     } catch (error) {
       console.log(error);
     }
