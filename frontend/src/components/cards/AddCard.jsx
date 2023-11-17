@@ -11,6 +11,7 @@ const AddCard = ({ property, isShowWishList = true }) => {
   const dispatch = useDispatch();
   const { WLproperties } = useSelector((state) => state.WLproperties);
   const { date } = useSelector((state) => state.date);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const handleAddToWishListClick = async () => {
     console.log("add to wish list");
@@ -33,7 +34,9 @@ const AddCard = ({ property, isShowWishList = true }) => {
   };
 
   const handleViewClick = async () => {
-    navigate(`/user/properties/${property._id}`);
+    userInfo
+      ? navigate(`/user/properties/${property._id}`)
+      : navigate(`/properties/${property._id}`);
     window.scrollTo(0, 0);
   };
 

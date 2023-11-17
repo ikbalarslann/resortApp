@@ -17,6 +17,8 @@ const ExploreLocations = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { userInfo } = useSelector((state) => state.auth);
+
   const data = [
     {
       title: "new york",
@@ -54,7 +56,7 @@ const ExploreLocations = () => {
     dispatch(setLocation(location));
     dispatch(setDate(formattedDate));
 
-    navigate("/user/properties");
+    userInfo ? navigate("/user/properties") : navigate("/properties");
   };
 
   return (

@@ -67,19 +67,19 @@ const Router = () => {
               element: <HostRegister />,
             },
             {
-              path: "user/properties",
+              path: "/properties",
               element: <Property />,
             },
             {
-              path: "user/properties/:propertyId",
+              path: "/properties/:propertyId",
               element: <SingleProperty />,
             },
             {
-              path: "user/shoppingCard",
+              path: "/shoppingCard",
               element: <ShoppingCard />,
             },
             {
-              path: "user/wishlist",
+              path: "/wishlist",
               element: <WishList />,
             },
           ],

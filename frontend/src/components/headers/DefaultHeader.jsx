@@ -69,10 +69,10 @@ const DefaultHeader = () => {
           </Link>
         </h1>
         <div className="nav__links">
-          <Link to="/user/shoppingCard" className="nav__links-link">
+          <Link to="/shoppingCard" className="nav__links-link">
             Shopping Card
           </Link>
-          <Link to="/user/wishlist" className="nav__links-link">
+          <Link to="/wishlist" className="nav__links-link">
             Wish List
           </Link>
 

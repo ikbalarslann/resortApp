@@ -17,6 +17,7 @@ const SearchBar = () => {
   const { date } = useSelector((state) => state.date);
   const { location } = useSelector((state) => state.location);
   const { properties } = useSelector((state) => state.properties);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     if (properties.length > 0) {
-      navigate("/user/properties");
+      userInfo ? navigate("/user/properties") : navigate("/properties");
       window.scrollTo(0, 0);
     }
   }, [properties, navigate]);
