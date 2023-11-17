@@ -1,6 +1,7 @@
 import path from "path";
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
@@ -12,6 +13,7 @@ import hostRoutes from "./routes/hostRoutes.js";
 import propertyRoutes from "./routes/propertyRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import locationRoutes from "./routes/locationRoutes.js";
+import stripeRoutes from "./routes/stripeRoutes.js";
 
 const port = process.env.PORT || 5000;
 
@@ -19,6 +21,7 @@ connectDB();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -29,6 +32,7 @@ app.use("/api/hosts", hostRoutes);
 app.use("/api/properties", propertyRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/locations", locationRoutes);
+app.use("/api/stripe", stripeRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();

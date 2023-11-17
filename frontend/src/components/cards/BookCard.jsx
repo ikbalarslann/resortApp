@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import findHost from "../../hooks/findHost";
 import { removeProperty } from "../../slices/properties/SCproperties";
+import Stripe from "react-stripe-checkout";
 import "./scss/bookCard.scss";
 
 const BookCard = ({ property }) => {
@@ -107,6 +108,27 @@ const BookCard = ({ property }) => {
       console.error("Error processing payment:", error);
     }
   };
+
+  const handleToken = (totalAmount, token) => {
+    try {
+      fetch("/api/stripe/pay", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: token.id,
+          amount: totalAmount,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const tokenHandler = (token) => {
+    handleToken(100, token);
+  };
+
   return (
     <div className="bookCard">
       <h2 className="bookCard__title">{property.title}</h2>
@@ -124,9 +146,10 @@ const BookCard = ({ property }) => {
       </p>
 
       {isBooked ? (
-        <button className="bookCard__button" onClick={handlePaymentClick}>
-          Pay Now
-        </button>
+        <Stripe
+          stripeKey={import.meta.env.VITE_Stripe_Publishable_key}
+          token={tokenHandler}
+        />
       ) : (
         <button
           className="bookCard__button"
