@@ -66,10 +66,12 @@ const HostBookings = () => {
     <div>
       <div>
         <h1>
-          {hostData.bookings.length > 0 &&
-            hostData.properties.find(
-              (property) => property._id === hostData.bookings[0].propertyId
-            )?.title}
+          {hostData.properties.length > 1
+            ? "All Properties"
+            : hostData.bookings.length > 0 &&
+              hostData.properties.find(
+                (property) => property._id === hostData.bookings[0].propertyId
+              )?.title}
         </h1>
         <h1>{hostData.bookings.length} bookings</h1>
         {hostData.bookings.map((booking, index) => (

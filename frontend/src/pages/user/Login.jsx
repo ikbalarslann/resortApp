@@ -75,7 +75,7 @@ const Login = () => {
 
       <Row className="py-3">
         <Col>
-          Demo account for customer: <br />
+          Demo account for user: <br />
           <strong>Email :</strong> user@gmail.com
           <br />
           <strong>Password :</strong> 123

@@ -14,9 +14,48 @@ const Analytics = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // Check if Hproperties is not undefined and has at least one element
-        if (Hproperties && Hproperties.length > 0) {
+      if (Hproperties.length > 1) {
+        const bookingsResponse = await fetch(`/api/bookings`);
+        const bookingsData = await bookingsResponse.json();
+
+        const filteredBookings = [];
+
+        for (let i = 0; i < Hproperties.length; i++) {
+          const propertyData = Hproperties[i];
+
+          const data = bookingsData.filter(
+            (b) => b.propertyId === propertyData._id
+          );
+          filteredBookings.push(...data);
+        }
+        setBookings(filteredBookings);
+
+        const filteredAvailability = [];
+
+        Hproperties[0].availability.map((k) => {
+          let space = 0;
+
+          for (let i = 0; i < Hproperties.length; i++) {
+            const propertyData = Hproperties[i];
+
+            const data = propertyData.availability.filter(
+              (a) => a.date === k.date
+            );
+            space += data[0].availableSpaces;
+          }
+
+          filteredAvailability.push({
+            date: format(new Date(k.date), "dd-MM-yyyy"),
+            price: k.pricePerNight,
+            space: space,
+          });
+        });
+
+        setAvaliability(filteredAvailability);
+      } else if (Hproperties.length === 0) {
+        console.log("No properties");
+      } else {
+        try {
           setProperty(Hproperties[0]);
 
           const bookingsResponse = await fetch(`/api/bookings`);
@@ -36,9 +75,9 @@ const Analytics = () => {
           );
 
           setAvaliability(filteredAvailability);
+        } catch (error) {
+          console.error("An error occurred:", error);
         }
-      } catch (error) {
-        console.error("An error occurred:", error);
       }
     };
 
@@ -158,7 +197,7 @@ const Analytics = () => {
       <h1>Property Analytics</h1>
       {property ? (
         <>
-          <h3>{property.title}</h3>
+          <h3>{Hproperties.length > 1 ? "All Properties" : property.title}</h3>
           <h6>{`Bookings: ${bookings.length}`}</h6>
         </>
       ) : (

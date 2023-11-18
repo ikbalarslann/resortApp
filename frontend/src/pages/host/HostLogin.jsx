@@ -76,7 +76,7 @@ const HostLogin = () => {
 
       <Row className="py-3">
         <Col>
-          Demo account for customer: <br />
+          Demo account for host: <br />
           <strong>Email :</strong> host@gmail.com
           <br />
           <strong>Password :</strong> 1234
