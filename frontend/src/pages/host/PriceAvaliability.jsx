@@ -93,6 +93,11 @@ const PriceAvaliability = () => {
         }
         availableSpacesRef={availableSpacesRef}
         pricePerNightRef={pricePerNightRef}
+        date={
+          filteredAvailability
+            ? format(new Date(filteredAvailability[0].date), "dd/MM/yyyy")
+            : ""
+        }
       />
     </div>
   );

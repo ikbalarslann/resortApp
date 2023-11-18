@@ -9,6 +9,7 @@ const ModalAvaliability = ({
   pricePerNight,
   availableSpacesRef,
   pricePerNightRef,
+  date,
 }) => {
   return (
     <div className={`modalA ${showModal ? "show" : ""}`} onClick={handleClose}>
@@ -25,9 +26,11 @@ const ModalAvaliability = ({
             </button>
           </div>
           <div className="modalA-content-body">
+            <h6>Date : {date}</h6>
             <form>
               <div className="modalA-content-body__form-group">
                 <label htmlFor="availableSpaces">Available Spaces</label>
+
                 <input
                   type="text"
                   id="availableSpaces"
