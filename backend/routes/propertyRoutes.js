@@ -14,7 +14,7 @@ const router = express.Router();
 router.route("/").get(getAllProperties).post(createProperty);
 
 router
-  .route("/:propertyId")
+  .route("/:propertyTitle")
   .get(getPropertyById)
   .put(updateProperty)
   .delete(deleteProperty);

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import "./scss/sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setSProperties } from "../slices/properties/SpropertiesSlice";
-import { set } from "mongoose";
 
 const Sidebar = () => {
   const dispatch = useDispatch();

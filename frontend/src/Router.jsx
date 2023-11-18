@@ -71,7 +71,7 @@ const Router = () => {
               element: <Property />,
             },
             {
-              path: "/properties/:propertyId",
+              path: "/properties/:propertyTitle",
               element: <SingleProperty />,
             },
             {
@@ -98,7 +98,7 @@ const Router = () => {
               element: <Property />,
             },
             {
-              path: "properties/:propertyId",
+              path: "properties/:propertyTitle",
               element: <SingleProperty />,
             },
             {

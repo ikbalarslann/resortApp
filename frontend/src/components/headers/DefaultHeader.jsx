@@ -82,10 +82,18 @@ const DefaultHeader = () => {
             </h5>
             {!dropdownHiddenHost && (
               <div className="dropdown-menu">
-                <Link to="/hostLogin" className="nav__links-link">
+                <Link
+                  to="/hostLogin"
+                  className="nav__links-link"
+                  onClick={() => setDropdownHiddenHost(true)}
+                >
                   Host Login
                 </Link>
-                <Link to="/hostRegister" className="nav__links-link">
+                <Link
+                  to="/hostRegister"
+                  className="nav__links-link"
+                  onClick={() => setDropdownHiddenHost(true)}
+                >
                   Host Register
                 </Link>
               </div>
@@ -97,10 +105,18 @@ const DefaultHeader = () => {
             </h5>
             {!dropdownHidden && (
               <div className="dropdown-menu">
-                <Link to="/login" className="nav__links-link">
+                <Link
+                  to="/login"
+                  className="nav__links-link"
+                  onClick={() => setDropdownHidden(true)}
+                >
                   Login
                 </Link>
-                <Link to="/register" className="nav__links-link">
+                <Link
+                  to="/register"
+                  className="nav__links-link"
+                  onClick={() => setDropdownHidden(true)}
+                >
                   Register
                 </Link>
               </div>

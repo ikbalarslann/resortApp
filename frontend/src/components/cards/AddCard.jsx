@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setWLproperties } from "../../slices/properties/WLproperties";
+import { setSProperties } from "../../slices/properties/SpropertiesSlice";
 import { useNavigate } from "react-router-dom";
 import "./scss/addCard.scss";
 import { format } from "date-fns";
@@ -34,9 +35,10 @@ const AddCard = ({ property, isShowWishList = true }) => {
   };
 
   const handleViewClick = async () => {
+    dispatch(setSProperties([property]));
     userInfo
-      ? navigate(`/user/properties/${property._id}`)
-      : navigate(`/properties/${property._id}`);
+      ? navigate(`/user/properties/${property.title}`)
+      : navigate(`/properties/${property.title}`);
     window.scrollTo(0, 0);
   };
 

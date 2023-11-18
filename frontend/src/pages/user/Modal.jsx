@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./scss/modal.scss";
 
-const Modal = ({ booking, setShowModal, userInfo }) => {
+const Modal = ({
+  booking,
+  setShowModal,
+  userInfo,
+  setIsShowReviewButton,
+  index,
+}) => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(1);
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    fetch(`/api/properties/${booking.propertyId}`).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          setTitle(data.title);
+        });
+      }
+    });
+  }, [booking.propertyId]);
 
   const handleModalSubmit = async (booking) => {
     try {
@@ -30,6 +47,11 @@ const Modal = ({ booking, setShowModal, userInfo }) => {
 
       if (response.ok) {
         console.log(`Review submitted successfully.`);
+
+        setIsShowReviewButton((prevButtons) =>
+          prevButtons.map((button, i) => (i === index ? false : button))
+        );
+
         setShowModal(false);
       } else {
         console.error("Failed to submit the review.");
@@ -51,6 +73,8 @@ const Modal = ({ booking, setShowModal, userInfo }) => {
       </div>
       <div className="userModal-body">
         <h2>Leave a Review</h2>
+        <h4> Pool name : {title}</h4>
+        <h6> Date : {booking.date}</h6>
         <form>
           <div className="userModal__input">
             <label>Rating (1-5)</label>

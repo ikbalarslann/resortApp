@@ -1,5 +1,4 @@
 import Slider from "../../components/Slider";
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./scss/singleProperty.scss";
 
@@ -14,20 +13,18 @@ import { setWLproperties } from "../../slices/properties/WLproperties";
 import { useDispatch, useSelector } from "react-redux";
 
 const SingleProperty = () => {
-  const { propertyId } = useParams();
   const [property, setProperty] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
   const { WLproperties } = useSelector((state) => state.WLproperties);
+  const { Sproperties } = useSelector((state) => state.Sproperties);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const SetTheproperty = async () => {
       try {
-        const response = await fetch(`/api/properties/${propertyId}`);
-        const data = await response.json();
-        setProperty(data);
+        setProperty(Sproperties[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Error fetching data. Please try again later.");
@@ -36,8 +33,8 @@ const SingleProperty = () => {
       }
     };
 
-    fetchData();
-  }, [propertyId]);
+    SetTheproperty();
+  }, [Sproperties]);
 
   if (loading) {
     return <p>Loading...</p>; // Add a loading indicator

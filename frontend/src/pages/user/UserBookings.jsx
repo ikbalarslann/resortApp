@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import findHost from "../../hooks/findHost";
 import Modal from "./Modal";
 import "./scss/userBookings.scss";
 
 const UserBookings = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const { date } = useSelector((state) => state.date);
   const [bookings, setBookings] = useState([]);
   const [showModals, setShowModals] = useState([]);
+  const [isShowReviewButton, setIsShowReviewButton] = useState([]);
 
   useEffect(() => {
     fetch("/api/bookings")
@@ -20,44 +19,10 @@ const UserBookings = () => {
         setBookings(userBookings);
         // Initialize showModals array with false for each booking
         setShowModals(Array(userBookings.length).fill(false));
+        setIsShowReviewButton(Array(userBookings.length).fill(true));
       })
       .catch((error) => console.error("Error fetching bookings:", error));
   }, [userInfo._id]);
-
-  const handlePayment = async (bookingId, index) => {
-    try {
-      const response = await fetch(`/api/bookings/${bookingId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ payment: true }),
-      });
-
-      if (response.ok) {
-        setBookings((prevBookings) =>
-          prevBookings.map((booking, i) =>
-            i === index ? { ...booking, payment: true } : booking
-          )
-        );
-      } else {
-        console.error("Payment failed");
-      }
-
-      const host = await findHost(bookingId);
-
-      host &&
-        console.log(
-          `Notification : Property successfully booked by Customer: ${userInfo.name} from Host: ${host.name}`
-        );
-
-      setTimeout(() => {
-        console.log("Notification: Review now");
-      }, 3000);
-    } catch (error) {
-      console.error("Error processing payment:", error);
-    }
-  };
 
   const handleReview = (index) => {
     // Set the corresponding modal state to true
@@ -100,19 +65,12 @@ const UserBookings = () => {
                 Payment: {booking.payment ? "true" : "false"}
               </p>
 
-              {booking.payment ? (
+              {isShowReviewButton[index] && (
                 <button
                   className="userBookings-card-button"
                   onClick={() => handleReview(index)}
                 >
                   Review
-                </button>
-              ) : (
-                <button
-                  className="userBookings-card-button"
-                  onClick={() => handlePayment(booking._id, index)}
-                >
-                  Pay now
                 </button>
               )}
             </div>
@@ -121,6 +79,8 @@ const UserBookings = () => {
                 userInfo={userInfo}
                 setShowModal={() => handleCloseModal(index)}
                 booking={booking}
+                setIsShowReviewButton={setIsShowReviewButton}
+                index={index}
               />
             )}
           </div>
