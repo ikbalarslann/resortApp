@@ -1,4 +1,9 @@
 .hostProperties {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   &__button {
     padding: 10px 15px;
     background-color: #007bff;
@@ -6,18 +11,5 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
-
-  &__container {
-    margin: 20px 0;
-    &__row {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    &__col {
-      flex: 0 0 33.3333%;
-      padding: 10px;
-    }
   }
 }

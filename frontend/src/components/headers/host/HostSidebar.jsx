@@ -8,7 +8,6 @@ const HostSidebar = () => {
   const [checkedCheckbox, setCheckedCheckbox] = useState(null);
   const [properties, setProperties] = useState([]);
   const { hostInfo } = useSelector((state) => state.auth);
-  const { Hproperties } = useSelector((state) => state.Hproperties);
 
   const dispatch = useDispatch();
 

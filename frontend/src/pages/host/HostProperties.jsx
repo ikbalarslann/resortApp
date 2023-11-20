@@ -21,20 +21,11 @@ const HostProperties = () => {
         <button className="hostProperties__button">Create Property</button>
       </Link>
 
-      <div className="hostProperties__container">
-        <div className="hostProperties__container__row">
-          {properties
-            .filter((property) => property.hostId === hostInfo?._id)
-            .map((property) => (
-              <div
-                key={property._id}
-                className="hostProperties__container__col"
-              >
-                <MyCard property={property} />
-              </div>
-            ))}
-        </div>
-      </div>
+      {properties
+        .filter((property) => property.hostId === hostInfo?._id)
+        .map((property, index) => (
+          <MyCard property={property} key={index} />
+        ))}
     </div>
   );
 };

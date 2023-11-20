@@ -6,7 +6,7 @@ import { setDate } from "../../slices/searchbars/dateSlice";
 import { setProperties } from "../../slices/properties/propertiesSlice";
 import { setLocation } from "../../slices/searchbars/locationSlice";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./scss/userHeader.scss";
 
 const UserHeader = () => {
@@ -37,31 +37,85 @@ const UserHeader = () => {
   };
 
   const handleLogoClick = () => {
+    handleToggleClick();
     dispatch(setDate(null));
     dispatch(setProperties({ properties: [] }));
     dispatch(setLocation(null));
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      const windowWidth = window.innerWidth;
+      if (windowWidth < 760) {
+        const toggle = document.querySelector(".nav__toggle");
+        const navLinks = document.querySelector(".nav__links");
+
+        navLinks.classList.add("hide");
+        toggle.classList.remove("hide");
+      } else {
+        const toggle = document.querySelector(".nav__toggle");
+        const navLinks = document.querySelector(".nav__links");
+
+        navLinks.classList.remove("hide");
+        toggle.classList.add("hide");
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleToggleClick = () => {
+    const nav = document.querySelector(".nav__links");
+
+    nav.classList.toggle("hide");
+  };
+
   return (
     <header>
       <div className="nav">
-        <h1>
-          <Link
-            to="/user"
-            onClick={() => handleLogoClick()}
-            className="nav__logo"
-          >
-            Resort
-          </Link>
-        </h1>
+        <div className="nav__toggle-parent">
+          <h1>
+            <Link to="/user" onClick={handleLogoClick} className="nav__logo">
+              Resort
+            </Link>
+          </h1>
+
+          <div className="nav__toggle" onClick={handleToggleClick}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
         <div className="nav__links">
-          <Link to="/user/shoppingCard" className="nav__links-link">
+          <Link
+            to="/user/shoppingCard"
+            className="nav__links-link"
+            onClick={handleToggleClick}
+          >
             Shopping Card
           </Link>
-          <Link to="/user/wishlist" className="nav__links-link">
+          <Link
+            to="/user/wishlist"
+            className="nav__links-link"
+            onClick={handleToggleClick}
+          >
             Wish List
           </Link>
-          <Link to="/user/bookings" className="nav__links-link">
+          <Link
+            to="/user/bookings"
+            className="nav__links-link"
+            onClick={handleToggleClick}
+          >
             My Bookings
           </Link>
           <div className="nav__user">

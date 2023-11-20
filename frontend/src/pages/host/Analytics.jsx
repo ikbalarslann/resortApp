@@ -203,7 +203,14 @@ const Analytics = () => {
       ) : (
         <p>Loading property data...</p>
       )}
-      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+      <div
+        style={{
+          height: "300px",
+          width: "80vw",
+          paddingBottom: "100px",
+          minWidth: "700px",
+        }}
+      >
         <h2>Bookings</h2>
         {/* <NivoBar data={filterBookingData(bookings)} leftkey={"booking"} /> */}
 
@@ -213,11 +220,25 @@ const Analytics = () => {
           leftLegend={"bookings"}
         />
       </div>
-      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+      <div
+        style={{
+          height: "300px",
+          width: "80vw",
+          paddingBottom: "100px",
+          minWidth: "700px",
+        }}
+      >
         <h2>Money</h2>
         <NivoBar data={moneyData} keys={["money"]} leftLegend={"revenue"} />
       </div>
-      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+      <div
+        style={{
+          height: "300px",
+          width: "80vw",
+          paddingBottom: "100px",
+          minWidth: "700px",
+        }}
+      >
         <h2>Occupancy</h2>
         <NivoBar
           data={occupancyData}
@@ -225,11 +246,25 @@ const Analytics = () => {
           leftLegend={"occupancy"}
         />
       </div>
-      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+      <div
+        style={{
+          height: "300px",
+          width: "80vw",
+          paddingBottom: "100px",
+          minWidth: "700px",
+        }}
+      >
         <h2>Monthly Occupancy </h2>
         <NivoPie data={occupancyMonthlyPie()} />
       </div>
-      <div style={{ height: "300px", width: "80vw", paddingBottom: "100px" }}>
+      <div
+        style={{
+          height: "300px",
+          width: "80vw",
+          paddingBottom: "100px",
+          minWidth: "700px",
+        }}
+      >
         <NivoCallendar data={callendarData} />
       </div>
     </>

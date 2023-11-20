@@ -1,10 +1,11 @@
-.nav {
+.hostMobileLayout {
   position: fixed;
   top: 0;
   width: 100%;
   background-color: rgb(99, 100, 97);
-  padding: 3px;
+
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
@@ -44,30 +45,26 @@
 
   &__links {
     display: flex;
+    flex-direction: column;
     margin-right: 7vw;
+    align-items: center;
 
     &-link {
       margin-right: 15px;
       color: white;
       text-decoration: none;
 
+      &:first-child {
+        background-color: gray;
+        color: white;
+        width: 100%;
+        text-align: center;
+        margin-right: 0;
+      }
+
       &:hover {
         text-decoration: underline;
       }
-    }
-  }
-  &__user {
-    margin-left: 15px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-
-    &-name {
-      margin: 0;
-      font-size: 1rem;
     }
   }
 }
@@ -81,25 +78,6 @@
   align-items: center;
   justify-content: center;
   background-color: #424242;
-}
-
-@media (max-width: 760px) {
-  .nav {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    &__logo {
-      margin-left: 0;
-    }
-
-    &__links {
-      margin: 15px 0;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-  }
 }
 
 .hide {

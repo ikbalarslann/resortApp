@@ -52,8 +52,41 @@ const Property = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const windowWidth = window.innerWidth;
+      if (windowWidth < 760) {
+        const sidebar = document.querySelector(".sidebar");
+        sidebar.classList.add("hide");
+      } else {
+        const sidebar = document.querySelector(".sidebar");
+        sidebar.classList.remove("hide");
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleFilterClick = () => {
+    const sidebar = document.querySelector(".sidebar");
+    sidebar.classList.toggle("hide");
+    console.log(sidebar);
+  };
+
   return (
     <div className="property">
+      <div className="property__filter" onClick={handleFilterClick}>
+        Filter Properties
+      </div>
       <Sidebar />
       <div className="property__row">
         <Searchbar />

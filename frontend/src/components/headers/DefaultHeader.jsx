@@ -60,19 +60,75 @@ const DefaultHeader = () => {
     HostLogout();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const windowWidth = window.innerWidth;
+      if (windowWidth < 760) {
+        const toggle = document.querySelector(".nav__toggle");
+        const navLinks = document.querySelector(".nav__links");
+
+        navLinks.classList.add("hide");
+        toggle.classList.remove("hide");
+      } else {
+        const toggle = document.querySelector(".nav__toggle");
+        const navLinks = document.querySelector(".nav__links");
+
+        navLinks.classList.remove("hide");
+        toggle.classList.add("hide");
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleToggleClick = () => {
+    const nav = document.querySelector(".nav__links");
+
+    nav.classList.toggle("hide");
+  };
+
   return (
     <header>
       <div className="nav">
-        <h1>
-          <Link to="/" onClick={() => handleLogoClick()} className="nav__logo">
-            Resort
-          </Link>
-        </h1>
+        <div className="nav__toggle-parent">
+          <h1>
+            <Link
+              to="/"
+              onClick={() => handleLogoClick()}
+              className="nav__logo"
+            >
+              Resort
+            </Link>
+          </h1>
+
+          <div className="nav__toggle" onClick={handleToggleClick}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
         <div className="nav__links">
-          <Link to="/shoppingCard" className="nav__links-link">
+          <Link
+            to="/shoppingCard"
+            className="nav__links-link"
+            onClick={handleToggleClick}
+          >
             Shopping Card
           </Link>
-          <Link to="/wishlist" className="nav__links-link">
+          <Link
+            to="/wishlist"
+            className="nav__links-link"
+            onClick={handleToggleClick}
+          >
             Wish List
           </Link>
 
@@ -85,14 +141,20 @@ const DefaultHeader = () => {
                 <Link
                   to="/hostLogin"
                   className="nav__links-link"
-                  onClick={() => setDropdownHiddenHost(true)}
+                  onClick={() => {
+                    setDropdownHiddenHost(true);
+                    handleToggleClick();
+                  }}
                 >
                   Host Login
                 </Link>
                 <Link
                   to="/hostRegister"
                   className="nav__links-link"
-                  onClick={() => setDropdownHiddenHost(true)}
+                  onClick={() => {
+                    setDropdownHiddenHost(true);
+                    handleToggleClick();
+                  }}
                 >
                   Host Register
                 </Link>
@@ -108,14 +170,20 @@ const DefaultHeader = () => {
                 <Link
                   to="/login"
                   className="nav__links-link"
-                  onClick={() => setDropdownHidden(true)}
+                  onClick={() => {
+                    setDropdownHidden(true);
+                    handleToggleClick();
+                  }}
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
                   className="nav__links-link"
-                  onClick={() => setDropdownHidden(true)}
+                  onClick={() => {
+                    setDropdownHidden(true);
+                    handleToggleClick();
+                  }}
                 >
                   Register
                 </Link>

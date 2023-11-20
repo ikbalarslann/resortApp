@@ -1,8 +1,8 @@
 import React from "react";
 import AddCard from "../../components/cards/AddCard";
-import "./scss/property.scss";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import "./scss/wishList.scss";
 
 const WishList = () => {
   const WLproperties = useSelector((state) => state.WLproperties);

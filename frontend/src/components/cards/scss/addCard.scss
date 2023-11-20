@@ -53,4 +53,13 @@
       }
     }
   }
+  @media (max-width: 760px) {
+    flex-direction: column;
+    max-width: 100vw;
+    margin-left: 0px;
+
+    &__img {
+      width: 100%;
+    }
+  }
 }
