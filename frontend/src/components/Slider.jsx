@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../../node_modules/swiper/swiper-bundle.css";
 
@@ -27,22 +28,48 @@ const Slider = () => {
     image10,
   ];
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [slice, setSlice] = useState(3);
+
+  useEffect(() => {
+    // Event listener callback
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Attach the event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (windowWidth < 800) {
+      setSlice(1);
+    } else setSlice(3);
+  });
+
   return (
-    <Swiper
-      spaceBetween={5}
-      slidesPerView={3}
-      className="slider"
-      loop={true}
-      navigation={true}
-    >
-      {data.map((element) => {
-        return (
-          <SwiperSlide key={element} className="slider__page">
-            <img src={element} alt="slider" />
-          </SwiperSlide>
-        );
-      })}
-    </Swiper>
+    <div>
+      <Swiper
+        spaceBetween={5}
+        slidesPerView={slice}
+        className="slider"
+        loop={true}
+        navigation={true}
+      >
+        {data.map((element) => {
+          return (
+            <SwiperSlide key={element} className="slider__page">
+              <img src={element} alt="slider" />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
   );
 };
 
