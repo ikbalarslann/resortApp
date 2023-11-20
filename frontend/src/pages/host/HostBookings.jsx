@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import "./scss/hostBookings.scss";
 
 const HostBookings = () => {
   const { hostInfo } = useSelector((state) => state.auth);
   const { Hproperties } = useSelector((state) => state.Hproperties);
-  const dispatch = useDispatch();
 
   const [hostData, setHostData] = useState({
     properties: [],
@@ -79,12 +78,7 @@ const HostBookings = () => {
             <p className="hostbookingcard__text">Number: {index + 1}</p>
             <p className="hostbookingcard__text">Date: {booking.date}</p>
             <p className="hostbookingcard__text">
-              Property Title:{" "}
-              {
-                hostData.properties.find(
-                  (property) => property._id === booking.propertyId
-                )?.title
-              }
+              Property Title : {booking.propertyTitle}
             </p>
             <p className="hostbookingcard__text">
               Customer Name:{" "}

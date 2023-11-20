@@ -52,6 +52,9 @@ const UserBookings = () => {
             style={{ margin: "10px", width: "18rem" }}
           >
             <div className="userBookings-card__content">
+              <h1 className="userBookings-card__content-title">
+                Title: {booking.propertyTitle}
+              </h1>
               <h2 className="userBookings-card__content-title">
                 Booking ID: {booking._id}
               </h2>

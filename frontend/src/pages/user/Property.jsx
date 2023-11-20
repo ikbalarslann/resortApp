@@ -57,9 +57,13 @@ const Property = () => {
       const windowWidth = window.innerWidth;
       if (windowWidth < 760) {
         const sidebar = document.querySelector(".sidebar");
+        const property = document.querySelector(".property__filter");
         sidebar.classList.add("hide");
+        property.classList.remove("hide");
       } else {
         const sidebar = document.querySelector(".sidebar");
+        const property = document.querySelector(".property__filter");
+        property.classList.add("hide");
         sidebar.classList.remove("hide");
       }
     };
@@ -79,7 +83,6 @@ const Property = () => {
   const handleFilterClick = () => {
     const sidebar = document.querySelector(".sidebar");
     sidebar.classList.toggle("hide");
-    console.log(sidebar);
   };
 
   return (

@@ -38,7 +38,7 @@ const getBookingById = asyncHandler(async (req, res) => {
 // @route   POST /api/bookings
 // @access  Public
 const createBooking = asyncHandler(async (req, res) => {
-  const { userId, propertyId, date, status, payment } = req.body;
+  const { userId, propertyId, propertyTitle, date, status, payment } = req.body;
 
   try {
     const newBooking = new Booking({
@@ -47,6 +47,7 @@ const createBooking = asyncHandler(async (req, res) => {
       date,
       status,
       payment,
+      propertyTitle,
     });
     const savedBooking = await newBooking.save();
 
@@ -62,7 +63,7 @@ const createBooking = asyncHandler(async (req, res) => {
 // @access  Public
 const updateBooking = asyncHandler(async (req, res) => {
   const bookingId = req.params.bookingId;
-  const { userId, propertyId, date, status, payment } = req.body;
+  const { userId, propertyId, propertyTitle, date, status, payment } = req.body;
 
   try {
     const booking = await Booking.findById(bookingId);
@@ -73,6 +74,7 @@ const updateBooking = asyncHandler(async (req, res) => {
 
     booking.userId = userId || booking.userId;
     booking.propertyId = propertyId || booking.propertyId;
+    booking.propertyTitle = propertyTitle || booking.propertyTitle;
     booking.date = date || booking.date;
     booking.status = status || booking.status;
     booking.payment = payment || booking.payment;

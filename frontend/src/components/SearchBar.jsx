@@ -29,7 +29,7 @@ const SearchBar = () => {
   };
 
   const handleLocationSelect = (selectedLocation) => {
-    dispatch(setLocation(selectedLocation));
+    dispatch(setLocation(selectedLocation.toLowerCase()));
     setShowSuggestions(false);
   };
 

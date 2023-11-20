@@ -65,6 +65,7 @@ const BookCard = ({ property }) => {
         body: JSON.stringify({
           userId: userInfo._id,
           propertyId: property._id,
+          propertyTitle: property.title,
           date: format(new Date(date), "dd-MM-yyyy"),
           status: "Pending",
           payment: false,

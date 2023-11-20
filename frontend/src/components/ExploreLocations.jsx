@@ -21,32 +21,33 @@ const ExploreLocations = () => {
 
   const data = [
     {
-      title: "new york",
+      title: "New York",
       img: image1,
     },
     {
-      title: "los angeles",
+      title: "Los Angeles",
       img: image2,
     },
     {
-      title: "san francisco",
+      title: "San Francisco",
       img: image3,
     },
     {
-      title: "chicago",
+      title: "Chicago",
       img: image4,
     },
     {
-      title: "miami",
+      title: "Miami",
       img: image5,
     },
     {
-      title: "boston",
+      title: "Boston",
       img: image6,
     },
   ];
 
   const handleOnClick = async (location) => {
+    location = location.toLowerCase();
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, "0");
     const month = String(currentDate.getMonth() + 1).padStart(2, "0");
