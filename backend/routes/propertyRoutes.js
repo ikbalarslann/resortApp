@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 
 const storage = multer.memoryStorage();
-const upload = multer({ dest: "../frontend/src/assets/img/property/" });
+const upload = multer({ dest: "./frontend/src/assets/img/property" });
 
 // Define routes for the 'properties' resource
 router
