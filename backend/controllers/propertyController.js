@@ -38,9 +38,11 @@ const createProperty = asyncHandler(async (req, res) => {
     space,
     availability,
     reviews,
-    images,
     type,
   } = req.body;
+
+  // Assuming you are using multer for file upload and 'image' is the field name for the image file
+  const image = req.file ? req.file.filename : null;
 
   try {
     const newProperty = new Property({
@@ -52,9 +54,10 @@ const createProperty = asyncHandler(async (req, res) => {
       space,
       availability,
       reviews,
-      images,
+      images: [image], // Assuming images is an array and you want to store multiple images
       type,
     });
+
     const savedProperty = await newProperty.save();
 
     res.status(201).json(savedProperty);
