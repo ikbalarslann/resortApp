@@ -11,8 +11,16 @@ import {
 // Create a router
 const router = express.Router();
 
-const storage = multer.memoryStorage();
-const upload = multer({ dest: "./frontend/src/assets/img/property" });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./frontend/src/assets/img/property");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Define routes for the 'properties' resource
 router
