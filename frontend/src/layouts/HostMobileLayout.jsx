@@ -1,10 +1,12 @@
 import "./scss/hostMobileLayout.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setHProperties } from "../slices/properties/HpropertiesSlice";
 import { setDate } from "../slices/searchbars/dateSlice";
 import { setProperties } from "../slices/properties/propertiesSlice";
+import { useHlogoutMutation } from "../slices/apis/hostsApiSlice";
+import { logout } from "../slices/authSlice";
 import { setLocation } from "../slices/searchbars/locationSlice";
 
 //import "../scss/hostSidebar.scss";
@@ -12,10 +14,13 @@ import { setLocation } from "../slices/searchbars/locationSlice";
 const HostMobileLayout = () => {
   const [properties, setProperties] = useState([]);
   const [checkedCheckbox, setCheckedCheckbox] = useState(null);
+  const [dropdownHidden, setDropdownHidden] = useState(true);
+
   const { Hproperties } = useSelector((state) => state.Hproperties);
   const { hostInfo } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogoClick = () => {
     handleToggleClick();
@@ -41,6 +46,10 @@ const HostMobileLayout = () => {
       );
       dispatch(setHProperties(filteredPropery));
     }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownHidden(!dropdownHidden);
   };
 
   const handleToggleClick = () => {
@@ -89,6 +98,19 @@ const HostMobileLayout = () => {
     const _properties = document.querySelector(".hostMobileLayout__properties");
 
     _properties.classList.toggle("hide");
+  };
+
+  const [logoutApiCall] = useHlogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout({ type: "host" }));
+      navigate("/");
+      window.scrollTo(0, 0);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -177,6 +199,21 @@ const HostMobileLayout = () => {
               Analytics
             </div>
           </Link>
+          <div onClick={toggleDropdown}>Host : {hostInfo.name}</div>
+          {!dropdownHidden && (
+            <div className="dropdown-menu">
+              <Link to="/hprofile" className="host-nav__links-link">
+                Profile
+              </Link>
+              <Link
+                to="/"
+                onClick={logoutHandler}
+                className="host-nav__links-link"
+              >
+                Logout
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

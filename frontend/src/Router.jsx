@@ -156,11 +156,13 @@ const Router = () => {
           children: [
             {
               path: "/profile",
-              element: <Profile />,
+              element: <UserLayout />,
+              children: [{ index: true, element: <Profile /> }],
             },
             {
               path: "/hprofile",
-              element: <HostProfile />,
+              element: <HostLayout />,
+              children: [{ index: true, element: <HostProfile /> }],
             },
           ],
         },
