@@ -13,6 +13,7 @@ import "./scss/userHeader.scss";
 const DefaultHeader = () => {
   const [dropdownHidden, setDropdownHidden] = useState(true);
   const [dropdownHiddenHost, setDropdownHiddenHost] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -66,12 +67,14 @@ const DefaultHeader = () => {
       if (windowWidth < 760) {
         const toggle = document.querySelector(".nav__toggle");
         const navLinks = document.querySelector(".nav__links");
+        setIsMobile(true);
 
         navLinks.classList.add("hide");
         toggle.classList.remove("hide");
       } else {
         const toggle = document.querySelector(".nav__toggle");
         const navLinks = document.querySelector(".nav__links");
+        setIsMobile(false);
 
         navLinks.classList.remove("hide");
         toggle.classList.add("hide");
@@ -91,6 +94,7 @@ const DefaultHeader = () => {
   }, []);
 
   const handleToggleClick = () => {
+    if (!isMobile) return;
     const nav = document.querySelector(".nav__links");
 
     nav.classList.toggle("hide");
